@@ -1,36 +1,36 @@
 import 'package:sqflite/sqflite.dart';
-import '../database_helper.dart';
-import '../../../shared/models/workout_type.dart';
+import '../../../core/db/database_helper.dart';
+import '../models/muscle_group.dart';
 
-class WorkoutTypeRepository {
+class MuscleGroupRepository {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
-  Future<int> create(WorkoutType workoutType) async {
+  Future<int> create(MuscleGroup muscleGroup) async {
     final db = await _dbHelper.database;
     return await db.insert(
-      'workout_type',
-      workoutType.toMap(),
+      'muscle_group',
+      muscleGroup.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<List<WorkoutType>> getAll() async {
+  Future<List<MuscleGroup>> getAll() async {
     final db = await _dbHelper.database;
-    final List<Map<String, dynamic>> maps = await db.query('workout_type');
+    final List<Map<String, dynamic>> maps = await db.query('muscle_group');
     return List.generate(maps.length, (i) {
-      return WorkoutType.fromMap(maps[i]);
+      return MuscleGroup.fromMap(maps[i]);
     });
   }
 
-  Future<WorkoutType?> getById(int id) async {
+  Future<MuscleGroup?> getById(int id) async {
     final db = await _dbHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(
-      'workout_type',
+      'muscle_group',
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.isEmpty) return null;
-    return WorkoutType.fromMap(maps.first);
+    return MuscleGroup.fromMap(maps.first);
   }
 }
 

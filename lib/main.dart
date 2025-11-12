@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'core/db/database_helper.dart';
-import 'core/db/repositories/exercise_type_repository.dart';
-import 'core/db/repositories/equipment_type_repository.dart';
-import 'core/db/repositories/muscle_group_repository.dart';
-import 'core/db/repositories/workout_type_repository.dart';
-import 'core/db/repositories/exercise_repository.dart';
-import 'core/db/repositories/workout_template_repository.dart';
-import 'core/db/repositories/template_exercise_repository.dart';
-import 'core/db/repositories/workout_session_repository.dart';
-import 'core/db/repositories/workout_exercise_repository.dart';
-import 'core/db/repositories/workout_set_repository.dart';
-import 'shared/models/exercise_type.dart';
-import 'shared/models/equipment_type.dart';
-import 'shared/models/muscle_group.dart';
-import 'shared/models/workout_type.dart';
-import 'shared/models/exercise.dart';
-import 'shared/models/workout_template.dart';
-import 'shared/models/template_exercise.dart';
-import 'shared/models/workout_session.dart';
-import 'shared/models/workout_exercise.dart';
-import 'shared/models/workout_set.dart';
+import 'features/exercise/repositories/exercise_type_repository.dart';
+import 'features/exercise/repositories/equipment_type_repository.dart';
+import 'features/exercise/repositories/muscle_group_repository.dart';
+import 'features/workout/repositories/workout_type_repository.dart';
+import 'features/exercise/repositories/exercise_repository.dart';
+import 'features/workout/repositories/workout_template_repository.dart';
+import 'features/workout/repositories/template_exercise_repository.dart';
+import 'features/workout/repositories/workout_session_repository.dart';
+import 'features/workout/repositories/workout_exercise_repository.dart';
+import 'features/workout/repositories/workout_set_repository.dart';
+import 'features/mesocycle/repositories/mesocycle_repository.dart';
+import 'features/exercise/models/exercise_type.dart';
+import 'features/exercise/models/equipment_type.dart';
+import 'features/exercise/models/muscle_group.dart';
+import 'features/workout/models/workout_type.dart';
+import 'features/exercise/models/exercise.dart';
+import 'features/workout/models/workout_template.dart';
+import 'features/workout/models/template_exercise.dart';
+import 'features/workout/models/workout_session.dart';
+import 'features/workout/models/workout_exercise.dart';
+import 'features/workout/models/workout_set.dart';
+import 'features/mesocycle/models/mesocycle.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +55,7 @@ Future<void> testCreateOperations() async {
   final workoutSessionRepo = WorkoutSessionRepository();
   final workoutExerciseRepo = WorkoutExerciseRepository();
   final workoutSetRepo = WorkoutSetRepository();
+  final mesocycleRepo = MesocycleRepository();
 
   // 1. Create Exercise Types
   print('1. Creating Exercise Types...');
@@ -154,8 +157,22 @@ Future<void> testCreateOperations() async {
   print('   ✓ Created Barbell Squat (ID: $squatId)');
   print('   ✓ Created Pull-ups (ID: $pullUpId)');
 
-  // 6. Create Workout Template
-  print('\n6. Creating Workout Template...');
+  // 6. Create Mesocycle
+  print('\n6. Creating Mesocycle...');
+  final mesocycleId = await mesocycleRepo.create(
+    Mesocycle(
+      name: 'Hypertrophy Phase 1',
+      startDate: DateTime(2025, 11, 1),
+      endDate: DateTime(2025, 12, 26),
+      weeksQuantity: 8,
+      sessionsPerWeek: 4,
+      createdAt: DateTime.now(),
+    )
+  );
+  print('   ✓ Created Hypertrophy Phase 1 (ID: $mesocycleId, 8 weeks, 4 sessions/week)');
+
+  // 7. Create Workout Template
+  print('\n7. Creating Workout Template...');
   final pushTemplateId = await workoutTemplateRepo.create(
     WorkoutTemplate(
       name: 'Push Day A',
@@ -164,8 +181,8 @@ Future<void> testCreateOperations() async {
   );
   print('   ✓ Created Push Day A template (ID: $pushTemplateId)');
 
-  // 7. Add Exercises to Template
-  print('\n7. Adding Exercises to Template...');
+  // 8. Add Exercises to Template
+  print('\n8. Adding Exercises to Template...');
   final te1Id = await templateExerciseRepo.create(
     TemplateExercise(
       templateId: pushTemplateId,
@@ -176,20 +193,21 @@ Future<void> testCreateOperations() async {
   );
   print('   ✓ Added Bench Press to template (ID: $te1Id)');
 
-  // 8. Create Workout Session
-  print('\n8. Creating Workout Session...');
+  // 9. Create Workout Session
+  print('\n9. Creating Workout Session...');
   final sessionId = await workoutSessionRepo.create(
     WorkoutSession(
       templateId: pushTemplateId,
       title: 'Push Day - Nov 11, 2025',
       startTime: DateTime.now(),
+      mesocycleId: mesocycleId,
       notes: 'First workout session test',
     )
   );
-  print('   ✓ Created workout session (ID: $sessionId)');
+  print('   ✓ Created workout session (ID: $sessionId) linked to mesocycle');
 
-  // 9. Add Exercise to Session (snapshot)
-  print('\n9. Adding Exercise to Session...');
+  // 10. Add Exercise to Session (snapshot)
+  print('\n10. Adding Exercise to Session...');
   final workoutExerciseId = await workoutExerciseRepo.create(
     WorkoutExercise(
       sessionId: sessionId,
@@ -203,8 +221,8 @@ Future<void> testCreateOperations() async {
   );
   print('   ✓ Added Bench Press to session (ID: $workoutExerciseId)');
 
-  // 10. Create Sets for the Exercise
-  print('\n10. Creating Sets...');
+  // 11. Create Sets for the Exercise
+  print('\n11. Creating Sets...');
   for (int i = 1; i <= 4; i++) {
     final setId = await workoutSetRepo.create(
       WorkoutSet(
@@ -220,8 +238,8 @@ Future<void> testCreateOperations() async {
     print('   ✓ Created Set $i (ID: $setId) - 8 reps @ 80kg, RPE ${7 + i}');
   }
 
-  // 11. Retrieve and Display Data
-  print('\n11. Retrieving Created Data...');
+  // 12. Retrieve and Display Data
+  print('\n12. Retrieving Created Data...');
 
   final allExerciseTypes = await exerciseTypeRepo.getAll();
   print('   Exercise Types: ${allExerciseTypes.length} total');
@@ -233,6 +251,12 @@ Future<void> testCreateOperations() async {
   print('   Exercises: ${allExercises.length} total');
   for (var exercise in allExercises) {
     print('      - $exercise');
+  }
+
+  final allMesocycles = await mesocycleRepo.getAll();
+  print('   Mesocycles: ${allMesocycles.length} total');
+  for (var mesocycle in allMesocycles) {
+    print('      - $mesocycle');
   }
 
   final allTemplates = await workoutTemplateRepo.getAll();

@@ -1,36 +1,36 @@
 import 'package:sqflite/sqflite.dart';
-import '../database_helper.dart';
-import '../../../shared/models/equipment_type.dart';
+import '../../../core/db/database_helper.dart';
+import '../models/workout_type.dart';
 
-class EquipmentTypeRepository {
+class WorkoutTypeRepository {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
-  Future<int> create(EquipmentType equipmentType) async {
+  Future<int> create(WorkoutType workoutType) async {
     final db = await _dbHelper.database;
     return await db.insert(
-      'equipment_type',
-      equipmentType.toMap(),
+      'workout_type',
+      workoutType.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<List<EquipmentType>> getAll() async {
+  Future<List<WorkoutType>> getAll() async {
     final db = await _dbHelper.database;
-    final List<Map<String, dynamic>> maps = await db.query('equipment_type');
+    final List<Map<String, dynamic>> maps = await db.query('workout_type');
     return List.generate(maps.length, (i) {
-      return EquipmentType.fromMap(maps[i]);
+      return WorkoutType.fromMap(maps[i]);
     });
   }
 
-  Future<EquipmentType?> getById(int id) async {
+  Future<WorkoutType?> getById(int id) async {
     final db = await _dbHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(
-      'equipment_type',
+      'workout_type',
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.isEmpty) return null;
-    return EquipmentType.fromMap(maps.first);
+    return WorkoutType.fromMap(maps.first);
   }
 }
 

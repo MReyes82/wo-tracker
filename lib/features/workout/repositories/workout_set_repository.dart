@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
-import '../database_helper.dart';
-import '../../../shared/models/workout_set.dart';
+import '../../../core/db/database_helper.dart';
+import '../models/workout_set.dart';
 
 class WorkoutSetRepository {
   final DatabaseHelper _dbHelper = DatabaseHelper();

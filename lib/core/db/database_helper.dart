@@ -110,6 +110,20 @@ class DatabaseHelper {
       )
     ''');
 
+    // Mesocycle table
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS mesocycle (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        start_date TEXT NOT NULL,
+        end_date TEXT NOT NULL,
+        created_at TEXT,
+        updated_at TEXT,
+        weeks_quantity INTEGER NOT NULL DEFAULT 0,
+        sessions_per_week INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+
     // Workout sessions
     await db.execute('''
       CREATE TABLE IF NOT EXISTS workout_session (
@@ -117,10 +131,12 @@ class DatabaseHelper {
         template_id INTEGER,
         title TEXT,
         start_time TEXT NOT NULL,
+        mesocycle_id INTEGER,
         end_time TEXT,
         notes TEXT,
         created_at TEXT,
-        FOREIGN KEY (template_id) REFERENCES workout_template(id) ON DELETE SET NULL
+        FOREIGN KEY (template_id) REFERENCES workout_template(id) ON DELETE SET NULL,
+        FOREIGN KEY (mesocycle_id) REFERENCES mesocycle(id)
       )
     ''');
 
@@ -198,6 +214,7 @@ class DatabaseHelper {
     await db.execute('DROP TABLE IF EXISTS workout_set');
     await db.execute('DROP TABLE IF EXISTS workout_exercise');
     await db.execute('DROP TABLE IF EXISTS workout_session');
+    await db.execute('DROP TABLE IF EXISTS mesocycle');
     await db.execute('DROP TABLE IF EXISTS template_exercise');
     await db.execute('DROP TABLE IF EXISTS workout_template');
     await db.execute('DROP TABLE IF EXISTS exercise');
