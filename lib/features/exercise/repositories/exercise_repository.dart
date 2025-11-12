@@ -53,5 +53,28 @@ class ExerciseRepository {
       return Exercise.fromMap(maps[i]);
     });
   }
+
+  Future<int> update(Exercise exercise) async {
+    final db = await _dbHelper.database;
+    final exerciseMap = exercise.toMap();
+    // Update the updated_at timestamp
+    exerciseMap['updated_at'] = DateTime.now().toIso8601String();
+
+    return await db.update(
+      'exercise',
+      exerciseMap,
+      where: 'id = ?',
+      whereArgs: [exercise.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await _dbHelper.database;
+    return await db.delete(
+      'exercise',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
 

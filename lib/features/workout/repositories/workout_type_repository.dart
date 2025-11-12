@@ -32,5 +32,24 @@ class WorkoutTypeRepository {
     if (maps.isEmpty) return null;
     return WorkoutType.fromMap(maps.first);
   }
+
+  Future<int> update(WorkoutType workoutType) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'workout_type',
+      workoutType.toMap(),
+      where: 'id = ?',
+      whereArgs: [workoutType.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await _dbHelper.database;
+    return await db.delete(
+      'workout_type',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
 

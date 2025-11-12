@@ -45,5 +45,24 @@ class WorkoutExerciseRepository {
       return WorkoutExercise.fromMap(maps[i]);
     });
   }
+
+  Future<int> update(WorkoutExercise workoutExercise) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'workout_exercise',
+      workoutExercise.toMap(),
+      where: 'id = ?',
+      whereArgs: [workoutExercise.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await _dbHelper.database;
+    return await db.delete(
+      'workout_exercise',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
 

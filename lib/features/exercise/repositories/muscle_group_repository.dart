@@ -32,5 +32,24 @@ class MuscleGroupRepository {
     if (maps.isEmpty) return null;
     return MuscleGroup.fromMap(maps.first);
   }
+
+  Future<int> update(MuscleGroup muscleGroup) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'muscle_group',
+      muscleGroup.toMap(),
+      where: 'id = ?',
+      whereArgs: [muscleGroup.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await _dbHelper.database;
+    return await db.delete(
+      'muscle_group',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
 

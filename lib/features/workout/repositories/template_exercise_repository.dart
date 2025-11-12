@@ -45,5 +45,24 @@ class TemplateExerciseRepository {
       return TemplateExercise.fromMap(maps[i]);
     });
   }
+
+  Future<int> update(TemplateExercise templateExercise) async {
+    final db = await _dbHelper.database;
+    return await db.update(
+      'template_exercise',
+      templateExercise.toMap(),
+      where: 'id = ?',
+      whereArgs: [templateExercise.id],
+    );
+  }
+
+  Future<int> delete(int id) async {
+    final db = await _dbHelper.database;
+    return await db.delete(
+      'template_exercise',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
 

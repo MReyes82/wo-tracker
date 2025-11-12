@@ -36,6 +36,14 @@ void main() async {
   print('─' * 50);
   await testReadOperations();
 
+  print('\n✏️ Phase 3: UPDATE Operations');
+  print('─' * 50);
+  await testUpdateOperations();
+
+  print('\n🗑️ Phase 4: DELETE Operations');
+  print('─' * 50);
+  await testDeleteOperations();
+
   // Show database location and cleanup
   final dbHelper = DatabaseHelper();
   final dbPath = await dbHelper.getDatabasePath();
@@ -551,4 +559,562 @@ Future<void> testReadOperations() async {
   print('   • Total Sets Logged: $totalSets');
 }
 
+Future<void> testUpdateOperations() async {
+  // Initialize repositories
+  final exerciseTypeRepo = ExerciseTypeRepository();
+  final equipmentTypeRepo = EquipmentTypeRepository();
+  final muscleGroupRepo = MuscleGroupRepository();
+  final workoutTypeRepo = WorkoutTypeRepository();
+  final exerciseRepo = ExerciseRepository();
+  final workoutTemplateRepo = WorkoutTemplateRepository();
+  final templateExerciseRepo = TemplateExerciseRepository();
+  final workoutSessionRepo = WorkoutSessionRepository();
+  final workoutExerciseRepo = WorkoutExerciseRepository();
+  final workoutSetRepo = WorkoutSetRepository();
+  final mesocycleRepo = MesocycleRepository();
 
+  print('\n🏷️ Testing Catalog UPDATE Operations');
+  print('─' * 50);
+
+  // 1. Update Exercise Type
+  print('1. Updating Exercise Type...');
+  final exerciseTypes = await exerciseTypeRepo.getAll();
+  if (exerciseTypes.isNotEmpty) {
+    final typeToUpdate = exerciseTypes.first;
+    print('   Before: ID=${typeToUpdate.id}, Name="${typeToUpdate.name}"');
+
+    final updatedType = ExerciseType(
+      id: typeToUpdate.id,
+      name: '${typeToUpdate.name} (Modified)',
+    );
+
+    await exerciseTypeRepo.update(updatedType);
+    final verified = await exerciseTypeRepo.getById(typeToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('   ✓ Exercise Type updated successfully');
+  }
+
+  // 2. Update Equipment Type
+  print('\n2. Updating Equipment Type...');
+  final equipmentTypes = await equipmentTypeRepo.getAll();
+  if (equipmentTypes.isNotEmpty) {
+    final typeToUpdate = equipmentTypes.first;
+    print('   Before: ID=${typeToUpdate.id}, Name="${typeToUpdate.name}"');
+
+    final updatedType = EquipmentType(
+      id: typeToUpdate.id,
+      name: '${typeToUpdate.name} (Updated)',
+    );
+
+    await equipmentTypeRepo.update(updatedType);
+    final verified = await equipmentTypeRepo.getById(typeToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('   ✓ Equipment Type updated successfully');
+  }
+
+  // 3. Update Muscle Group
+  print('\n3. Updating Muscle Group...');
+  final muscleGroups = await muscleGroupRepo.getAll();
+  if (muscleGroups.isNotEmpty) {
+    final groupToUpdate = muscleGroups.first;
+    print('   Before: ID=${groupToUpdate.id}, Name="${groupToUpdate.name}"');
+
+    final updatedGroup = MuscleGroup(
+      id: groupToUpdate.id,
+      name: '${groupToUpdate.name} (Modified)',
+    );
+
+    await muscleGroupRepo.update(updatedGroup);
+    final verified = await muscleGroupRepo.getById(groupToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('   ✓ Muscle Group updated successfully');
+  }
+
+  // 4. Update Workout Type
+  print('\n4. Updating Workout Type...');
+  final workoutTypes = await workoutTypeRepo.getAll();
+  if (workoutTypes.isNotEmpty) {
+    final typeToUpdate = workoutTypes.first;
+    print('   Before: ID=${typeToUpdate.id}, Name="${typeToUpdate.name}"');
+
+    final updatedType = WorkoutType(
+      id: typeToUpdate.id,
+      name: '${typeToUpdate.name} (Updated)',
+    );
+
+    await workoutTypeRepo.update(updatedType);
+    final verified = await workoutTypeRepo.getById(typeToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('   ✓ Workout Type updated successfully');
+  }
+
+  print('\n🏋️ Testing Exercise UPDATE Operations');
+  print('─' * 50);
+
+  // 5. Update Exercise
+  print('5. Updating Exercise...');
+  final exercises = await exerciseRepo.getAll();
+  if (exercises.isNotEmpty) {
+    final exerciseToUpdate = exercises.first;
+    print('   Before: ID=${exerciseToUpdate.id}, Name="${exerciseToUpdate.name}"');
+    print('           Weight=${exerciseToUpdate.defaultWorkingWeight}kg');
+
+    final updatedExercise = Exercise(
+      id: exerciseToUpdate.id,
+      name: '${exerciseToUpdate.name} (Pro Version)',
+      exerciseTypeId: exerciseToUpdate.exerciseTypeId,
+      equipmentTypeId: exerciseToUpdate.equipmentTypeId,
+      muscleGroupId: exerciseToUpdate.muscleGroupId,
+      defaultWorkingWeight: (exerciseToUpdate.defaultWorkingWeight ?? 0) + 10.0,
+      isUsingMetric: exerciseToUpdate.isUsingMetric,
+      createdAt: exerciseToUpdate.createdAt,
+    );
+
+    await exerciseRepo.update(updatedExercise);
+    final verified = await exerciseRepo.getById(exerciseToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('           Weight=${verified?.defaultWorkingWeight}kg');
+    print('   ✓ Exercise updated successfully (weight increased by 10kg)');
+  }
+
+  print('\n📋 Testing Workout Template UPDATE Operations');
+  print('─' * 50);
+
+  // 6. Update Workout Template
+  print('6. Updating Workout Template...');
+  final templates = await workoutTemplateRepo.getAll();
+  if (templates.isNotEmpty) {
+    final templateToUpdate = templates.first;
+    print('   Before: ID=${templateToUpdate.id}, Name="${templateToUpdate.name}"');
+
+    final updatedTemplate = WorkoutTemplate(
+      id: templateToUpdate.id,
+      name: '${templateToUpdate.name} V2',
+      typeId: templateToUpdate.typeId,
+      createdAt: templateToUpdate.createdAt,
+    );
+
+    await workoutTemplateRepo.update(updatedTemplate);
+    final verified = await workoutTemplateRepo.getById(templateToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('   ✓ Workout Template updated successfully');
+  }
+
+  // 7. Update Template Exercise
+  print('\n7. Updating Template Exercise...');
+  if (templates.isNotEmpty) {
+    final templateExercises = await templateExerciseRepo.getByTemplate(templates.first.id!);
+    if (templateExercises.isNotEmpty) {
+      final teToUpdate = templateExercises.first;
+      print('   Before: ID=${teToUpdate.id}, Position=${teToUpdate.position}, Planned Sets=${teToUpdate.plannedSets}');
+
+      final updatedTe = TemplateExercise(
+        id: teToUpdate.id,
+        templateId: teToUpdate.templateId,
+        exerciseId: teToUpdate.exerciseId,
+        position: teToUpdate.position,
+        plannedSets: (teToUpdate.plannedSets ?? 0) + 1,
+      );
+
+      await templateExerciseRepo.update(updatedTe);
+      final verified = await templateExerciseRepo.getById(teToUpdate.id!);
+      print('   After:  ID=${verified?.id}, Position=${verified?.position}, Planned Sets=${verified?.plannedSets}');
+      print('   ✓ Template Exercise updated successfully (added 1 set)');
+    }
+  }
+
+  print('\n📅 Testing Mesocycle UPDATE Operations');
+  print('─' * 50);
+
+  // 8. Update Mesocycle
+  print('8. Updating Mesocycle...');
+  final mesocycles = await mesocycleRepo.getAll();
+  if (mesocycles.isNotEmpty) {
+    final mesoToUpdate = mesocycles.first;
+    print('   Before: ID=${mesoToUpdate.id}, Name="${mesoToUpdate.name}"');
+    print('           Weeks=${mesoToUpdate.weeksQuantity}, Sessions/week=${mesoToUpdate.sessionsPerWeek}');
+
+    final updatedMeso = Mesocycle(
+      id: mesoToUpdate.id,
+      name: '${mesoToUpdate.name} (Extended)',
+      startDate: mesoToUpdate.startDate,
+      endDate: mesoToUpdate.endDate.add(Duration(days: 14)), // Add 2 weeks
+      weeksQuantity: mesoToUpdate.weeksQuantity + 2,
+      sessionsPerWeek: mesoToUpdate.sessionsPerWeek,
+      createdAt: mesoToUpdate.createdAt,
+    );
+
+    await mesocycleRepo.update(updatedMeso);
+    final verified = await mesocycleRepo.getById(mesoToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Name="${verified?.name}"');
+    print('           Weeks=${verified?.weeksQuantity}, Sessions/week=${verified?.sessionsPerWeek}');
+    print('   ✓ Mesocycle updated successfully (extended by 2 weeks)');
+  }
+
+  print('\n💪 Testing Workout Session UPDATE Operations');
+  print('─' * 50);
+
+  // 9. Update Workout Session
+  print('9. Updating Workout Session...');
+  final sessions = await workoutSessionRepo.getAll();
+  if (sessions.isNotEmpty) {
+    final sessionToUpdate = sessions.first;
+    print('   Before: ID=${sessionToUpdate.id}, Title="${sessionToUpdate.title}"');
+    print('           Notes="${sessionToUpdate.notes ?? "None"}"');
+
+    final updatedSession = WorkoutSession(
+      id: sessionToUpdate.id,
+      templateId: sessionToUpdate.templateId,
+      title: '${sessionToUpdate.title} (Completed)',
+      startTime: sessionToUpdate.startTime,
+      endTime: DateTime.now(), // Set end time
+      mesocycleId: sessionToUpdate.mesocycleId,
+      notes: '${sessionToUpdate.notes ?? ""}\nGreat workout! Felt strong.',
+      createdAt: sessionToUpdate.createdAt,
+    );
+
+    await workoutSessionRepo.update(updatedSession);
+    final verified = await workoutSessionRepo.getById(sessionToUpdate.id!);
+    print('   After:  ID=${verified?.id}, Title="${verified?.title}"');
+    print('           End Time: ${verified?.endTime?.toLocal().toString().split('.')[0]}');
+    print('           Notes="${verified?.notes}"');
+    print('   ✓ Workout Session updated successfully (marked as completed)');
+  }
+
+  print('\n🎯 Testing Workout Exercise & Set UPDATE Operations');
+  print('─' * 50);
+
+  // 10. Update Workout Exercise
+  print('10. Updating Workout Exercise...');
+  if (sessions.isNotEmpty) {
+    final workoutExercises = await workoutExerciseRepo.getBySession(sessions.first.id!);
+    if (workoutExercises.isNotEmpty) {
+      final weToUpdate = workoutExercises.first;
+      print('   Before: ID=${weToUpdate.id}, Name="${weToUpdate.exerciseName}"');
+      print('           Planned Sets=${weToUpdate.plannedSets}');
+
+      final updatedWe = WorkoutExercise(
+        id: weToUpdate.id,
+        sessionId: weToUpdate.sessionId,
+        templateExerciseId: weToUpdate.templateExerciseId,
+        exerciseId: weToUpdate.exerciseId,
+        exerciseName: weToUpdate.exerciseName,
+        exerciseDescription: '${weToUpdate.exerciseDescription ?? ""}\nFocus on form!',
+        plannedSets: (weToUpdate.plannedSets ?? 0) + 1,
+        position: weToUpdate.position,
+      );
+
+      await workoutExerciseRepo.update(updatedWe);
+      final verified = await workoutExerciseRepo.getById(weToUpdate.id!);
+      print('   After:  ID=${verified?.id}, Name="${verified?.exerciseName}"');
+      print('           Planned Sets=${verified?.plannedSets}');
+      print('   ✓ Workout Exercise updated successfully (added 1 set)');
+
+      // 11. Update Workout Sets
+      print('\n11. Updating Workout Sets...');
+      final sets = await workoutSetRepo.getByWorkoutExercise(weToUpdate.id!);
+      if (sets.isNotEmpty) {
+        final setToUpdate = sets.first;
+        print('   Before: Set ${setToUpdate.setNumber} - ${setToUpdate.reps} reps @ ${setToUpdate.weight}kg, RPE ${setToUpdate.effortLevel}');
+
+        final updatedSet = WorkoutSet(
+          id: setToUpdate.id,
+          workoutExerciseId: setToUpdate.workoutExerciseId,
+          setNumber: setToUpdate.setNumber,
+          reps: (setToUpdate.reps ?? 0) + 2, // Increase reps by 2
+          weight: (setToUpdate.weight ?? 0.0) + 2.5, // Increase weight by 2.5kg
+          effortLevel: (setToUpdate.effortLevel ?? 0) == 10 ? 10 : (setToUpdate.effortLevel ?? 0) + 1,
+          completed: setToUpdate.completed,
+          completedAt: setToUpdate.completedAt,
+        );
+
+        await workoutSetRepo.update(updatedSet);
+        final verified = await workoutSetRepo.getById(setToUpdate.id!);
+        print('   After:  Set ${verified?.setNumber} - ${verified?.reps} reps @ ${verified?.weight}kg, RPE ${verified?.effortLevel}');
+        print('   ✓ Workout Set updated successfully (improved performance!)');
+      }
+    }
+  }
+
+  print('\n📊 Verification - Reading All Updated Data');
+  print('─' * 50);
+
+  // Verify all changes
+  print('Catalog items (showing first 2 of each):');
+  final updatedExerciseTypes = await exerciseTypeRepo.getAll();
+  print('   Exercise Types: ${updatedExerciseTypes.take(2).map((e) => e.name).join(", ")}');
+
+  final updatedEquipmentTypes = await equipmentTypeRepo.getAll();
+  print('   Equipment Types: ${updatedEquipmentTypes.take(2).map((e) => e.name).join(", ")}');
+
+  final updatedMuscleGroups = await muscleGroupRepo.getAll();
+  print('   Muscle Groups: ${updatedMuscleGroups.take(2).map((e) => e.name).join(", ")}');
+
+  final updatedWorkoutTypes = await workoutTypeRepo.getAll();
+  print('   Workout Types: ${updatedWorkoutTypes.take(2).map((e) => e.name).join(", ")}');
+
+  print('\nUser-created items:');
+  final updatedExercises = await exerciseRepo.getAll();
+  print('   Exercises: ${updatedExercises.take(2).map((e) => '${e.name} (${e.defaultWorkingWeight}kg)').join(", ")}');
+
+  final updatedTemplates = await workoutTemplateRepo.getAll();
+  print('   Templates: ${updatedTemplates.map((e) => e.name).join(", ")}');
+
+  final updatedMesocycles = await mesocycleRepo.getAll();
+  print('   Mesocycles: ${updatedMesocycles.map((e) => '${e.name} (${e.weeksQuantity}w)').join(", ")}');
+
+  print('\n✅ All UPDATE operations completed successfully!');
+}
+
+Future<void> testDeleteOperations() async {
+  // Initialize repositories
+  final exerciseTypeRepo = ExerciseTypeRepository();
+  final equipmentTypeRepo = EquipmentTypeRepository();
+  final muscleGroupRepo = MuscleGroupRepository();
+  final workoutTypeRepo = WorkoutTypeRepository();
+  final exerciseRepo = ExerciseRepository();
+  final workoutTemplateRepo = WorkoutTemplateRepository();
+  final templateExerciseRepo = TemplateExerciseRepository();
+  final workoutSessionRepo = WorkoutSessionRepository();
+  final workoutExerciseRepo = WorkoutExerciseRepository();
+  final workoutSetRepo = WorkoutSetRepository();
+  final mesocycleRepo = MesocycleRepository();
+
+  print('\n🎯 Testing Workout Set DELETE Operations');
+  print('─' * 50);
+
+  // 1. Delete Workout Sets
+  print('1. Deleting Workout Sets...');
+  final allSets = await workoutSetRepo.getAll();
+  print('   Before: ${allSets.length} sets in database');
+
+  if (allSets.isNotEmpty) {
+    final setToDelete = allSets.first;
+    print('   Deleting Set ID ${setToDelete.id}: Set ${setToDelete.setNumber} - ${setToDelete.reps} reps @ ${setToDelete.weight}kg');
+
+    await workoutSetRepo.delete(setToDelete.id!);
+
+    final verifyDeleted = await workoutSetRepo.getById(setToDelete.id!);
+    final remainingSets = await workoutSetRepo.getAll();
+    print('   After: ${remainingSets.length} sets in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Set successfully deleted" : "✗ Set still exists"}');
+  }
+
+  print('\n💪 Testing Workout Exercise DELETE Operations');
+  print('─' * 50);
+
+  // 2. Delete Workout Exercise (this would cascade delete remaining sets)
+  print('2. Deleting Workout Exercise...');
+  final allWorkoutExercises = await workoutExerciseRepo.getAll();
+  print('   Before: ${allWorkoutExercises.length} workout exercises in database');
+
+  if (allWorkoutExercises.isNotEmpty) {
+    final weToDelete = allWorkoutExercises.first;
+    print('   Deleting Workout Exercise ID ${weToDelete.id}: "${weToDelete.exerciseName}"');
+
+    // Check how many sets will be affected
+    final setsForThisExercise = await workoutSetRepo.getByWorkoutExercise(weToDelete.id!);
+    print('   This will also affect ${setsForThisExercise.length} sets (if cascading)');
+
+    await workoutExerciseRepo.delete(weToDelete.id!);
+
+    final verifyDeleted = await workoutExerciseRepo.getById(weToDelete.id!);
+    final remainingWE = await workoutExerciseRepo.getAll();
+    print('   After: ${remainingWE.length} workout exercises in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Workout Exercise successfully deleted" : "✗ Workout Exercise still exists"}');
+  }
+
+  print('\n📅 Testing Workout Session DELETE Operations');
+  print('─' * 50);
+
+  // 3. Delete Workout Session
+  print('3. Deleting Workout Session...');
+  final allSessions = await workoutSessionRepo.getAll();
+  print('   Before: ${allSessions.length} workout sessions in database');
+
+  if (allSessions.isNotEmpty) {
+    final sessionToDelete = allSessions.first;
+    print('   Deleting Session ID ${sessionToDelete.id}: "${sessionToDelete.title}"');
+
+    await workoutSessionRepo.delete(sessionToDelete.id!);
+
+    final verifyDeleted = await workoutSessionRepo.getById(sessionToDelete.id!);
+    final remainingSessions = await workoutSessionRepo.getAll();
+    print('   After: ${remainingSessions.length} workout sessions in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Session successfully deleted" : "✗ Session still exists"}');
+  }
+
+  print('\n📋 Testing Template Exercise DELETE Operations');
+  print('─' * 50);
+
+  // 4. Delete Template Exercise
+  print('4. Deleting Template Exercise...');
+  final allTemplateExercises = await templateExerciseRepo.getAll();
+  print('   Before: ${allTemplateExercises.length} template exercises in database');
+
+  if (allTemplateExercises.isNotEmpty) {
+    final teToDelete = allTemplateExercises.first;
+    print('   Deleting Template Exercise ID ${teToDelete.id}: Exercise ${teToDelete.exerciseId} at position ${teToDelete.position}');
+
+    await templateExerciseRepo.delete(teToDelete.id!);
+
+    final verifyDeleted = await templateExerciseRepo.getById(teToDelete.id!);
+    final remainingTE = await templateExerciseRepo.getAll();
+    print('   After: ${remainingTE.length} template exercises in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Template Exercise successfully deleted" : "✗ Template Exercise still exists"}');
+  }
+
+  print('\n📝 Testing Workout Template DELETE Operations');
+  print('─' * 50);
+
+  // 5. Delete Workout Template
+  print('5. Deleting Workout Template...');
+  final allTemplates = await workoutTemplateRepo.getAll();
+  print('   Before: ${allTemplates.length} workout templates in database');
+
+  if (allTemplates.isNotEmpty) {
+    final templateToDelete = allTemplates.first;
+    print('   Deleting Template ID ${templateToDelete.id}: "${templateToDelete.name}"');
+
+    await workoutTemplateRepo.delete(templateToDelete.id!);
+
+    final verifyDeleted = await workoutTemplateRepo.getById(templateToDelete.id!);
+    final remainingTemplates = await workoutTemplateRepo.getAll();
+    print('   After: ${remainingTemplates.length} workout templates in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Template successfully deleted" : "✗ Template still exists"}');
+  }
+
+  print('\n🏋️ Testing Exercise DELETE Operations');
+  print('─' * 50);
+
+  // 6. Delete Exercise
+  print('6. Deleting Exercise...');
+  final allExercises = await exerciseRepo.getAll();
+  print('   Before: ${allExercises.length} exercises in database');
+
+  if (allExercises.length > 1) {
+    // Delete the second one to keep at least one
+    final exerciseToDelete = allExercises[1];
+    print('   Deleting Exercise ID ${exerciseToDelete.id}: "${exerciseToDelete.name}"');
+
+    await exerciseRepo.delete(exerciseToDelete.id!);
+
+    final verifyDeleted = await exerciseRepo.getById(exerciseToDelete.id!);
+    final remainingExercises = await exerciseRepo.getAll();
+    print('   After: ${remainingExercises.length} exercises in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Exercise successfully deleted" : "✗ Exercise still exists"}');
+  }
+
+  print('\n📆 Testing Mesocycle DELETE Operations');
+  print('─' * 50);
+
+  // 7. Delete Mesocycle
+  print('7. Deleting Mesocycle...');
+  final allMesocycles = await mesocycleRepo.getAll();
+  print('   Before: ${allMesocycles.length} mesocycles in database');
+
+  if (allMesocycles.isNotEmpty) {
+    final mesoToDelete = allMesocycles.first;
+    print('   Deleting Mesocycle ID ${mesoToDelete.id}: "${mesoToDelete.name}"');
+
+    await mesocycleRepo.delete(mesoToDelete.id!);
+
+    final verifyDeleted = await mesocycleRepo.getById(mesoToDelete.id!);
+    final remainingMesocycles = await mesocycleRepo.getAll();
+    print('   After: ${remainingMesocycles.length} mesocycles in database');
+    print('   Verification: ${verifyDeleted == null ? "✓ Mesocycle successfully deleted" : "✗ Mesocycle still exists"}');
+  }
+
+  print('\n🏷️ Testing Catalog DELETE Operations');
+  print('─' * 50);
+
+  // 8. Delete Catalog Items (be careful - these might have foreign key constraints)
+  print('8. Deleting Catalog Items...');
+
+  // Delete a Workout Type
+  final allWorkoutTypes = await workoutTypeRepo.getAll();
+  if (allWorkoutTypes.length > 1) {
+    final workoutTypeToDelete = allWorkoutTypes.last;
+    print('   Deleting Workout Type ID ${workoutTypeToDelete.id}: "${workoutTypeToDelete.name}"');
+    await workoutTypeRepo.delete(workoutTypeToDelete.id!);
+    final verifyWT = await workoutTypeRepo.getById(workoutTypeToDelete.id!);
+    print('   ${verifyWT == null ? "✓" : "✗"} Workout Type deleted');
+  }
+
+  // Delete a Muscle Group (only if no exercises reference it)
+  final allMuscleGroups = await muscleGroupRepo.getAll();
+  if (allMuscleGroups.length > 2) {
+    final muscleGroupToDelete = allMuscleGroups.last;
+    print('   Deleting Muscle Group ID ${muscleGroupToDelete.id}: "${muscleGroupToDelete.name}"');
+    try {
+      await muscleGroupRepo.delete(muscleGroupToDelete.id!);
+      final verifyMG = await muscleGroupRepo.getById(muscleGroupToDelete.id!);
+      print('   ${verifyMG == null ? "✓" : "✗"} Muscle Group deleted');
+    } catch (e) {
+      print('   ⚠ Cannot delete: ${e.toString().contains("FOREIGN KEY") ? "Foreign key constraint (still referenced by exercises)" : e.toString()}');
+    }
+  }
+
+  // Delete an Equipment Type
+  final allEquipmentTypes = await equipmentTypeRepo.getAll();
+  if (allEquipmentTypes.length > 2) {
+    final equipmentTypeToDelete = allEquipmentTypes.last;
+    print('   Deleting Equipment Type ID ${equipmentTypeToDelete.id}: "${equipmentTypeToDelete.name}"');
+    try {
+      await equipmentTypeRepo.delete(equipmentTypeToDelete.id!);
+      final verifyET = await equipmentTypeRepo.getById(equipmentTypeToDelete.id!);
+      print('   ${verifyET == null ? "✓" : "✗"} Equipment Type deleted');
+    } catch (e) {
+      print('   ⚠ Cannot delete: ${e.toString().contains("FOREIGN KEY") ? "Foreign key constraint (still referenced by exercises)" : e.toString()}');
+    }
+  }
+
+  // Delete an Exercise Type
+  final allExerciseTypes = await exerciseTypeRepo.getAll();
+  if (allExerciseTypes.length > 1) {
+    final exerciseTypeToDelete = allExerciseTypes.last;
+    print('   Deleting Exercise Type ID ${exerciseTypeToDelete.id}: "${exerciseTypeToDelete.name}"');
+    try {
+      await exerciseTypeRepo.delete(exerciseTypeToDelete.id!);
+      final verifyEXT = await exerciseTypeRepo.getById(exerciseTypeToDelete.id!);
+      print('   ${verifyEXT == null ? "✓" : "✗"} Exercise Type deleted');
+    } catch (e) {
+      print('   ⚠ Cannot delete: ${e.toString().contains("FOREIGN KEY") ? "Foreign key constraint (still referenced by exercises)" : e.toString()}');
+    }
+  }
+
+  print('\n📊 Final Database State');
+  print('─' * 50);
+
+  // Show what's left in the database
+  final finalExerciseTypes = await exerciseTypeRepo.getAll();
+  final finalEquipmentTypes = await equipmentTypeRepo.getAll();
+  final finalMuscleGroups = await muscleGroupRepo.getAll();
+  final finalWorkoutTypes = await workoutTypeRepo.getAll();
+  final finalExercises = await exerciseRepo.getAll();
+  final finalTemplates = await workoutTemplateRepo.getAll();
+  final finalMesocycles = await mesocycleRepo.getAll();
+  final finalSessions = await workoutSessionRepo.getAll();
+  final finalWorkoutExercises = await workoutExerciseRepo.getAll();
+  final finalSets = await workoutSetRepo.getAll();
+
+  print('Remaining Catalog Items:');
+  print('   • Exercise Types: ${finalExerciseTypes.length}');
+  print('   • Equipment Types: ${finalEquipmentTypes.length}');
+  print('   • Muscle Groups: ${finalMuscleGroups.length}');
+  print('   • Workout Types: ${finalWorkoutTypes.length}');
+
+  print('\nRemaining User-Created Items:');
+  print('   • Exercises: ${finalExercises.length}');
+  print('   • Workout Templates: ${finalTemplates.length}');
+  print('   • Mesocycles: ${finalMesocycles.length}');
+
+  print('\nRemaining Session Data:');
+  print('   • Workout Sessions: ${finalSessions.length}');
+  print('   • Workout Exercises: ${finalWorkoutExercises.length}');
+  print('   • Workout Sets: ${finalSets.length}');
+
+  print('\n✅ All DELETE operations completed successfully!');
+  print('💡 Note: Some deletions may fail due to foreign key constraints,');
+  print('   which is expected behavior to maintain data integrity.');
+}
