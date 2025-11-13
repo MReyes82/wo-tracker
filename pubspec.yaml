@@ -39,6 +39,13 @@ dependencies:
   sqflite: ^2.3.0
   path: ^1.8.3
   sqflite_common_ffi: ^2.3.0
+  sqflite_common_ffi_web: ^0.4.0
+
+  # State management
+  provider: ^6.1.1
+
+  # Internationalization
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

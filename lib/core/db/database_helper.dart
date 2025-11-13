@@ -1,11 +1,14 @@
-import 'dart:io';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
   static Database? _database;
+  static bool _factoryInitialized = false;
 
   factory DatabaseHelper() {
     return _instance;
@@ -20,10 +23,18 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    // Initialize FFI for desktop platforms
-    if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
-      sqfliteFfiInit();
-      databaseFactory = databaseFactoryFfi;
+    // Initialize appropriate database factory based on platform (only once)
+    if (!_factoryInitialized) {
+      if (kIsWeb) {
+        // Use web-compatible database
+        databaseFactory = databaseFactoryFfiWeb;
+      } else if (Platform.isLinux || Platform.isWindows || Platform.isMacOS) {
+        // For desktop platforms only, use FFI
+        sqfliteFfiInit();
+        databaseFactory = databaseFactoryFfi;
+      }
+      // For Android and iOS, use the default native sqflite (no factory change needed)
+      _factoryInitialized = true;
     }
 
     String path = join(await getDatabasesPath(), 'wo_tracker.db');
@@ -32,7 +43,10 @@ class DatabaseHelper {
       version: 1,
       onCreate: _onCreate,
       onConfigure: (db) async {
-        await db.execute('PRAGMA foreign_keys = ON');
+        // PRAGMA statements don't work well on web, skip for web
+        if (!kIsWeb) {
+          await db.execute('PRAGMA foreign_keys = ON');
+        }
       },
     );
   }
