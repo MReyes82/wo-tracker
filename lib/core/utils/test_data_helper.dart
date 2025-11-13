@@ -41,23 +41,104 @@ class TestDataHelper {
       final now = DateTime.now();
       
       // Today's workout
-      await db.insert('workout_session', {
+      final todaySessionId = await db.insert('workout_session', {
         'template_id': 1,
         'title': 'Push Day',
         'start_time': DateTime(now.year, now.month, now.day, 10, 0).toIso8601String(),
         'created_at': DateTime.now().toIso8601String(),
       });
       
+      // Add exercises to today's workout
+      final benchPressId = await db.insert('workout_exercise', {
+        'session_id': todaySessionId,
+        'exercise_name': 'Bench Press',
+        'exercise_description': 'Barbell bench press',
+        'planned_sets': 4,
+        'position': 1,
+        'notes': 'Focus on form',
+      });
+
+      final inclineDbPressId = await db.insert('workout_exercise', {
+        'session_id': todaySessionId,
+        'exercise_name': 'Incline Dumbbell Press',
+        'exercise_description': 'Incline press with dumbbells',
+        'planned_sets': 3,
+        'position': 2,
+      });
+
+      final lateralRaisesId = await db.insert('workout_exercise', {
+        'session_id': todaySessionId,
+        'exercise_name': 'Lateral Raises',
+        'exercise_description': 'Dumbbell lateral raises',
+        'planned_sets': 3,
+        'position': 3,
+        'notes': 'Light weight, high reps',
+      });
+
+      // Add sets for bench press
+      for (int i = 1; i <= 4; i++) {
+        await db.insert('workout_set', {
+          'workout_exercise_id': benchPressId,
+          'set_number': i,
+          'reps': null,
+          'weight': null,
+          'completed': 0,
+        });
+      }
+
+      // Add sets for incline dumbbell press
+      for (int i = 1; i <= 3; i++) {
+        await db.insert('workout_set', {
+          'workout_exercise_id': inclineDbPressId,
+          'set_number': i,
+          'reps': null,
+          'weight': null,
+          'completed': 0,
+        });
+      }
+
+      // Add sets for lateral raises
+      for (int i = 1; i <= 3; i++) {
+        await db.insert('workout_set', {
+          'workout_exercise_id': lateralRaisesId,
+          'set_number': i,
+          'reps': null,
+          'weight': null,
+          'completed': 0,
+        });
+      }
+
       // Past workouts
       for (int i = 1; i <= 5; i++) {
         final date = now.subtract(Duration(days: i * 2));
-        await db.insert('workout_session', {
+        final sessionId = await db.insert('workout_session', {
           'template_id': 1,
           'title': i % 3 == 0 ? 'Pull Day' : 'Push Day',
           'start_time': DateTime(date.year, date.month, date.day, 10, 0).toIso8601String(),
           'end_time': DateTime(date.year, date.month, date.day, 11, 30).toIso8601String(),
           'created_at': date.toIso8601String(),
         });
+
+        // Add sample exercise to past workout
+        final exerciseId = await db.insert('workout_exercise', {
+          'session_id': sessionId,
+          'exercise_name': i % 3 == 0 ? 'Barbell Row' : 'Bench Press',
+          'exercise_description': 'Compound exercise',
+          'planned_sets': 3,
+          'position': 1,
+        });
+
+        // Add completed sets for past workouts
+        for (int j = 1; j <= 3; j++) {
+          await db.insert('workout_set', {
+            'workout_exercise_id': exerciseId,
+            'set_number': j,
+            'reps': 8 + j,
+            'weight': 100.0 + (j * 10),
+            'completed': 1,
+            'completed_at': date.toIso8601String(),
+          });
+        }
       }
       
       print('Test data seeded successfully!');

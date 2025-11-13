@@ -95,7 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     workout: viewModel.todayWorkout,
                     onTap: () {
                       if (viewModel.todayWorkout != null) {
-                        _navigateToWorkoutDetails(viewModel.todayWorkout!.id);
+                        _navigateToWorkoutDetails(
+                          viewModel.todayWorkout!.id,
+                          isEditable: true,
+                        );
                       } else {
                         // Navigate to add workout screen
                         // TODO: Implement navigation to add workout
@@ -204,15 +207,17 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _navigateToWorkoutDetails(int? workoutId) {
+  void _navigateToWorkoutDetails(int? workoutId, {bool isEditable = false}) {
     if (workoutId == null) return;
 
     // Navigate to workout detail screen
-    // TODO: Update this navigation once WorkoutDetailScreen is properly implemented
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WorkoutDetailScreen(sessionId: workoutId),
+        builder: (context) => WorkoutDetailScreen(
+          sessionId: workoutId,
+          isEditable: isEditable,
+        ),
       ),
     );
   }
