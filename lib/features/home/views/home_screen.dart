@@ -4,7 +4,7 @@ import '../../../core/themes/app_colors.dart';
 import '../view_models/home_view_model.dart';
 import '../widgets/today_workout_card.dart';
 import '../widgets/workout_card.dart';
-import '../../workout/workout_detail_screen.dart';
+import '../../workout/views/workout_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

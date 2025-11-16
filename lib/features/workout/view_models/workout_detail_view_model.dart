@@ -5,6 +5,9 @@ import '../models/workout_set.dart';
 import '../repositories/workout_session_repository.dart';
 import '../repositories/workout_exercise_repository.dart';
 import '../repositories/workout_set_repository.dart';
+import '../../exercise/repositories/exercise_repository.dart';
+import '../../exercise/repositories/muscle_group_repository.dart';
+import '../../exercise/repositories/equipment_type_repository.dart';
 
 class ExerciseWithSets {
   final WorkoutExercise exercise;
@@ -24,6 +27,9 @@ class WorkoutDetailViewModel extends ChangeNotifier {
   final WorkoutSessionRepository _sessionRepository = WorkoutSessionRepository();
   final WorkoutExerciseRepository _exerciseRepository = WorkoutExerciseRepository();
   final WorkoutSetRepository _setRepository = WorkoutSetRepository();
+  final ExerciseRepository _exerciseCatalogRepository = ExerciseRepository();
+  final MuscleGroupRepository _muscleGroupRepository = MuscleGroupRepository();
+  final EquipmentTypeRepository _equipmentTypeRepository = EquipmentTypeRepository();
 
   WorkoutSession? _session;
   List<ExerciseWithSets> _exercises = [];
@@ -65,11 +71,37 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       for (var exercise in workoutExercises) {
         final sets = await _setRepository.getByWorkoutExercise(exercise.id!);
         print('WorkoutDetailViewModel: Exercise ${exercise.exerciseName} has ${sets.length} sets');
+        print('WorkoutDetailViewModel: Exercise ID in catalog: ${exercise.exerciseId}');
+
+        // Fetch muscle group and equipment names if exercise_id is available
+        String? muscleGroupName;
+        String? equipmentName;
+
+        if (exercise.exerciseId != null) {
+          // Fetch the exercise details from catalog
+          final exerciseDetails = await _exerciseCatalogRepository.getById(exercise.exerciseId!);
+          print('WorkoutDetailViewModel: Exercise details from catalog: $exerciseDetails');
+
+          if (exerciseDetails != null) {
+            // Fetch muscle group name
+            final muscleGroup = await _muscleGroupRepository.getById(exerciseDetails.muscleGroupId);
+            muscleGroupName = muscleGroup?.name;
+            print('WorkoutDetailViewModel: Muscle group: $muscleGroupName');
+
+            // Fetch equipment type name
+            final equipmentType = await _equipmentTypeRepository.getById(exerciseDetails.equipmentTypeId);
+            equipmentName = equipmentType?.name;
+            print('WorkoutDetailViewModel: Equipment type: $equipmentName');
+          }
+        } else {
+          print('WorkoutDetailViewModel: No exercise_id found for ${exercise.exerciseName}');
+        }
+
         _exercises.add(ExerciseWithSets(
           exercise: exercise,
           sets: sets,
-          equipmentName: 'Barbell', // TODO: Fetch from exercise catalog
-          muscleGroupName: 'Chest', // TODO: Fetch from exercise catalog
+          equipmentName: equipmentName ?? 'Unknown',
+          muscleGroupName: muscleGroupName ?? 'Unknown',
         ));
       }
 

@@ -182,6 +182,18 @@ class ExerciseSetItem extends StatelessWidget {
               color: AppColors.success,
               size: 24,
             ),
+
+          // Options menu button
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            iconSize: 20,
+            color: AppColors.textSecondary,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(),
+            onPressed: () {
+              // TODO: Show options menu for the set
+            },
+          ),
         ],
       ),
     );

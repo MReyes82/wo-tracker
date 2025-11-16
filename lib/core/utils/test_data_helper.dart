@@ -10,20 +10,58 @@ class TestDataHelper {
     print('Database instance obtained');
 
     try {
-      // Check if we already have data
-      print('Checking for existing data...');
-      final result = await db.rawQuery('SELECT COUNT(*) as count FROM workout_session');
-      final count = result.first['count'] as int;
-      
-      print('Found $count existing workout sessions');
-
-      if (count > 0) {
-        print('Database already has data, skipping seed');
-        return;
-      }
-      
       print('Seeding test data...');
       
+      // Add muscle groups
+      await db.insert('muscle_group', {'id': 1, 'name': 'Chest'});
+      await db.insert('muscle_group', {'id': 2, 'name': 'Back'});
+      await db.insert('muscle_group', {'id': 3, 'name': 'Legs'});
+      await db.insert('muscle_group', {'id': 4, 'name': 'Shoulders'});
+      await db.insert('muscle_group', {'id': 5, 'name': 'Arms'});
+
+      // Add equipment types
+      await db.insert('equipment_type', {'id': 1, 'name': 'Barbell'});
+      await db.insert('equipment_type', {'id': 2, 'name': 'Dumbbell'});
+      await db.insert('equipment_type', {'id': 3, 'name': 'Cable'});
+      await db.insert('equipment_type', {'id': 4, 'name': 'Machine'});
+
+      // Add exercise types
+      await db.insert('exercise_type', {'id': 1, 'name': 'Compound'});
+      await db.insert('exercise_type', {'id': 2, 'name': 'Isolation'});
+
+      // Add exercises
+      final benchPressExId = await db.insert('exercise', {
+        'name': 'Bench Press',
+        'exercise_type_id': 1,
+        'equipment_type_id': 1,
+        'muscle_group_id': 1,
+        'created_at': DateTime.now().toIso8601String(),
+      });
+
+      final inclineDbPressExId = await db.insert('exercise', {
+        'name': 'Incline Dumbbell Press',
+        'exercise_type_id': 1,
+        'equipment_type_id': 2,
+        'muscle_group_id': 1,
+        'created_at': DateTime.now().toIso8601String(),
+      });
+
+      final lateralRaisesExId = await db.insert('exercise', {
+        'name': 'Lateral Raises',
+        'exercise_type_id': 2,
+        'equipment_type_id': 2,
+        'muscle_group_id': 4,
+        'created_at': DateTime.now().toIso8601String(),
+      });
+
+      final barbellRowExId = await db.insert('exercise', {
+        'name': 'Barbell Row',
+        'exercise_type_id': 1,
+        'equipment_type_id': 1,
+        'muscle_group_id': 2,
+        'created_at': DateTime.now().toIso8601String(),
+      });
+
       // Add a workout type
       await db.insert('workout_type', {'id': 1, 'name': 'Push'});
       await db.insert('workout_type', {'id': 2, 'name': 'Pull'});
@@ -37,6 +75,28 @@ class TestDataHelper {
         'created_at': DateTime.now().toIso8601String(),
       });
       
+      // Add template exercises
+      await db.insert('template_exercise', {
+        'template_id': 1,
+        'exercise_id': benchPressExId,
+        'position': 1,
+        'planned_sets': 4,
+      });
+
+      await db.insert('template_exercise', {
+        'template_id': 1,
+        'exercise_id': inclineDbPressExId,
+        'position': 2,
+        'planned_sets': 3,
+      });
+
+      await db.insert('template_exercise', {
+        'template_id': 1,
+        'exercise_id': lateralRaisesExId,
+        'position': 3,
+        'planned_sets': 3,
+      });
+
       // Add some sample workout sessions
       final now = DateTime.now();
       
@@ -51,6 +111,7 @@ class TestDataHelper {
       // Add exercises to today's workout
       final benchPressId = await db.insert('workout_exercise', {
         'session_id': todaySessionId,
+        'exercise_id': benchPressExId,
         'exercise_name': 'Bench Press',
         'exercise_description': 'Barbell bench press',
         'planned_sets': 4,
@@ -60,6 +121,7 @@ class TestDataHelper {
 
       final inclineDbPressId = await db.insert('workout_exercise', {
         'session_id': todaySessionId,
+        'exercise_id': inclineDbPressExId,
         'exercise_name': 'Incline Dumbbell Press',
         'exercise_description': 'Incline press with dumbbells',
         'planned_sets': 3,
@@ -68,6 +130,7 @@ class TestDataHelper {
 
       final lateralRaisesId = await db.insert('workout_exercise', {
         'session_id': todaySessionId,
+        'exercise_id': lateralRaisesExId,
         'exercise_name': 'Lateral Raises',
         'exercise_description': 'Dumbbell lateral raises',
         'planned_sets': 3,
@@ -122,6 +185,7 @@ class TestDataHelper {
         // Add sample exercise to past workout
         final exerciseId = await db.insert('workout_exercise', {
           'session_id': sessionId,
+          'exercise_id': i % 3 == 0 ? barbellRowExId : benchPressExId,
           'exercise_name': i % 3 == 0 ? 'Barbell Row' : 'Bench Press',
           'exercise_description': 'Compound exercise',
           'planned_sets': 3,

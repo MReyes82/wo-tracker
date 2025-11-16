@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../core/themes/app_colors.dart';
-import 'view_models/workout_detail_view_model.dart';
-import 'widgets/exercise_card.dart';
+import '../../../core/themes/app_colors.dart';
+import '../view_models/workout_detail_view_model.dart';
+import '../widgets/exercise_card.dart';
 import 'package:intl/intl.dart';
 
 class WorkoutDetailScreen extends StatefulWidget {
@@ -160,12 +160,24 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             color: AppColors.textSecondary,
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            DateFormat('EEEE, MMMM d, yyyy').format(viewModel.session!.startTime),
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
+                          Expanded(
+                            child: Text(
+                              DateFormat('EEEE, MMMM d, yyyy').format(viewModel.session!.startTime),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary,
+                              ),
                             ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.more_vert),
+                            iconSize: 20,
+                            color: AppColors.textSecondary,
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            onPressed: () {
+                              // TODO: Show session options menu
+                            },
                           ),
                         ],
                       ),

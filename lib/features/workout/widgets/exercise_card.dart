@@ -40,23 +40,8 @@ class ExerciseCard extends StatelessWidget {
   }
 
   IconData _getMuscleGroupIcon(String? muscleGroup) {
-    // Icon based on muscle group
-    switch (muscleGroup?.toLowerCase()) {
-      case 'chest':
-        return Icons.sports_gymnastics;
-      case 'back':
-        return Icons.accessibility_new;
-      case 'legs':
-        return Icons.directions_run;
-      case 'shoulders':
-        return Icons.sports_martial_arts;
-      case 'arms':
-        return Icons.sports_kabaddi;
-      case 'core':
-        return Icons.self_improvement;
-      default:
-        return Icons.fitness_center;
-    }
+    // Use the same icon for all muscle groups (arm flexing)
+    return Icons.fitness_center;
   }
 
   @override
@@ -93,19 +78,33 @@ class ExerciseCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                // Muscle group icon
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: muscleColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    muscleIcon,
-                    color: muscleColor,
-                    size: 24,
-                  ),
+                // Muscle group icon with label
+                Column(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: muscleColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Icon(
+                        muscleIcon,
+                        color: muscleColor,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      exerciseData.muscleGroupName ?? 'Unknown',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: muscleColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
                 const SizedBox(width: 12),
 
@@ -124,9 +123,9 @@ class ExerciseCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        exerciseData.equipmentName ?? 'Unknown equipment',
+                        exerciseData.equipmentName ?? 'Unknown',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           color: AppColors.textSecondary,
                         ),
                       ),
@@ -152,7 +151,7 @@ class ExerciseCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.blue.withValues(alpha: 0.05),
+                color: Colors.yellow.withValues(alpha: 0.15),
                 border: Border(
                   top: BorderSide(color: AppColors.borderColor.withValues(alpha: 0.5)),
                   bottom: BorderSide(color: AppColors.borderColor.withValues(alpha: 0.5)),
@@ -163,7 +162,7 @@ class ExerciseCard extends StatelessWidget {
                   const Icon(
                     Icons.info_outline,
                     size: 16,
-                    color: Colors.blue,
+                    color: Colors.orange,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

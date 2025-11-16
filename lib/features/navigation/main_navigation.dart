@@ -15,7 +15,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const Placeholder(), // Add Workout Screen - TODO: Implement
+    const Placeholder(), // Add History Screen - TODO: Implement
     const Placeholder(), // Templates Screen - TODO: Implement
     const SettingsScreen(),
   ];
