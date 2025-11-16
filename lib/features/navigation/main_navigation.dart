@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/themes/app_colors.dart';
 import '../home/views/home_screen.dart';
 import '../settings/views/settings_screen.dart';
+import '../register/views/register_new_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const Placeholder(), // Add History Screen - TODO: Implement
+    const RegisterNewScreen(),
     const Placeholder(), // Templates Screen - TODO: Implement
     const SettingsScreen(),
   ];
@@ -45,11 +46,11 @@ class _MainNavigationState extends State<MainNavigation> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle_outline),
-            label: 'Add Workout',
+            label: 'Register new',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.view_list),
-            label: 'Templates',
+            label: 'History',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

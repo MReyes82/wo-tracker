@@ -138,6 +138,18 @@ class DatabaseHelper {
       )
     ''');
 
+    // Mesocycle workout split (which workout template for which day)
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS mesocycle_workout (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        mesocycle_id INTEGER NOT NULL,
+        workout_template_id INTEGER NOT NULL,
+        day_of_week INTEGER NOT NULL,
+        FOREIGN KEY (mesocycle_id) REFERENCES mesocycle(id) ON DELETE CASCADE,
+        FOREIGN KEY (workout_template_id) REFERENCES workout_template(id)
+      )
+    ''');
+
     // Workout sessions
     await db.execute('''
       CREATE TABLE IF NOT EXISTS workout_session (
