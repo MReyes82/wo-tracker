@@ -14,12 +14,14 @@ class ExerciseWithSets {
   final List<WorkoutSet> sets;
   final String? equipmentName;
   final String? muscleGroupName;
+  final bool isUsingMetric;
 
   ExerciseWithSets({
     required this.exercise,
     required this.sets,
     this.equipmentName,
     this.muscleGroupName,
+    this.isUsingMetric = true,
   });
 }
 
@@ -76,6 +78,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         // Fetch muscle group and equipment names if exercise_id is available
         String? muscleGroupName;
         String? equipmentName;
+        bool isUsingMetric = true; // Default to metric
 
         if (exercise.exerciseId != null) {
           // Fetch the exercise details from catalog
@@ -92,6 +95,10 @@ class WorkoutDetailViewModel extends ChangeNotifier {
             final equipmentType = await _equipmentTypeRepository.getById(exerciseDetails.equipmentTypeId);
             equipmentName = equipmentType?.name;
             print('WorkoutDetailViewModel: Equipment type: $equipmentName');
+
+            // Get unit preference
+            isUsingMetric = exerciseDetails.isUsingMetric;
+            print('WorkoutDetailViewModel: Unit preference: ${isUsingMetric ? "kg" : "lbs"}');
           }
         } else {
           print('WorkoutDetailViewModel: No exercise_id found for ${exercise.exerciseName}');
@@ -102,6 +109,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           sets: sets,
           equipmentName: equipmentName ?? 'Unknown',
           muscleGroupName: muscleGroupName ?? 'Unknown',
+          isUsingMetric: isUsingMetric,
         ));
       }
 

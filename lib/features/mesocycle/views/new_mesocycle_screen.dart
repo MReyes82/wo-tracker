@@ -3,9 +3,18 @@ import '../../../core/themes/app_colors.dart';
 import '../repositories/mesocycle_repository.dart';
 import '../repositories/mesocycle_workout_repository.dart';
 import '../../workout/repositories/workout_template_repository.dart';
+import '../../workout/repositories/workout_session_repository.dart';
+import '../../workout/repositories/template_exercise_repository.dart';
+import '../../workout/repositories/workout_exercise_repository.dart';
+import '../../workout/repositories/workout_set_repository.dart';
+import '../../exercise/repositories/exercise_repository.dart';
 import '../models/mesocycle.dart';
 import '../models/mesocycle_workout.dart';
 import '../../workout/models/workout_template.dart';
+import '../../workout/models/workout_session.dart';
+import '../../workout/models/template_exercise.dart';
+import '../../workout/models/workout_exercise.dart';
+import '../../workout/models/workout_set.dart';
 
 class NewMesocycleScreen extends StatefulWidget {
   const NewMesocycleScreen({Key? key}) : super(key: key);
@@ -22,6 +31,11 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
   final _mesocycleRepository = MesocycleRepository();
   final _mesocycleWorkoutRepository = MesocycleWorkoutRepository();
   final _workoutTemplateRepository = WorkoutTemplateRepository();
+  final _workoutSessionRepository = WorkoutSessionRepository();
+  final _templateExerciseRepository = TemplateExerciseRepository();
+  final _workoutExerciseRepository = WorkoutExerciseRepository();
+  final _workoutSetRepository = WorkoutSetRepository();
+  final _exerciseRepository = ExerciseRepository();
 
   // Form state
   String? _mesocycleName;
@@ -132,6 +146,64 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
           dayOfWeek: selection.dayOfWeek,
         );
         await _mesocycleWorkoutRepository.create(mesocycleWorkout);
+      }
+
+      // Create workout sessions for each week
+      for (int week = 0; week < _trainingWeeks; week++) {
+        for (int i = 0; i < _workoutSelections.length; i++) {
+          final selection = _workoutSelections[i];
+          final template = await _workoutTemplateRepository.getById(selection.workoutTemplateId!);
+
+          if (template != null) {
+            // Calculate the date for this session
+            // Assuming sessions start from day 0 (today) and follow the order they were selected
+            final sessionDate = startDate.add(Duration(days: week * 7 + i));
+
+            final session = WorkoutSession(
+              templateId: template.id,
+              title: template.name,
+              startTime: sessionDate,
+              mesocycleId: mesocycleId,
+              createdAt: DateTime.now(),
+            );
+
+            final sessionId = await _workoutSessionRepository.create(session);
+
+            // Copy exercises from template to session
+            final templateExercises = await _templateExerciseRepository.getByTemplate(template.id!);
+
+            for (final templateExercise in templateExercises) {
+              // Get exercise details
+              final exercise = await _exerciseRepository.getById(templateExercise.exerciseId);
+
+              if (exercise != null) {
+                final workoutExercise = WorkoutExercise(
+                  sessionId: sessionId,
+                  templateExerciseId: templateExercise.id,
+                  exerciseId: exercise.id,
+                  exerciseName: exercise.name,
+                  plannedSets: templateExercise.plannedSets,
+                  position: templateExercise.position,
+                );
+
+                final workoutExerciseId = await _workoutExerciseRepository.create(workoutExercise);
+
+                // Create workout sets based on planned sets
+                for (int setNum = 1; setNum <= templateExercise.plannedSets; setNum++) {
+                  final workoutSet = WorkoutSet(
+                    workoutExerciseId: workoutExerciseId,
+                    setNumber: setNum,
+                    // Only pre-fill weight if useDefaultWeight is true
+                    weight: templateExercise.useDefaultWeight ? exercise.defaultWorkingWeight : null,
+                    completed: false,
+                  );
+
+                  await _workoutSetRepository.create(workoutSet);
+                }
+              }
+            }
+          }
+        }
       }
 
       if (mounted) {

@@ -198,6 +198,7 @@ class ExerciseCard extends StatelessWidget {
                 ...exerciseData.sets.map((set) => ExerciseSetItem(
                   set: set,
                   isEditable: isEditable,
+                  isUsingMetric: exerciseData.isUsingMetric,
                   onSetUpdated: onSetUpdated,
                 )),
 

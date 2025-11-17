@@ -119,6 +119,7 @@ class DatabaseHelper {
         exercise_id INTEGER NOT NULL,
         position INTEGER DEFAULT 0,
         planned_sets INTEGER DEFAULT 0,
+        use_default_weight INTEGER NOT NULL DEFAULT 0,
         FOREIGN KEY (template_id) REFERENCES workout_template(id) ON DELETE CASCADE,
         FOREIGN KEY (exercise_id) REFERENCES exercise(id)
       )

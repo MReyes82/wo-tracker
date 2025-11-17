@@ -207,11 +207,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _navigateToWorkoutDetails(int? workoutId, {bool isEditable = false}) {
+  Future<void> _navigateToWorkoutDetails(int? workoutId, {bool isEditable = false}) async {
     if (workoutId == null) return;
 
     // Navigate to workout detail screen
-    Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => WorkoutDetailScreen(
@@ -220,6 +220,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+
+    // Refresh home data when returning from workout detail
+    if (mounted) {
+      context.read<HomeViewModel>().loadHomeData();
+    }
   }
 }
 

@@ -24,30 +24,48 @@ class HomeViewModel extends ChangeNotifier {
       // Load all workouts
       final allSessions = await _sessionRepository.getAll();
       print('HomeViewModel: Loaded ${allSessions.length} sessions');
+
+      // Sort by start_time ascending to find the first upcoming workout
+      allSessions.sort((a, b) => a.startTime.compareTo(b.startTime));
+
       for (var session in allSessions) {
         print('  - Session: id=${session.id}, title=${session.title}, startTime=${session.startTime}');
       }
 
-      // Check if there's a workout scheduled for today
-      final today = DateTime.now();
-      final todayStart = DateTime(today.year, today.month, today.day);
-      final todayEnd = todayStart.add(const Duration(days: 1));
+      final now = DateTime.now();
 
-      print('HomeViewModel: Looking for today\'s workout between $todayStart and $todayEnd');
-
+      // Find the first upcoming incomplete workout session (including today)
       if (allSessions.isNotEmpty) {
         try {
           _todayWorkout = allSessions.firstWhere(
-            (session) =>
-                session.startTime.isAfter(todayStart) &&
-                session.startTime.isBefore(todayEnd) &&
-                session.endTime == null, // Only show incomplete workouts as today's workout
+            (session) {
+              // Must be incomplete
+              if (session.endTime != null) return false;
+
+              // Check if it's today
+              final isToday = session.startTime.year == now.year &&
+                              session.startTime.month == now.month &&
+                              session.startTime.day == now.day;
+
+              // Check if it's in the future
+              final isFuture = session.startTime.isAfter(now);
+
+              return isToday || isFuture;
+            },
           );
-          print('HomeViewModel: Found today\'s workout: ${_todayWorkout?.title}');
+          print('HomeViewModel: Found upcoming workout: ${_todayWorkout?.title} on ${_todayWorkout?.startTime}');
         } catch (e) {
-          // No workout for today, that's okay
-          print('HomeViewModel: No workout for today');
-          _todayWorkout = null;
+          // No upcoming workout, try to find the first incomplete workout from the past
+          try {
+            _todayWorkout = allSessions.firstWhere(
+              (session) => session.endTime == null,
+            );
+            print('HomeViewModel: Found incomplete workout from past: ${_todayWorkout?.title}');
+          } catch (e2) {
+            // No incomplete workouts at all
+            print('HomeViewModel: No incomplete workouts found');
+            _todayWorkout = null;
+          }
         }
       } else {
         _todayWorkout = null;
@@ -58,8 +76,14 @@ class HomeViewModel extends ChangeNotifier {
           .where((session) =>
               session.id != _todayWorkout?.id && // Exclude today's workout
               session.endTime != null) // Only show completed workouts
-          .take(5)
-          .toList();
+          .toList()
+          ..sort((a, b) => b.startTime.compareTo(a.startTime)); // Sort descending (newest first)
+
+      // Take only the first 5
+      if (_recentWorkouts.length > 5) {
+        _recentWorkouts = _recentWorkouts.take(5).toList();
+      }
+
       print('HomeViewModel: ${_recentWorkouts.length} recent workouts (excluding today)');
 
       _isLoading = false;

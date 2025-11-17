@@ -154,6 +154,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           exerciseId: selection.exerciseId!,
           position: i,
           plannedSets: selection.plannedSets,
+          useDefaultWeight: selection.useDefaultWeight,
         );
         await _templateExerciseRepository.create(templateExercise);
       }

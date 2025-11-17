@@ -5,12 +5,14 @@ import '../models/workout_set.dart';
 class ExerciseSetItem extends StatelessWidget {
   final WorkoutSet set;
   final bool isEditable;
+  final bool isUsingMetric;
   final Function(WorkoutSet) onSetUpdated;
 
   const ExerciseSetItem({
     Key? key,
     required this.set,
     required this.isEditable,
+    this.isUsingMetric = true,
     required this.onSetUpdated,
   }) : super(key: key);
 
@@ -108,9 +110,9 @@ class ExerciseSetItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Weight (kg)',
-                  style: TextStyle(
+                Text(
+                  'Weight (${isUsingMetric ? 'kg' : 'lbs'})',
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),

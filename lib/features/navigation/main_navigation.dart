@@ -14,17 +14,25 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const RegisterNewScreen(),
-    const Placeholder(), // Templates Screen - TODO: Implement
-    const SettingsScreen(),
-  ];
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 0:
+        return const HomeScreen();
+      case 1:
+        return const RegisterNewScreen();
+      case 2:
+        return const Placeholder(); // History Screen - TODO: Implement
+      case 3:
+        return const SettingsScreen();
+      default:
+        return const HomeScreen();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_currentIndex],
+      body: _getScreen(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {

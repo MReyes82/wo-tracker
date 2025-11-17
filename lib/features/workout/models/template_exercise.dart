@@ -4,6 +4,7 @@ class TemplateExercise {
   final int exerciseId;
   final int position;
   final int plannedSets;
+  final bool useDefaultWeight;
 
   TemplateExercise({
     this.id,
@@ -11,6 +12,7 @@ class TemplateExercise {
     required this.exerciseId,
     this.position = 0,
     this.plannedSets = 0,
+    this.useDefaultWeight = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +22,7 @@ class TemplateExercise {
       'exercise_id': exerciseId,
       'position': position,
       'planned_sets': plannedSets,
+      'use_default_weight': useDefaultWeight ? 1 : 0,
     };
   }
 
@@ -30,13 +33,14 @@ class TemplateExercise {
       exerciseId: map['exercise_id'] as int,
       position: map['position'] as int? ?? 0,
       plannedSets: map['planned_sets'] as int? ?? 0,
+      useDefaultWeight: (map['use_default_weight'] as int? ?? 0) == 1,
     );
   }
 
   @override
   String toString() {
     return 'TemplateExercise{id: $id, templateId: $templateId, exerciseId: $exerciseId, '
-           'position: $position, plannedSets: $plannedSets}';
+           'position: $position, plannedSets: $plannedSets, useDefaultWeight: $useDefaultWeight}';
   }
 }
 
