@@ -3,6 +3,7 @@ import '../../core/themes/app_colors.dart';
 import '../home/views/home_screen.dart';
 import '../settings/views/settings_screen.dart';
 import '../register/views/register_new_screen.dart';
+import '../history/views/records_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _MainNavigationState extends State<MainNavigation> {
       case 1:
         return const RegisterNewScreen();
       case 2:
-        return const Placeholder(); // History Screen - TODO: Implement
+        return RecordsScreen(key: ValueKey('records-$index'));
       case 3:
         return const SettingsScreen();
       default:
