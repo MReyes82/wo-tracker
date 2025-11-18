@@ -52,7 +52,6 @@ class WorkoutSession {
   @override
   String toString() {
     return 'WorkoutSession{id: $id, templateId: $templateId, title: $title, '
-           'startTime: $startTime, mesocycleId: $mesocycleId, endTime: $endTime}';
+        'startTime: $startTime, mesocycleId: $mesocycleId, endTime: $endTime}';
   }
 }
-

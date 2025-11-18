@@ -45,9 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, viewModel, child) {
           if (viewModel.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             );
           }
 
@@ -64,9 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 16),
                   Text(
                     'Error: ${viewModel.error}',
-                    style: const TextStyle(
-                      color: AppColors.textSecondary,
-                    ),
+                    style: const TextStyle(color: AppColors.textSecondary),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
@@ -202,9 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _navigateToRecords();
                   }
                 },
-                style: TextButton.styleFrom(
-                  foregroundColor: AppColors.primary,
-                ),
+                style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -227,17 +221,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<void> _navigateToWorkoutDetails(int? workoutId, {bool isEditable = false}) async {
+  Future<void> _navigateToWorkoutDetails(
+    int? workoutId, {
+    bool isEditable = false,
+  }) async {
     if (workoutId == null) return;
 
     // Navigate to workout detail screen
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => WorkoutDetailScreen(
-          sessionId: workoutId,
-          isEditable: isEditable,
-        ),
+        builder: (context) =>
+            WorkoutDetailScreen(sessionId: workoutId, isEditable: isEditable),
       ),
     );
 
@@ -257,4 +252,3 @@ class _HomeScreenState extends State<HomeScreen> {
     mainNavigationKey.currentState?.switchTab(2);
   }
 }
-

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/themes/app_colors.dart';
+
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
   @override
@@ -23,11 +24,7 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.settings,
-              size: 64,
-              color: AppColors.primary,
-            ),
+            const Icon(Icons.settings, size: 64, color: AppColors.primary),
             const SizedBox(height: 16),
             const Text(
               'Settings Screen',
@@ -43,9 +40,7 @@ class SettingsScreen extends StatelessWidget {
               child: Text(
                 'This screen will allow you to configure app preferences such as units, theme, and effort tracking method.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(color: AppColors.textSecondary),
               ),
             ),
           ],

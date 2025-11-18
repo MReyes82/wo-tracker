@@ -42,4 +42,3 @@ class WorkoutTemplate {
     return 'WorkoutTemplate{id: $id, name: $name, typeId: $typeId}';
   }
 }
-

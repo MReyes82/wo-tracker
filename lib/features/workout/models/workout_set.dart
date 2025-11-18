@@ -48,8 +48,8 @@ class WorkoutSet {
       effortLevel: map['effort_level'] as int?,
       effortLevelSpecifier: map['effort_level_specifier'] as String?,
       completed: (map['completed'] as int) == 1,
-      completedAt: map['completed_at'] != null 
-          ? DateTime.parse(map['completed_at'] as String) 
+      completedAt: map['completed_at'] != null
+          ? DateTime.parse(map['completed_at'] as String)
           : null,
       notes: map['notes'] as String?,
     );
@@ -58,7 +58,6 @@ class WorkoutSet {
   @override
   String toString() {
     return 'WorkoutSet{id: $id, workoutExerciseId: $workoutExerciseId, setNumber: $setNumber, '
-           'reps: $reps, weight: $weight, effortLevel: $effortLevel, completed: $completed}';
+        'reps: $reps, weight: $weight, effortLevel: $effortLevel, completed: $completed}';
   }
 }
-

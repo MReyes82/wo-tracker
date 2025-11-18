@@ -45,11 +45,6 @@ class WorkoutTypeRepository {
 
   Future<int> delete(int id) async {
     final db = await _dbHelper.database;
-    return await db.delete(
-      'workout_type',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    return await db.delete('workout_type', where: 'id = ?', whereArgs: [id]);
   }
 }
-

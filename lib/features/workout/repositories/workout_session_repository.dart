@@ -5,7 +5,6 @@ import '../models/workout_session.dart';
 class WorkoutSessionRepository {
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
-
   Future<int> create(WorkoutSession session) async {
     final db = await _dbHelper.database;
     final sessionMap = session.toMap();
@@ -93,11 +92,6 @@ class WorkoutSessionRepository {
 
   Future<int> delete(int id) async {
     final db = await _dbHelper.database;
-    return await db.delete(
-      'workout_session',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    return await db.delete('workout_session', where: 'id = ?', whereArgs: [id]);
   }
 }
-

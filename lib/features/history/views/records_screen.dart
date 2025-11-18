@@ -12,12 +12,7 @@ import '../../exercise/views/exercise_detail_screen.dart';
 import '../../workout/views/workout_template_detail_screen.dart';
 import '../../mesocycle/views/mesocycle_detail_screen.dart';
 
-enum RecordType {
-  exercises,
-  workouts,
-  mesocycles,
-  sessions,
-}
+enum RecordType { exercises, workouts, mesocycles, sessions }
 
 class RecordsScreen extends StatefulWidget {
   const RecordsScreen({Key? key}) : super(key: key);
@@ -103,7 +98,10 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   // Record type dropdown button
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.background,
                       borderRadius: BorderRadius.circular(12),
@@ -112,7 +110,10 @@ class _RecordsScreenState extends State<RecordsScreen> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<RecordType>(
                         value: _selectedType,
-                        icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
+                        icon: const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppColors.primary,
+                        ),
                         isExpanded: true,
                         style: const TextStyle(
                           fontSize: 16,
@@ -124,7 +125,11 @@ class _RecordsScreenState extends State<RecordsScreen> {
                             value: type,
                             child: Row(
                               children: [
-                                Icon(_getRecordTypeIcon(type), color: AppColors.primary, size: 20),
+                                Icon(
+                                  _getRecordTypeIcon(type),
+                                  color: AppColors.primary,
+                                  size: 20,
+                                ),
                                 const SizedBox(width: 12),
                                 Text(_getRecordTypeLabel(type)),
                               ],
@@ -150,10 +155,16 @@ class _RecordsScreenState extends State<RecordsScreen> {
                     controller: _searchController,
                     decoration: InputDecoration(
                       hintText: 'Search by name...',
-                      prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: AppColors.textSecondary,
+                      ),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
-                              icon: const Icon(Icons.clear, color: AppColors.textSecondary),
+                              icon: const Icon(
+                                Icons.clear,
+                                color: AppColors.textSecondary,
+                              ),
                               onPressed: () {
                                 setState(() {
                                   _searchController.clear();
@@ -168,7 +179,10 @@ class _RecordsScreenState extends State<RecordsScreen> {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -186,7 +200,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 builder: (context, viewModel, child) {
                   if (viewModel.isLoading) {
                     return const Center(
-                      child: CircularProgressIndicator(color: AppColors.primary),
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
                     );
                   }
 
@@ -263,7 +279,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No exercises found' : 'No exercises match your search',
+              _searchQuery.isEmpty
+                  ? 'No exercises found'
+                  : 'No exercises match your search',
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -346,16 +364,13 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ExerciseDetailScreen(
-                      exerciseId: exercise.id!,
-                    ),
+                    builder: (context) =>
+                        ExerciseDetailScreen(exerciseId: exercise.id!),
                   ),
                 );
               }
             },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
             child: const Text('Details'),
           ),
         ],
@@ -378,7 +393,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No workouts found' : 'No workouts match your search',
+              _searchQuery.isEmpty
+                  ? 'No workouts found'
+                  : 'No workouts match your search',
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -459,16 +476,13 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WorkoutTemplateDetailScreen(
-                      templateId: workout.id!,
-                    ),
+                    builder: (context) =>
+                        WorkoutTemplateDetailScreen(templateId: workout.id!),
                   ),
                 );
               }
             },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
             child: const Text('Details'),
           ),
         ],
@@ -491,7 +505,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No mesocycles found' : 'No mesocycles match your search',
+              _searchQuery.isEmpty
+                  ? 'No mesocycles found'
+                  : 'No mesocycles match your search',
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -572,16 +588,13 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MesocycleDetailScreen(
-                      mesocycleId: mesocycle.id!,
-                    ),
+                    builder: (context) =>
+                        MesocycleDetailScreen(mesocycleId: mesocycle.id!),
                   ),
                 );
               }
             },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
             child: const Text('Details'),
           ),
         ],
@@ -604,7 +617,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No sessions found' : 'No sessions match your search',
+              _searchQuery.isEmpty
+                  ? 'No sessions found'
+                  : 'No sessions match your search',
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -634,7 +649,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isCompleted ? AppColors.success.withValues(alpha: 0.3) : AppColors.divider,
+          color: isCompleted
+              ? AppColors.success.withValues(alpha: 0.3)
+              : AppColors.divider,
           width: isCompleted ? 2 : 1,
         ),
         boxShadow: [
@@ -709,9 +726,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 );
               }
             },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.primary,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
             child: const Text('Details'),
           ),
         ],
@@ -719,4 +734,3 @@ class _RecordsScreenState extends State<RecordsScreen> {
     );
   }
 }
-

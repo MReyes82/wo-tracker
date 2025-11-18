@@ -41,7 +41,7 @@ class RegisterNewScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 32),
-            
+
             // Add Exercise Card
             _RegisterCard(
               icon: Icons.fitness_center,
@@ -58,7 +58,7 @@ class RegisterNewScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            
+
             // Add Workout Card
             _RegisterCard(
               icon: Icons.assignment,
@@ -75,7 +75,7 @@ class RegisterNewScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            
+
             // Add Mesocycle Card
             _RegisterCard(
               icon: Icons.calendar_month,
@@ -181,14 +181,10 @@ class _RegisterCard extends StatelessWidget {
                 color: iconColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(
-                icon,
-                color: iconColor,
-                size: 28,
-              ),
+              child: Icon(icon, color: iconColor, size: 28),
             ),
             const SizedBox(width: 16),
-            
+
             // Text content
             Expanded(
               child: Column(
@@ -213,7 +209,7 @@ class _RegisterCard extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             // Arrow icon
             const Icon(
               Icons.arrow_forward_ios,
@@ -226,4 +222,3 @@ class _RegisterCard extends StatelessWidget {
     );
   }
 }
-

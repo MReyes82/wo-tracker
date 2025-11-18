@@ -52,7 +52,6 @@ class WorkoutExercise {
   @override
   String toString() {
     return 'WorkoutExercise{id: $id, sessionId: $sessionId, exerciseName: $exerciseName, '
-           'plannedSets: $plannedSets, position: $position}';
+        'plannedSets: $plannedSets, position: $position}';
   }
 }
-

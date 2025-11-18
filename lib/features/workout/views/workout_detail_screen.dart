@@ -27,7 +27,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     super.initState();
     _viewModel = WorkoutDetailViewModel();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _viewModel.loadWorkoutDetails(widget.sessionId, editable: widget.isEditable);
+      _viewModel.loadWorkoutDetails(
+        widget.sessionId,
+        editable: widget.isEditable,
+      );
     });
   }
 
@@ -83,9 +86,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
           builder: (context, viewModel, child) {
             if (viewModel.isLoading) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.primary,
-                ),
+                child: CircularProgressIndicator(color: AppColors.primary),
               );
             }
 
@@ -102,9 +103,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                     const SizedBox(height: 16),
                     Text(
                       viewModel.error!,
-                      style: const TextStyle(
-                        color: AppColors.textSecondary,
-                      ),
+                      style: const TextStyle(color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
@@ -127,9 +126,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
               return const Center(
                 child: Text(
                   'Workout not found',
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                  ),
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
               );
             }
@@ -162,7 +159,9 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              DateFormat('EEEE, MMMM d, yyyy').format(viewModel.session!.startTime),
+                              DateFormat(
+                                'EEEE, MMMM d, yyyy',
+                              ).format(viewModel.session!.startTime),
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.textSecondary,
@@ -193,7 +192,9 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             const SizedBox(width: 8),
                             Text(
                               _formatDuration(
-                                viewModel.session!.endTime!.difference(viewModel.session!.startTime),
+                                viewModel.session!.endTime!.difference(
+                                  viewModel.session!.startTime,
+                                ),
                               ),
                               style: const TextStyle(
                                 fontSize: 14,
@@ -206,7 +207,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                       if (widget.isEditable) ...[
                         const SizedBox(height: 8),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
@@ -226,7 +230,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                 ),
 
                 // Workout Notes Section
-                if (viewModel.session!.notes != null && viewModel.session!.notes!.isNotEmpty)
+                if (viewModel.session!.notes != null &&
+                    viewModel.session!.notes!.isNotEmpty)
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
@@ -321,12 +326,28 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             return ExerciseCard(
                               exerciseData: exerciseData,
                               isEditable: viewModel.isEditable,
-                              onAddSet: (exerciseId) => viewModel.addSet(exerciseId),
-                              onDeleteSet: (exerciseId) => viewModel.deleteLastSet(exerciseId),
-                              onSetUpdated: (updatedSet) => viewModel.updateSet(updatedSet),
-                              onExerciseNotesUpdated: (exerciseId, notes) => viewModel.updateExerciseNotes(exerciseId, notes),
-                              onChangeExercise: (exerciseId) => _showChangeExerciseDialog(context, viewModel, exerciseId),
-                              onUpdateDefaultWeight: (exerciseId, setId) => viewModel.markExerciseForDefaultWeightUpdate(exerciseId, setId),
+                              onAddSet: (exerciseId) =>
+                                  viewModel.addSet(exerciseId),
+                              onDeleteSet: (exerciseId) =>
+                                  viewModel.deleteLastSet(exerciseId),
+                              onSetUpdated: (updatedSet) =>
+                                  viewModel.updateSet(updatedSet),
+                              onExerciseNotesUpdated: (exerciseId, notes) =>
+                                  viewModel.updateExerciseNotes(
+                                    exerciseId,
+                                    notes,
+                                  ),
+                              onChangeExercise: (exerciseId) =>
+                                  _showChangeExerciseDialog(
+                                    context,
+                                    viewModel,
+                                    exerciseId,
+                                  ),
+                              onUpdateDefaultWeight: (exerciseId, setId) =>
+                                  viewModel.markExerciseForDefaultWeightUpdate(
+                                    exerciseId,
+                                    setId,
+                                  ),
                             );
                           },
                         ),
@@ -350,7 +371,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     }
   }
 
-  void _showWorkoutOptionsMenu(BuildContext context, WorkoutDetailViewModel viewModel) {
+  void _showWorkoutOptionsMenu(
+    BuildContext context,
+    WorkoutDetailViewModel viewModel,
+  ) {
     final isPastSession = viewModel.session?.endTime != null;
 
     showModalBottomSheet(
@@ -371,8 +395,13 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                   },
                 ),
               ListTile(
-                leading: const Icon(Icons.access_time, color: AppColors.primary),
-                title: Text(isPastSession ? 'See Start Time' : 'Mark Start Time'),
+                leading: const Icon(
+                  Icons.access_time,
+                  color: AppColors.primary,
+                ),
+                title: Text(
+                  isPastSession ? 'See Start Time' : 'Mark Start Time',
+                ),
                 onTap: () {
                   Navigator.pop(context);
                   if (isPastSession) {
@@ -389,7 +418,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     );
   }
 
-  void _showAddNotesDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
+  void _showAddNotesDialog(
+    BuildContext context,
+    WorkoutDetailViewModel viewModel,
+  ) {
     final TextEditingController notesController = TextEditingController(
       text: viewModel.session?.notes ?? '',
     );
@@ -433,7 +465,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     );
   }
 
-  void _showMarkStartTimeDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
+  void _showMarkStartTimeDialog(
+    BuildContext context,
+    WorkoutDetailViewModel viewModel,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -497,7 +532,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     );
   }
 
-  void _showSeeStartTimeDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
+  void _showSeeStartTimeDialog(
+    BuildContext context,
+    WorkoutDetailViewModel viewModel,
+  ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -526,14 +564,18 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          DateFormat('EEEE, MMMM d, yyyy').format(viewModel.session!.startTime),
+                          DateFormat(
+                            'EEEE, MMMM d, yyyy',
+                          ).format(viewModel.session!.startTime),
                           style: const TextStyle(
                             fontSize: 14,
                             color: AppColors.textSecondary,
                           ),
                         ),
                         Text(
-                          DateFormat('h:mm a').format(viewModel.session!.startTime),
+                          DateFormat(
+                            'h:mm a',
+                          ).format(viewModel.session!.startTime),
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -558,7 +600,11 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     );
   }
 
-  void _showChangeExerciseDialog(BuildContext context, WorkoutDetailViewModel viewModel, int exerciseId) async {
+  void _showChangeExerciseDialog(
+    BuildContext context,
+    WorkoutDetailViewModel viewModel,
+    int exerciseId,
+  ) async {
     // Load available exercises from catalog
     await viewModel.loadAvailableExercises();
 
@@ -586,7 +632,10 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                     itemBuilder: (context, index) {
                       final exercise = availableExercises[index];
                       return ListTile(
-                        leading: const Icon(Icons.fitness_center, color: AppColors.primary),
+                        leading: const Icon(
+                          Icons.fitness_center,
+                          color: AppColors.primary,
+                        ),
                         title: Text(exercise.name),
                         subtitle: Text(
                           'Default: ${exercise.defaultWorkingWeight ?? "Not set"} ${exercise.isUsingMetric ? "kg" : "lbs"}',
@@ -594,11 +643,16 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                         ),
                         onTap: () async {
                           Navigator.pop(context);
-                          await viewModel.swapExercise(exerciseId, exercise.id!);
+                          await viewModel.swapExercise(
+                            exerciseId,
+                            exercise.id!,
+                          );
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Exercise changed to ${exercise.name}'),
+                                content: Text(
+                                  'Exercise changed to ${exercise.name}',
+                                ),
                                 backgroundColor: AppColors.success,
                               ),
                             );
@@ -625,4 +679,3 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     super.dispose();
   }
 }
-

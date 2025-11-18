@@ -9,10 +9,8 @@ import '../../exercise/repositories/muscle_group_repository.dart';
 class ExerciseDetailScreen extends StatefulWidget {
   final int exerciseId;
 
-  const ExerciseDetailScreen({
-    Key? key,
-    required this.exerciseId,
-  }) : super(key: key);
+  const ExerciseDetailScreen({Key? key, required this.exerciseId})
+    : super(key: key);
 
   @override
   State<ExerciseDetailScreen> createState() => _ExerciseDetailScreenState();
@@ -20,8 +18,10 @@ class ExerciseDetailScreen extends StatefulWidget {
 
 class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   final ExerciseRepository _exerciseRepository = ExerciseRepository();
-  final ExerciseTypeRepository _exerciseTypeRepository = ExerciseTypeRepository();
-  final EquipmentTypeRepository _equipmentTypeRepository = EquipmentTypeRepository();
+  final ExerciseTypeRepository _exerciseTypeRepository =
+      ExerciseTypeRepository();
+  final EquipmentTypeRepository _equipmentTypeRepository =
+      EquipmentTypeRepository();
   final MuscleGroupRepository _muscleGroupRepository = MuscleGroupRepository();
 
   Exercise? _exercise;
@@ -39,11 +39,17 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
   Future<void> _loadExerciseDetails() async {
     try {
       final exercise = await _exerciseRepository.getById(widget.exerciseId);
-      
+
       if (exercise != null) {
-        final exerciseType = await _exerciseTypeRepository.getById(exercise.exerciseTypeId);
-        final equipmentType = await _equipmentTypeRepository.getById(exercise.equipmentTypeId);
-        final muscleGroup = await _muscleGroupRepository.getById(exercise.muscleGroupId);
+        final exerciseType = await _exerciseTypeRepository.getById(
+          exercise.exerciseTypeId,
+        );
+        final equipmentType = await _equipmentTypeRepository.getById(
+          exercise.equipmentTypeId,
+        );
+        final muscleGroup = await _muscleGroupRepository.getById(
+          exercise.muscleGroupId,
+        );
 
         setState(() {
           _exercise = exercise;
@@ -86,93 +92,98 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         ),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+          ? const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            )
           : _exercise == null
-              ? const Center(child: Text('Exercise not found'))
-              : SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Header card
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.05),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+          ? const Center(child: Text('Exercise not found'))
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header card
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.fitness_center,
-                              size: 64,
-                              color: AppColors.primary,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              _exercise!.name,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.textPrimary,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.fitness_center,
+                          size: 64,
+                          color: AppColors.primary,
                         ),
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      // Details section
-                      const Text(
-                        'Details',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+                        const SizedBox(height: 16),
+                        Text(
+                          _exercise!.name,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      const SizedBox(height: 12),
-
-                      _buildDetailCard(
-                        icon: Icons.category,
-                        label: 'Exercise Type',
-                        value: _exerciseType ?? 'Unknown',
-                      ),
-                      _buildDetailCard(
-                        icon: Icons.build,
-                        label: 'Equipment',
-                        value: _equipmentType ?? 'Unknown',
-                      ),
-                      _buildDetailCard(
-                        icon: Icons.fitness_center,
-                        label: 'Muscle Group',
-                        value: _muscleGroup ?? 'Unknown',
-                      ),
-                      if (_exercise!.defaultWorkingWeight != null)
-                        _buildDetailCard(
-                          icon: Icons.monitor_weight,
-                          label: 'Default Working Weight',
-                          value: '${_exercise!.defaultWorkingWeight} ${_exercise!.isUsingMetric ? "kg" : "lbs"}',
-                        ),
-                      _buildDetailCard(
-                        icon: Icons.straighten,
-                        label: 'Unit System',
-                        value: _exercise!.isUsingMetric ? 'Metric (kg)' : 'Imperial (lbs)',
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
+
+                  const SizedBox(height: 20),
+
+                  // Details section
+                  const Text(
+                    'Details',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  _buildDetailCard(
+                    icon: Icons.category,
+                    label: 'Exercise Type',
+                    value: _exerciseType ?? 'Unknown',
+                  ),
+                  _buildDetailCard(
+                    icon: Icons.build,
+                    label: 'Equipment',
+                    value: _equipmentType ?? 'Unknown',
+                  ),
+                  _buildDetailCard(
+                    icon: Icons.fitness_center,
+                    label: 'Muscle Group',
+                    value: _muscleGroup ?? 'Unknown',
+                  ),
+                  if (_exercise!.defaultWorkingWeight != null)
+                    _buildDetailCard(
+                      icon: Icons.monitor_weight,
+                      label: 'Default Working Weight',
+                      value:
+                          '${_exercise!.defaultWorkingWeight} ${_exercise!.isUsingMetric ? "kg" : "lbs"}',
+                    ),
+                  _buildDetailCard(
+                    icon: Icons.straighten,
+                    label: 'Unit System',
+                    value: _exercise!.isUsingMetric
+                        ? 'Metric (kg)'
+                        : 'Imperial (lbs)',
+                  ),
+                ],
+              ),
+            ),
     );
   }
 
@@ -235,4 +246,3 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
     );
   }
 }
-

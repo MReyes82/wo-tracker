@@ -3,7 +3,8 @@ import '../../workout/models/workout_session.dart';
 import '../../workout/repositories/workout_session_repository.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  final WorkoutSessionRepository _sessionRepository = WorkoutSessionRepository();
+  final WorkoutSessionRepository _sessionRepository =
+      WorkoutSessionRepository();
 
   List<WorkoutSession> _recentWorkouts = [];
   WorkoutSession? _todayWorkout;
@@ -31,7 +32,9 @@ class HomeViewModel extends ChangeNotifier {
       allSessions.sort((a, b) => a.startTime.compareTo(b.startTime));
 
       for (var session in allSessions) {
-        print('  - Session: id=${session.id}, title=${session.title}, startTime=${session.startTime}');
+        print(
+          '  - Session: id=${session.id}, title=${session.title}, startTime=${session.startTime}',
+        );
       }
 
       final now = DateTime.now();
@@ -39,30 +42,33 @@ class HomeViewModel extends ChangeNotifier {
       // Find the first upcoming incomplete workout session (including today)
       if (allSessions.isNotEmpty) {
         try {
-          _todayWorkout = allSessions.firstWhere(
-            (session) {
-              // Must be incomplete
-              if (session.endTime != null) return false;
+          _todayWorkout = allSessions.firstWhere((session) {
+            // Must be incomplete
+            if (session.endTime != null) return false;
 
-              // Check if it's today
-              final isToday = session.startTime.year == now.year &&
-                              session.startTime.month == now.month &&
-                              session.startTime.day == now.day;
+            // Check if it's today
+            final isToday =
+                session.startTime.year == now.year &&
+                session.startTime.month == now.month &&
+                session.startTime.day == now.day;
 
-              // Check if it's in the future
-              final isFuture = session.startTime.isAfter(now);
+            // Check if it's in the future
+            final isFuture = session.startTime.isAfter(now);
 
-              return isToday || isFuture;
-            },
+            return isToday || isFuture;
+          });
+          print(
+            'HomeViewModel: Found upcoming workout: ${_todayWorkout?.title} on ${_todayWorkout?.startTime}',
           );
-          print('HomeViewModel: Found upcoming workout: ${_todayWorkout?.title} on ${_todayWorkout?.startTime}');
         } catch (e) {
           // No upcoming workout, try to find the first incomplete workout from the past
           try {
             _todayWorkout = allSessions.firstWhere(
               (session) => session.endTime == null,
             );
-            print('HomeViewModel: Found incomplete workout from past: ${_todayWorkout?.title}');
+            print(
+              'HomeViewModel: Found incomplete workout from past: ${_todayWorkout?.title}',
+            );
           } catch (e2) {
             // No incomplete workouts at all
             print('HomeViewModel: No incomplete workouts found');
@@ -74,12 +80,18 @@ class HomeViewModel extends ChangeNotifier {
       }
 
       // Load recent workouts (exclude today's workout if found, and only show completed workouts)
-      final completedWorkouts = allSessions
-          .where((session) =>
-              session.id != _todayWorkout?.id && // Exclude today's workout
-              session.endTime != null) // Only show completed workouts
-          .toList()
-          ..sort((a, b) => b.startTime.compareTo(a.startTime)); // Sort descending (newest first)
+      final completedWorkouts =
+          allSessions
+              .where(
+                (session) =>
+                    session.id !=
+                        _todayWorkout?.id && // Exclude today's workout
+                    session.endTime != null,
+              ) // Only show completed workouts
+              .toList()
+            ..sort(
+              (a, b) => b.startTime.compareTo(a.startTime),
+            ); // Sort descending (newest first)
 
       // Store total count
       _totalCompletedWorkouts = completedWorkouts.length;
@@ -87,7 +99,9 @@ class HomeViewModel extends ChangeNotifier {
       // Take only the first 5 for display
       _recentWorkouts = completedWorkouts.take(5).toList();
 
-      print('HomeViewModel: ${_recentWorkouts.length} recent workouts (excluding today)');
+      print(
+        'HomeViewModel: ${_recentWorkouts.length} recent workouts (excluding today)',
+      );
 
       _isLoading = false;
       notifyListeners();
@@ -106,4 +120,3 @@ class HomeViewModel extends ChangeNotifier {
     await loadHomeData();
   }
 }
-

@@ -50,10 +50,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
             const SizedBox(height: 8),
             const Text(
               'Manage your catalogs',
-              style: TextStyle(
-                fontSize: 16,
-                color: AppColors.textSecondary,
-              ),
+              style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 24),
 
@@ -63,13 +60,11 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
               iconColor: Colors.blue,
               title: 'Exercise Types',
               description: 'Compound, Isolation, etc.',
-              onTap: () => _showAddDialog(
-                context,
-                'Exercise Type',
-                (name) async {
-                  await _exerciseTypeRepository.create(ExerciseType(name: name));
-                },
-              ),
+              onTap: () => _showAddDialog(context, 'Exercise Type', (
+                name,
+              ) async {
+                await _exerciseTypeRepository.create(ExerciseType(name: name));
+              }),
             ),
             const SizedBox(height: 12),
 
@@ -79,13 +74,12 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
               iconColor: Colors.green,
               title: 'Equipment Types',
               description: 'Barbell, Dumbbell, Machine, etc.',
-              onTap: () => _showAddDialog(
-                context,
-                'Equipment Type',
-                (name) async {
-                  await _equipmentTypeRepository.create(EquipmentType(name: name));
-                },
-              ),
+              onTap: () =>
+                  _showAddDialog(context, 'Equipment Type', (name) async {
+                    await _equipmentTypeRepository.create(
+                      EquipmentType(name: name),
+                    );
+                  }),
             ),
             const SizedBox(height: 12),
 
@@ -95,13 +89,11 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
               iconColor: Colors.orange,
               title: 'Muscle Groups',
               description: 'Chest, Back, Legs, etc.',
-              onTap: () => _showAddDialog(
-                context,
-                'Muscle Group',
-                (name) async {
-                  await _muscleGroupRepository.create(MuscleGroup(name: name));
-                },
-              ),
+              onTap: () => _showAddDialog(context, 'Muscle Group', (
+                name,
+              ) async {
+                await _muscleGroupRepository.create(MuscleGroup(name: name));
+              }),
             ),
             const SizedBox(height: 12),
 
@@ -111,13 +103,11 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
               iconColor: Colors.purple,
               title: 'Workout Types',
               description: 'Push, Pull, Legs, etc.',
-              onTap: () => _showAddDialog(
-                context,
-                'Workout Type',
-                (name) async {
-                  await _workoutTypeRepository.create(WorkoutType(name: name));
-                },
-              ),
+              onTap: () => _showAddDialog(context, 'Workout Type', (
+                name,
+              ) async {
+                await _workoutTypeRepository.create(WorkoutType(name: name));
+              }),
             ),
           ],
         ),
@@ -156,7 +146,10 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: const BorderSide(
+                    color: AppColors.primary,
+                    width: 2,
+                  ),
                 ),
               ),
               validator: (value) {
@@ -250,14 +243,10 @@ class _CatalogCard extends StatelessWidget {
                 color: iconColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(
-                icon,
-                color: iconColor,
-                size: 24,
-              ),
+              child: Icon(icon, color: iconColor, size: 24),
             ),
             const SizedBox(width: 12),
-            
+
             // Text content
             Expanded(
               child: Column(
@@ -282,7 +271,7 @@ class _CatalogCard extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             // Add icon
             const Icon(
               Icons.add_circle_outline,
@@ -295,4 +284,3 @@ class _CatalogCard extends StatelessWidget {
     );
   }
 }
-

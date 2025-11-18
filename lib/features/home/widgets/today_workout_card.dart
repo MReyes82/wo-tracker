@@ -7,11 +7,8 @@ class TodayWorkoutCard extends StatelessWidget {
   final WorkoutSession? workout;
   final VoidCallback? onTap;
 
-  const TodayWorkoutCard({
-    Key? key,
-    this.workout,
-    this.onTap,
-  }) : super(key: key);
+  const TodayWorkoutCard({Key? key, this.workout, this.onTap})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +36,7 @@ class TodayWorkoutCard extends StatelessWidget {
             const SizedBox(height: 12),
             const Text(
               'No workout scheduled for today',
-              style: TextStyle(
-                fontSize: 16,
-                color: AppColors.textSecondary,
-              ),
+              style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -50,7 +44,10 @@ class TodayWorkoutCard extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -86,11 +83,7 @@ class TodayWorkoutCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
-                  Icons.today,
-                  color: Colors.white,
-                  size: 24,
-                ),
+                const Icon(Icons.today, color: Colors.white, size: 24),
                 const SizedBox(width: 8),
                 Text(
                   'Today\'s Workout',
@@ -114,18 +107,11 @@ class TodayWorkoutCard extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(
-                  Icons.access_time,
-                  color: Colors.white70,
-                  size: 16,
-                ),
+                const Icon(Icons.access_time, color: Colors.white70, size: 16),
                 const SizedBox(width: 4),
                 Text(
                   DateFormat('h:mm a').format(workout!.startTime),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
+                  style: const TextStyle(fontSize: 14, color: Colors.white70),
                 ),
               ],
             ),
@@ -134,7 +120,10 @@ class TodayWorkoutCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
@@ -149,11 +138,7 @@ class TodayWorkoutCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 4),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                        size: 18,
-                      ),
+                      Icon(Icons.arrow_forward, color: Colors.white, size: 18),
                     ],
                   ),
                 ),
@@ -165,4 +150,3 @@ class TodayWorkoutCard extends StatelessWidget {
     );
   }
 }
-

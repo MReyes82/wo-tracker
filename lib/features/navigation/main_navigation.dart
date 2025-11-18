@@ -6,7 +6,8 @@ import '../register/views/register_new_screen.dart';
 import '../history/views/records_screen.dart';
 
 // Global key to access MainNavigation state from anywhere
-final GlobalKey<_MainNavigationState> mainNavigationKey = GlobalKey<_MainNavigationState>();
+final GlobalKey<_MainNavigationState> mainNavigationKey =
+    GlobalKey<_MainNavigationState>();
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -57,14 +58,9 @@ class _MainNavigationState extends State<MainNavigation> {
         backgroundColor: Colors.white,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textSecondary,
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle_outline),
             label: 'Register new',
@@ -82,4 +78,3 @@ class _MainNavigationState extends State<MainNavigation> {
     );
   }
 }
-

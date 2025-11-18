@@ -74,7 +74,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   void _updateExerciseCount(int count) {
     setState(() {
       _numberOfExercises = count;
-      
+
       // Adjust the exercise selections list
       if (_exerciseSelections.length < count) {
         // Add new selections
@@ -123,7 +123,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       if (_exerciseSelections[i].plannedSets < 1) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Please select sets for the ${_getOrdinal(i + 1)} exercise'),
+            content: Text(
+              'Please select sets for the ${_getOrdinal(i + 1)} exercise',
+            ),
             backgroundColor: AppColors.error,
           ),
         );
@@ -209,9 +211,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       ),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             )
           : SingleChildScrollView(
               child: Padding(
@@ -234,15 +234,22 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.borderColor),
+                            borderSide: const BorderSide(
+                              color: AppColors.borderColor,
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.borderColor),
+                            borderSide: const BorderSide(
+                              color: AppColors.borderColor,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                            borderSide: const BorderSide(
+                              color: AppColors.primary,
+                              width: 2,
+                            ),
                           ),
                         ),
                         validator: (value) {
@@ -253,7 +260,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                         },
                         onChanged: (value) {
                           setState(() {
-                            _workoutName = value.trim().isNotEmpty ? value.trim() : null;
+                            _workoutName = value.trim().isNotEmpty
+                                ? value.trim()
+                                : null;
                           });
                         },
                       ),
@@ -269,15 +278,22 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                              borderSide: const BorderSide(
+                                color: AppColors.primary,
+                                width: 2,
+                              ),
                             ),
                           ),
                           hint: const Text('Select workout type'),
@@ -316,7 +332,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Exercises: $_numberOfExercises',
@@ -327,9 +344,14 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 6,
+                                    ),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(alpha: 0.1),
+                                      color: AppColors.primary.withValues(
+                                        alpha: 0.1,
+                                      ),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
@@ -371,7 +393,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                         const SizedBox(height: 24),
                         _buildSectionTitle('Select Exercises'),
                         const SizedBox(height: 16),
-                        
+
                         ...List.generate(_exerciseSelections.length, (index) {
                           return _buildExerciseSelector(index);
                         }),
@@ -443,7 +465,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          
+
           // Exercise Dropdown
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
@@ -451,7 +473,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: AppColors.background,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(color: AppColors.borderColor),
@@ -462,7 +487,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  borderSide: const BorderSide(
+                    color: AppColors.primary,
+                    width: 2,
+                  ),
                 ),
               ),
               hint: const Text('Choose exercise'),
@@ -500,7 +528,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                       ),
                       const SizedBox(height: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.background,
                           borderRadius: BorderRadius.circular(8),
@@ -515,7 +546,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                               onPressed: selection.plannedSets > 1
                                   ? () {
                                       setState(() {
-                                        _exerciseSelections[index].plannedSets--;
+                                        _exerciseSelections[index]
+                                            .plannedSets--;
                                       });
                                     }
                                   : null,
@@ -544,7 +576,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                   ),
                 ),
                 const SizedBox(width: 16),
-                
+
                 // Use Default Weight Checkbox
                 Expanded(
                   child: Column(
@@ -560,7 +592,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                       ),
                       const SizedBox(height: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.background,
                           borderRadius: BorderRadius.circular(8),
@@ -576,7 +611,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                                     : 'Not set',
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: selectedExercise?.defaultWorkingWeight != null
+                                  color:
+                                      selectedExercise?.defaultWorkingWeight !=
+                                          null
                                       ? AppColors.textPrimary
                                       : AppColors.textSecondary,
                                 ),
@@ -585,10 +622,13 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                             Checkbox(
                               value: selection.useDefaultWeight,
                               activeColor: AppColors.primary,
-                              onChanged: selectedExercise?.defaultWorkingWeight != null
+                              onChanged:
+                                  selectedExercise?.defaultWorkingWeight != null
                                   ? (value) {
                                       setState(() {
-                                        _exerciseSelections[index].useDefaultWeight = value ?? false;
+                                        _exerciseSelections[index]
+                                                .useDefaultWeight =
+                                            value ?? false;
                                       });
                                     }
                                   : null,
@@ -630,4 +670,3 @@ class _ExerciseSelection {
     this.useDefaultWeight = false,
   });
 }
-

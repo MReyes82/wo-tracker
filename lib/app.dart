@@ -7,7 +7,6 @@ import 'features/home/view_models/home_view_model.dart';
 class WoTrackerApp extends StatelessWidget {
   const WoTrackerApp({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,4 +40,3 @@ class WoTrackerApp extends StatelessWidget {
     );
   }
 }
-

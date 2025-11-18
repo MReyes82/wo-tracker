@@ -61,22 +61,24 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
   @override
   Widget build(BuildContext context) {
-    final muscleColor = _getMuscleGroupColor(widget.exerciseData.muscleGroupName);
+    final muscleColor = _getMuscleGroupColor(
+      widget.exerciseData.muscleGroupName,
+    );
     final muscleIcon = _getMuscleGroupIcon(widget.exerciseData.muscleGroupName);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -84,12 +86,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  color: muscleColor,
-                  width: 4,
-                ),
-              ),
+              border: Border(left: BorderSide(color: muscleColor, width: 4)),
             ),
             child: Row(
               children: [
@@ -103,11 +100,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                         color: muscleColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(
-                        muscleIcon,
-                        color: muscleColor,
-                        size: 24,
-                      ),
+                      child: Icon(muscleIcon, color: muscleColor, size: 24),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -161,7 +154,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
           ),
 
           // Notes section (if exists)
-          if (widget.exerciseData.exercise.notes != null && widget.exerciseData.exercise.notes!.isNotEmpty)
+          if (widget.exerciseData.exercise.notes != null &&
+              widget.exerciseData.exercise.notes!.isNotEmpty)
             InkWell(
               onTap: () {
                 setState(() {
@@ -169,12 +163,19 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 });
               },
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.yellow.withValues(alpha: 0.15),
                   border: Border(
-                    top: BorderSide(color: AppColors.borderColor.withValues(alpha: 0.5)),
-                    bottom: BorderSide(color: AppColors.borderColor.withValues(alpha: 0.5)),
+                    top: BorderSide(
+                      color: AppColors.borderColor.withValues(alpha: 0.5),
+                    ),
+                    bottom: BorderSide(
+                      color: AppColors.borderColor.withValues(alpha: 0.5),
+                    ),
                   ),
                 ),
                 child: Row(
@@ -193,12 +194,16 @@ class _ExerciseCardState extends State<ExerciseCard> {
                           color: AppColors.textPrimary,
                         ),
                         maxLines: _isNotesExpanded ? null : 2,
-                        overflow: _isNotesExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                        overflow: _isNotesExpanded
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
                       ),
                     ),
                     if (widget.exerciseData.exercise.notes!.length > 50)
                       Icon(
-                        _isNotesExpanded ? Icons.expand_less : Icons.expand_more,
+                        _isNotesExpanded
+                            ? Icons.expand_less
+                            : Icons.expand_more,
                         color: Colors.orange,
                       ),
                   ],
@@ -223,13 +228,15 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 const SizedBox(height: 12),
 
                 // Sets
-                ...widget.exerciseData.sets.map((set) => ExerciseSetItem(
-                  set: set,
-                  isEditable: widget.isEditable,
-                  isUsingMetric: widget.exerciseData.isUsingMetric,
-                  onSetUpdated: widget.onSetUpdated,
-                  onUpdateDefaultWeight: widget.onUpdateDefaultWeight,
-                )),
+                ...widget.exerciseData.sets.map(
+                  (set) => ExerciseSetItem(
+                    set: set,
+                    isEditable: widget.isEditable,
+                    isUsingMetric: widget.exerciseData.isUsingMetric,
+                    onSetUpdated: widget.onSetUpdated,
+                    onUpdateDefaultWeight: widget.onUpdateDefaultWeight,
+                  ),
+                ),
 
                 // Empty state
                 if (widget.exerciseData.sets.isEmpty)
@@ -246,9 +253,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                     child: const Center(
                       child: Text(
                         'No sets logged yet',
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                        ),
+                        style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
                   ),
@@ -260,7 +265,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                          onPressed: () => widget.onAddSet(widget.exerciseData.exercise.id!),
+                          onPressed: () =>
+                              widget.onAddSet(widget.exerciseData.exercise.id!),
                           icon: const Icon(Icons.add),
                           label: const Text('Add Set'),
                           style: OutlinedButton.styleFrom(
@@ -274,7 +280,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: OutlinedButton.icon(
-                            onPressed: () => widget.onDeleteSet(widget.exerciseData.exercise.id!),
+                            onPressed: () => widget.onDeleteSet(
+                              widget.exerciseData.exercise.id!,
+                            ),
                             icon: const Icon(Icons.remove),
                             label: const Text('Delete Last'),
                             style: OutlinedButton.styleFrom(
@@ -317,7 +325,10 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.swap_horiz, color: AppColors.primary),
+                  leading: const Icon(
+                    Icons.swap_horiz,
+                    color: AppColors.primary,
+                  ),
                   title: const Text('Change Exercise'),
                   onTap: () {
                     Navigator.pop(context);
@@ -331,7 +342,10 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 if (widget.exerciseData.exercise.exerciseId != null &&
                     widget.exerciseData.exercise.templateExerciseId != null)
                   ListTile(
-                    leading: const Icon(Icons.history, color: AppColors.primary),
+                    leading: const Icon(
+                      Icons.history,
+                      color: AppColors.primary,
+                    ),
                     title: const Text('See Original Planned Exercise'),
                     onTap: () {
                       Navigator.pop(context);
@@ -424,12 +438,14 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
       // Get the template exercise
       final templateExercise = await templateExerciseRepo.getById(
-        widget.exerciseData.exercise.templateExerciseId!
+        widget.exerciseData.exercise.templateExerciseId!,
       );
 
       if (templateExercise != null) {
         // Get the actual exercise name from catalog
-        final exercise = await exerciseRepo.getById(templateExercise.exerciseId);
+        final exercise = await exerciseRepo.getById(
+          templateExercise.exerciseId,
+        );
         if (exercise != null) {
           originalExerciseName = exercise.name;
         }
@@ -441,7 +457,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
     if (!context.mounted) return;
 
     // Check if exercise was actually swapped (names differ)
-    var wasSwapped = originalExerciseName != widget.exerciseData.exercise.exerciseName;
+    var wasSwapped =
+        originalExerciseName != widget.exerciseData.exercise.exerciseName;
 
     // Show dialog with actual exercise name
     showDialog(
@@ -548,4 +565,3 @@ class _ExerciseCardState extends State<ExerciseCard> {
     );
   }
 }
-

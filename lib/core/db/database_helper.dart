@@ -281,4 +281,3 @@ class DatabaseHelper {
     print('✓ Database reset successfully');
   }
 }
-
