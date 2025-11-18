@@ -5,6 +5,9 @@ import '../settings/views/settings_screen.dart';
 import '../register/views/register_new_screen.dart';
 import '../history/views/records_screen.dart';
 
+// Global key to access MainNavigation state from anywhere
+final GlobalKey<_MainNavigationState> mainNavigationKey = GlobalKey<_MainNavigationState>();
+
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
 
@@ -14,6 +17,15 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
+
+  // Method to switch tabs from external widgets
+  void switchTab(int index) {
+    if (index >= 0 && index < 4) {
+      setState(() {
+        _currentIndex = index;
+      });
+    }
+  }
 
   Widget _getScreen(int index) {
     switch (index) {

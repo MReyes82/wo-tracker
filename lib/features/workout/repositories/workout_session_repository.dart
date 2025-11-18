@@ -68,6 +68,19 @@ class WorkoutSessionRepository {
     });
   }
 
+  Future<List<WorkoutSession>> getSessionsByMesocycle(int mesocycleId) async {
+    final db = await _dbHelper.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'workout_session',
+      where: 'mesocycle_id = ?',
+      whereArgs: [mesocycleId],
+      orderBy: 'start_time ASC',
+    );
+    return List.generate(maps.length, (i) {
+      return WorkoutSession.fromMap(maps[i]);
+    });
+  }
+
   Future<int> update(WorkoutSession session) async {
     final db = await _dbHelper.database;
     return await db.update(

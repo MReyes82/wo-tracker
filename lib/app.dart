@@ -36,7 +36,7 @@ class WoTrackerApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const MainNavigation(),
+        home: MainNavigation(key: mainNavigationKey),
       ),
     );
   }

@@ -9,11 +9,13 @@ class HomeViewModel extends ChangeNotifier {
   WorkoutSession? _todayWorkout;
   bool _isLoading = false;
   String? _error;
+  int _totalCompletedWorkouts = 0;
 
   List<WorkoutSession> get recentWorkouts => _recentWorkouts;
   WorkoutSession? get todayWorkout => _todayWorkout;
   bool get isLoading => _isLoading;
   String? get error => _error;
+  int get totalCompletedWorkouts => _totalCompletedWorkouts;
 
   Future<void> loadHomeData() async {
     _isLoading = true;
@@ -72,17 +74,18 @@ class HomeViewModel extends ChangeNotifier {
       }
 
       // Load recent workouts (exclude today's workout if found, and only show completed workouts)
-      _recentWorkouts = allSessions
+      final completedWorkouts = allSessions
           .where((session) =>
               session.id != _todayWorkout?.id && // Exclude today's workout
               session.endTime != null) // Only show completed workouts
           .toList()
           ..sort((a, b) => b.startTime.compareTo(a.startTime)); // Sort descending (newest first)
 
-      // Take only the first 5
-      if (_recentWorkouts.length > 5) {
-        _recentWorkouts = _recentWorkouts.take(5).toList();
-      }
+      // Store total count
+      _totalCompletedWorkouts = completedWorkouts.length;
+
+      // Take only the first 5 for display
+      _recentWorkouts = completedWorkouts.take(5).toList();
 
       print('HomeViewModel: ${_recentWorkouts.length} recent workouts (excluding today)');
 

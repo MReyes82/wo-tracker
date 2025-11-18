@@ -31,12 +31,23 @@ class _RecordsScreenState extends State<RecordsScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   late RecordsViewModel _viewModel;
+  bool _isFirstBuild = true;
 
   @override
   void initState() {
     super.initState();
     _viewModel = RecordsViewModel();
     _loadData();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Reload data when screen becomes visible again (but not on first build)
+    if (!_isFirstBuild) {
+      _loadData();
+    }
+    _isFirstBuild = false;
   }
 
   void _loadData() {

@@ -5,6 +5,7 @@ import '../view_models/home_view_model.dart';
 import '../widgets/today_workout_card.dart';
 import '../widgets/workout_card.dart';
 import '../../workout/views/workout_detail_screen.dart';
+import '../../navigation/main_navigation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -100,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           isEditable: true,
                         );
                       } else {
-                        // Navigate to add workout screen
-                        // TODO: Implement navigation to add workout
+                        // Navigate to Register new screen to plan a workout
+                        _navigateToRegisterNew();
                       }
                     },
                   ),
@@ -179,8 +180,27 @@ class _HomeScreenState extends State<HomeScreen> {
             Center(
               child: TextButton(
                 onPressed: () {
-                  // Navigate to history screen
-                  // TODO: Implement navigation to history
+                  if (viewModel.totalCompletedWorkouts <= 5) {
+                    // Show dialog if not enough workouts
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('No More Workouts'),
+                        content: Text(
+                          'You have completed ${viewModel.totalCompletedWorkouts} workout${viewModel.totalCompletedWorkouts == 1 ? '' : 's'}. Keep training to see more history!',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    // Navigate to Records screen (History tab with Sessions selected)
+                    _navigateToRecords();
+                  }
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.primary,
@@ -225,6 +245,16 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) {
       context.read<HomeViewModel>().loadHomeData();
     }
+  }
+
+  void _navigateToRegisterNew() {
+    // Switch to Register new tab (index 1)
+    mainNavigationKey.currentState?.switchTab(1);
+  }
+
+  void _navigateToRecords() {
+    // Switch to Records/History tab (index 2)
+    mainNavigationKey.currentState?.switchTab(2);
   }
 }
 
