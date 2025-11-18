@@ -25,112 +25,115 @@ class RegisterNewScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            const Text(
-              'What would you like to create?',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 24),
+              const Text(
+                'What would you like to create?',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 32),
-            
-            // Add Exercise Card
-            _RegisterCard(
-              icon: Icons.fitness_center,
-              iconColor: Colors.blue,
-              title: 'Add Exercise',
-              description: 'Create a new exercise for your catalog',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NewExerciseScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
-            
-            // Add Workout Card
-            _RegisterCard(
-              icon: Icons.assignment,
-              iconColor: Colors.green,
-              title: 'Add Workout',
-              description: 'Build a workout with exercises',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NewWorkoutScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
-            
-            // Add Mesocycle Card
-            _RegisterCard(
-              icon: Icons.calendar_month,
-              iconColor: Colors.orange,
-              title: 'Add Mesocycle',
-              description: 'Plan a training cycle with multiple workouts',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NewMesocycleScreen(),
-                  ),
-                );
-              },
-            ),
+              const SizedBox(height: 32),
 
-            const SizedBox(height: 32),
+              // Add Exercise Card
+              _RegisterCard(
+                icon: Icons.fitness_center,
+                iconColor: Colors.blue,
+                title: 'Add Exercise',
+                description: 'Create a new exercise for your catalog',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewExerciseScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
 
-            // Divider
-            Row(
-              children: [
-                const Expanded(child: Divider()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'MANAGE CATALOGS',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondary.withValues(alpha: 0.6),
+              // Add Workout Card
+              _RegisterCard(
+                icon: Icons.assignment,
+                iconColor: Colors.green,
+                title: 'Add Workout',
+                description: 'Build a workout with exercises',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewWorkoutScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Add Mesocycle Card
+              _RegisterCard(
+                icon: Icons.calendar_month,
+                iconColor: Colors.orange,
+                title: 'Add Mesocycle',
+                description: 'Plan a training cycle with multiple workouts',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewMesocycleScreen(),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 32),
+
+              // Divider
+              Row(
+                children: [
+                  const Expanded(child: Divider()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      'MANAGE CATALOGS',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary.withValues(alpha: 0.6),
+                      ),
                     ),
                   ),
-                ),
-                const Expanded(child: Divider()),
-              ],
-            ),
+                  const Expanded(child: Divider()),
+                ],
+              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // Manage Catalogs Card
-            _RegisterCard(
-              icon: Icons.settings,
-              iconColor: Colors.grey,
-              title: 'Manage Catalogs',
-              description: 'Add exercise types, equipment, muscle groups, etc.',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ManageCatalogsScreen(),
-                  ),
-                );
-              },
-            ),
-          ],
+              // Manage Catalogs Card
+              _RegisterCard(
+                icon: Icons.settings,
+                iconColor: Colors.grey,
+                title: 'Manage Catalogs',
+                description:
+                    'Add exercise types, equipment, muscle groups, etc.',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageCatalogsScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -181,14 +184,10 @@ class _RegisterCard extends StatelessWidget {
                 color: iconColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(
-                icon,
-                color: iconColor,
-                size: 28,
-              ),
+              child: Icon(icon, color: iconColor, size: 28),
             ),
             const SizedBox(width: 16),
-            
+
             // Text content
             Expanded(
               child: Column(
@@ -213,7 +212,7 @@ class _RegisterCard extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             // Arrow icon
             const Icon(
               Icons.arrow_forward_ios,
@@ -226,4 +225,3 @@ class _RegisterCard extends StatelessWidget {
     );
   }
 }
-
