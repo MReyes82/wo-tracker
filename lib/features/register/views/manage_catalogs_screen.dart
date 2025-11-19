@@ -25,6 +25,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -42,23 +43,24 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 8),
-            const Text(
-              'Manage your catalogs',
-              style: TextStyle(
-                fontSize: 16,
-                color: AppColors.textSecondary,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 8),
+              const Text(
+                'Manage your catalogs',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSecondary,
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-            // Exercise Type Card
-            _CatalogCard(
+              // Exercise Type Card
+              _CatalogCard(
               icon: Icons.category,
               iconColor: Colors.blue,
               title: 'Exercise Types',
@@ -121,6 +123,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
