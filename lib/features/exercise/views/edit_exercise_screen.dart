@@ -1,0 +1,493 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../../core/themes/app_colors.dart';
+import '../repositories/exercise_type_repository.dart';
+import '../repositories/equipment_type_repository.dart';
+import '../repositories/muscle_group_repository.dart';
+import '../repositories/exercise_repository.dart';
+import '../models/exercise_type.dart';
+import '../models/equipment_type.dart';
+import '../models/muscle_group.dart';
+import '../models/exercise.dart';
+
+class EditExerciseScreen extends StatefulWidget {
+  final int exerciseId;
+
+  const EditExerciseScreen({
+    Key? key,
+    required this.exerciseId,
+  }) : super(key: key);
+
+  @override
+  State<EditExerciseScreen> createState() => _EditExerciseScreenState();
+}
+
+class _EditExerciseScreenState extends State<EditExerciseScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _exerciseNameController = TextEditingController();
+  final _defaultWeightController = TextEditingController();
+
+  // Repositories
+  final _exerciseTypeRepository = ExerciseTypeRepository();
+  final _equipmentTypeRepository = EquipmentTypeRepository();
+  final _muscleGroupRepository = MuscleGroupRepository();
+  final _exerciseRepository = ExerciseRepository();
+
+  // Form state
+  Exercise? _exercise;
+  String? _exerciseName;
+  int? _selectedExerciseTypeId;
+  int? _selectedEquipmentTypeId;
+  int? _selectedMuscleGroupId;
+  double? _defaultWeight;
+  bool _isUsingMetric = true;
+
+  // Catalog data
+  List<ExerciseType> _exerciseTypes = [];
+  List<EquipmentType> _equipmentTypes = [];
+  List<MuscleGroup> _muscleGroups = [];
+
+  bool _isLoading = true;
+  bool _isSaving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  @override
+  void dispose() {
+    _exerciseNameController.dispose();
+    _defaultWeightController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadData() async {
+    try {
+      // Load catalogs
+      final exerciseTypes = await _exerciseTypeRepository.getAll();
+      final equipmentTypes = await _equipmentTypeRepository.getAll();
+      final muscleGroups = await _muscleGroupRepository.getAll();
+
+      // Load exercise data
+      final exercise = await _exerciseRepository.getById(widget.exerciseId);
+
+      if (exercise != null) {
+        _exerciseNameController.text = exercise.name;
+        _defaultWeightController.text = exercise.defaultWorkingWeight?.toString() ?? '';
+
+        setState(() {
+          _exercise = exercise;
+          _exerciseTypes = exerciseTypes;
+          _equipmentTypes = equipmentTypes;
+          _muscleGroups = muscleGroups;
+          _exerciseName = exercise.name;
+          _selectedExerciseTypeId = exercise.exerciseTypeId;
+          _selectedEquipmentTypeId = exercise.equipmentTypeId;
+          _selectedMuscleGroupId = exercise.muscleGroupId;
+          _defaultWeight = exercise.defaultWorkingWeight;
+          _isUsingMetric = exercise.isUsingMetric;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      print('Error loading data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error loading exercise: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _updateExercise() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (_selectedMuscleGroupId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a muscle group'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSaving = true;
+    });
+
+    try {
+      final updatedExercise = Exercise(
+        id: widget.exerciseId,
+        name: _exerciseName!,
+        exerciseTypeId: _selectedExerciseTypeId!,
+        equipmentTypeId: _selectedEquipmentTypeId!,
+        muscleGroupId: _selectedMuscleGroupId!,
+        defaultWorkingWeight: _defaultWeight,
+        isUsingMetric: _isUsingMetric,
+        createdAt: _exercise!.createdAt,
+        updatedAt: DateTime.now(),
+      );
+
+      await _exerciseRepository.update(updatedExercise);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Exercise updated successfully!'),
+            backgroundColor: AppColors.success,
+          ),
+        );
+        Navigator.pop(context, true); // Return true to indicate success
+      }
+    } catch (e) {
+      print('Error updating exercise: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error updating exercise: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Edit Exercise',
+          style: TextStyle(
+            color: AppColors.textPrimary,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.primary,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 8),
+
+                      // Exercise Name Field
+                      _buildSectionTitle('Exercise Name'),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _exerciseNameController,
+                        decoration: InputDecoration(
+                          hintText: 'Enter exercise name',
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Please enter an exercise name';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _exerciseName = value.trim().isNotEmpty ? value.trim() : null;
+                          });
+                        },
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Exercise Type Dropdown
+                      _buildSectionTitle('Exercise Type'),
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<int>(
+                        value: _selectedExerciseTypeId,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                          ),
+                        ),
+                        hint: const Text('Select exercise type'),
+                        items: _exerciseTypes.map((type) {
+                          return DropdownMenuItem<int>(
+                            value: type.id!,
+                            child: Text(type.name),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select an exercise type';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedExerciseTypeId = value;
+                          });
+                        },
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Equipment Type Dropdown
+                      _buildSectionTitle('Equipment Type'),
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<int>(
+                        value: _selectedEquipmentTypeId,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                          ),
+                        ),
+                        hint: const Text('Select equipment type'),
+                        items: _equipmentTypes.map((type) {
+                          return DropdownMenuItem<int>(
+                            value: type.id!,
+                            child: Text(type.name),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select an equipment type';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedEquipmentTypeId = value;
+                          });
+                        },
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Muscle Group Dropdown
+                      _buildSectionTitle('Muscle Group'),
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<int>(
+                        value: _selectedMuscleGroupId,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                          ),
+                        ),
+                        hint: const Text('Select muscle group'),
+                        items: _muscleGroups.map((group) {
+                          return DropdownMenuItem<int>(
+                            value: group.id!,
+                            child: Text(group.name),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedMuscleGroupId = value;
+                          });
+                        },
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Default Weight Field
+                      _buildSectionTitle('Default Working Weight (Optional)'),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: _defaultWeightController,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                              ],
+                              decoration: InputDecoration(
+                                hintText: 'Enter weight',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(color: AppColors.borderColor),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(color: AppColors.borderColor),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _defaultWeight = double.tryParse(value);
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Radio<bool>(
+                                    value: true,
+                                    groupValue: _isUsingMetric,
+                                    activeColor: AppColors.primary,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _isUsingMetric = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('kg'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio<bool>(
+                                    value: false,
+                                    groupValue: _isUsingMetric,
+                                    activeColor: AppColors.primary,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _isUsingMetric = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('lbs'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 32),
+
+                      // Update Button
+                      ElevatedButton(
+                        onPressed: _isSaving ? null : _updateExercise,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: _isSaving
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(
+                                'Update Exercise',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                      ),
+
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      ),
+    );
+  }
+}
+

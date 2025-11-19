@@ -8,9 +8,13 @@ import '../../workout/models/workout_template.dart';
 import '../../mesocycle/models/mesocycle.dart';
 import '../../workout/models/workout_session.dart';
 import '../../workout/views/workout_detail_screen.dart';
+import '../../workout/views/workout_detail_screen.dart';
 import '../../exercise/views/exercise_detail_screen.dart';
+import '../../exercise/views/edit_exercise_screen.dart';
 import '../../workout/views/workout_template_detail_screen.dart';
+import '../../workout/views/edit_workout_screen.dart';
 import '../../mesocycle/views/mesocycle_detail_screen.dart';
+import '../../mesocycle/views/edit_mesocycle_screen.dart';
 
 enum RecordType {
   exercises,
@@ -341,6 +345,28 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
           ),
           TextButton(
+            onPressed: () async {
+              if (exercise.id != null) {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditExerciseScreen(
+                      exerciseId: exercise.id!,
+                    ),
+                  ),
+                );
+                // Reload data if edit was successful
+                if (result == true) {
+                  _loadData();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: const Text('Edit'),
+          ),
+          TextButton(
             onPressed: () {
               if (exercise.id != null) {
                 Navigator.push(
@@ -454,6 +480,28 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
           ),
           TextButton(
+            onPressed: () async {
+              if (workout.id != null) {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditWorkoutScreen(
+                      workoutId: workout.id!,
+                    ),
+                  ),
+                );
+                // Reload data if edit was successful
+                if (result == true) {
+                  _loadData();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: const Text('Edit'),
+          ),
+          TextButton(
             onPressed: () {
               if (workout.id != null) {
                 Navigator.push(
@@ -565,6 +613,28 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 ),
               ],
             ),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (mesocycle.id != null) {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditMesocycleScreen(
+                      mesocycleId: mesocycle.id!,
+                    ),
+                  ),
+                );
+                // Reload data if edit was successful
+                if (result == true) {
+                  _loadData();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: const Text('Edit'),
           ),
           TextButton(
             onPressed: () {
