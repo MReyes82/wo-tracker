@@ -1125,5 +1125,170 @@
   "exerciseChangedToSuitNeeds": "Exercise was changed to better suit workout needs",
   "@exerciseChangedToSuitNeeds": {
     "description": "Info message about exercise swap"
+  },
+
+  "reps": "Reps",
+  "@reps": {
+    "description": "Label for reps field"
+  },
+
+  "weightWithUnit": "Weight ({unit})",
+  "@weightWithUnit": {
+    "description": "Label for weight field with unit",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+
+  "addSetNotes": "Add Set Notes",
+  "@addSetNotes": {
+    "description": "Menu option to add notes to set"
+  },
+
+  "seeSetNotes": "See Set Notes",
+  "@seeSetNotes": {
+    "description": "Menu option to view set notes"
+  },
+
+  "addEffortLevel": "Add Effort Level",
+  "@addEffortLevel": {
+    "description": "Menu option to add effort level"
+  },
+
+  "seeEffortLevel": "See Effort Level",
+  "@seeEffortLevel": {
+    "description": "Menu option to view effort level"
+  },
+
+  "updateExerciseDefaultWeight": "Update Exercise Default Weight",
+  "@updateExerciseDefaultWeight": {
+    "description": "Menu option to update default weight"
+  },
+
+  "setNotes": "Set Notes",
+  "@setNotes": {
+    "description": "Dialog title for set notes"
+  },
+
+  "noNotesForThisSet": "No notes for this set.",
+  "@noNotesForThisSet": {
+    "description": "Message when set has no notes"
+  },
+
+  "addNotesAboutSet": "Add notes about this set...",
+  "@addNotesAboutSet": {
+    "description": "Hint for set notes field"
+  },
+
+  "setNotesSaved": "Set notes saved!",
+  "@setNotesSaved": {
+    "description": "Success message for set notes"
+  },
+
+  "effortLevel": "Effort Level",
+  "@effortLevel": {
+    "description": "Label for effort level"
+  },
+
+  "effortUnit": "Effort Unit:",
+  "@effortUnit": {
+    "description": "Label for effort unit selection"
+  },
+
+  "effortValue": "Effort Value:",
+  "@effortValue": {
+    "description": "Label for effort value slider"
+  },
+
+  "closenessSpecifier": "Closeness Specifier (optional):",
+  "@closenessSpecifier": {
+    "description": "Label for closeness specifier"
+  },
+
+  "effort": "Effort:",
+  "@effort": {
+    "description": "Label for effort preview"
+  },
+
+  "effortLevelSaved": "Effort level saved!",
+  "@effortLevelSaved": {
+    "description": "Success message for effort level"
+  },
+
+  "noEffortLevelRecorded": "No effort level recorded for this set.",
+  "@noEffortLevelRecorded": {
+    "description": "Message when set has no effort level"
+  },
+
+  "updateDefaultWeight": "Update Default Weight",
+  "@updateDefaultWeight": {
+    "description": "Dialog title for updating default weight"
+  },
+
+  "markSetWeightMessage": "Mark this set's weight to update the exercise default weight when the workout is completed.",
+  "@markSetWeightMessage": {
+    "description": "Explanation for marking set weight"
+  },
+
+  "currentWeight": "Current Weight:",
+  "@currentWeight": {
+    "description": "Label for current weight display"
+  },
+
+  "willUpdateDefaultWeight": "Will update default weight on workout completion!",
+  "@willUpdateDefaultWeight": {
+    "description": "Success message for marking weight update"
+  },
+
+  "markForUpdate": "Mark for Update",
+  "@markForUpdate": {
+    "description": "Button to mark weight for update"
+  },
+
+  "ordinalSt": "{number}st",
+  "@ordinalSt": {
+    "description": "Ordinal suffix for 1st, 21st, 31st, etc.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "ordinalNd": "{number}nd",
+  "@ordinalNd": {
+    "description": "Ordinal suffix for 2nd, 22nd, 32nd, etc.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "ordinalRd": "{number}rd",
+  "@ordinalRd": {
+    "description": "Ordinal suffix for 3rd, 23rd, 33rd, etc.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "ordinalTh": "{number}th",
+  "@ordinalTh": {
+    "description": "Ordinal suffix for 4th, 5th, 10th, 11th, 12th, 13th, etc.",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "unitSystemLabel": "Unit System",
+  "@unitSystemLabel": {
+    "description": "Label for unit system field"
   }
 }

@@ -639,4 +639,100 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get exerciseChangedToSuitNeeds =>
       'Exercise was changed to better suit workout needs';
+
+  @override
+  String get reps => 'Reps';
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Weight ($unit)';
+  }
+
+  @override
+  String get addSetNotes => 'Add Set Notes';
+
+  @override
+  String get seeSetNotes => 'See Set Notes';
+
+  @override
+  String get addEffortLevel => 'Add Effort Level';
+
+  @override
+  String get seeEffortLevel => 'See Effort Level';
+
+  @override
+  String get updateExerciseDefaultWeight => 'Update Exercise Default Weight';
+
+  @override
+  String get setNotes => 'Set Notes';
+
+  @override
+  String get noNotesForThisSet => 'No notes for this set.';
+
+  @override
+  String get addNotesAboutSet => 'Add notes about this set...';
+
+  @override
+  String get setNotesSaved => 'Set notes saved!';
+
+  @override
+  String get effortLevel => 'Effort Level';
+
+  @override
+  String get effortUnit => 'Effort Unit:';
+
+  @override
+  String get effortValue => 'Effort Value:';
+
+  @override
+  String get closenessSpecifier => 'Closeness Specifier (optional):';
+
+  @override
+  String get effort => 'Effort:';
+
+  @override
+  String get effortLevelSaved => 'Effort level saved!';
+
+  @override
+  String get noEffortLevelRecorded => 'No effort level recorded for this set.';
+
+  @override
+  String get updateDefaultWeight => 'Update Default Weight';
+
+  @override
+  String get markSetWeightMessage =>
+      'Mark this set\'s weight to update the exercise default weight when the workout is completed.';
+
+  @override
+  String get currentWeight => 'Current Weight:';
+
+  @override
+  String get willUpdateDefaultWeight =>
+      'Will update default weight on workout completion!';
+
+  @override
+  String get markForUpdate => 'Mark for Update';
+
+  @override
+  String ordinalSt(int number) {
+    return '${number}st';
+  }
+
+  @override
+  String ordinalNd(int number) {
+    return '${number}nd';
+  }
+
+  @override
+  String ordinalRd(int number) {
+    return '${number}rd';
+  }
+
+  @override
+  String ordinalTh(int number) {
+    return '${number}th';
+  }
+
+  @override
+  String get unitSystemLabel => 'Unit System';
 }

@@ -1255,6 +1255,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Exercise was changed to better suit workout needs'**
   String get exerciseChangedToSuitNeeds;
+
+  /// Label for reps field
+  ///
+  /// In en, this message translates to:
+  /// **'Reps'**
+  String get reps;
+
+  /// Label for weight field with unit
+  ///
+  /// In en, this message translates to:
+  /// **'Weight ({unit})'**
+  String weightWithUnit(String unit);
+
+  /// Menu option to add notes to set
+  ///
+  /// In en, this message translates to:
+  /// **'Add Set Notes'**
+  String get addSetNotes;
+
+  /// Menu option to view set notes
+  ///
+  /// In en, this message translates to:
+  /// **'See Set Notes'**
+  String get seeSetNotes;
+
+  /// Menu option to add effort level
+  ///
+  /// In en, this message translates to:
+  /// **'Add Effort Level'**
+  String get addEffortLevel;
+
+  /// Menu option to view effort level
+  ///
+  /// In en, this message translates to:
+  /// **'See Effort Level'**
+  String get seeEffortLevel;
+
+  /// Menu option to update default weight
+  ///
+  /// In en, this message translates to:
+  /// **'Update Exercise Default Weight'**
+  String get updateExerciseDefaultWeight;
+
+  /// Dialog title for set notes
+  ///
+  /// In en, this message translates to:
+  /// **'Set Notes'**
+  String get setNotes;
+
+  /// Message when set has no notes
+  ///
+  /// In en, this message translates to:
+  /// **'No notes for this set.'**
+  String get noNotesForThisSet;
+
+  /// Hint for set notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Add notes about this set...'**
+  String get addNotesAboutSet;
+
+  /// Success message for set notes
+  ///
+  /// In en, this message translates to:
+  /// **'Set notes saved!'**
+  String get setNotesSaved;
+
+  /// Label for effort level
+  ///
+  /// In en, this message translates to:
+  /// **'Effort Level'**
+  String get effortLevel;
+
+  /// Label for effort unit selection
+  ///
+  /// In en, this message translates to:
+  /// **'Effort Unit:'**
+  String get effortUnit;
+
+  /// Label for effort value slider
+  ///
+  /// In en, this message translates to:
+  /// **'Effort Value:'**
+  String get effortValue;
+
+  /// Label for closeness specifier
+  ///
+  /// In en, this message translates to:
+  /// **'Closeness Specifier (optional):'**
+  String get closenessSpecifier;
+
+  /// Label for effort preview
+  ///
+  /// In en, this message translates to:
+  /// **'Effort:'**
+  String get effort;
+
+  /// Success message for effort level
+  ///
+  /// In en, this message translates to:
+  /// **'Effort level saved!'**
+  String get effortLevelSaved;
+
+  /// Message when set has no effort level
+  ///
+  /// In en, this message translates to:
+  /// **'No effort level recorded for this set.'**
+  String get noEffortLevelRecorded;
+
+  /// Dialog title for updating default weight
+  ///
+  /// In en, this message translates to:
+  /// **'Update Default Weight'**
+  String get updateDefaultWeight;
+
+  /// Explanation for marking set weight
+  ///
+  /// In en, this message translates to:
+  /// **'Mark this set\'s weight to update the exercise default weight when the workout is completed.'**
+  String get markSetWeightMessage;
+
+  /// Label for current weight display
+  ///
+  /// In en, this message translates to:
+  /// **'Current Weight:'**
+  String get currentWeight;
+
+  /// Success message for marking weight update
+  ///
+  /// In en, this message translates to:
+  /// **'Will update default weight on workout completion!'**
+  String get willUpdateDefaultWeight;
+
+  /// Button to mark weight for update
+  ///
+  /// In en, this message translates to:
+  /// **'Mark for Update'**
+  String get markForUpdate;
+
+  /// Ordinal suffix for 1st, 21st, 31st, etc.
+  ///
+  /// In en, this message translates to:
+  /// **'{number}st'**
+  String ordinalSt(int number);
+
+  /// Ordinal suffix for 2nd, 22nd, 32nd, etc.
+  ///
+  /// In en, this message translates to:
+  /// **'{number}nd'**
+  String ordinalNd(int number);
+
+  /// Ordinal suffix for 3rd, 23rd, 33rd, etc.
+  ///
+  /// In en, this message translates to:
+  /// **'{number}rd'**
+  String ordinalRd(int number);
+
+  /// Ordinal suffix for 4th, 5th, 10th, 11th, 12th, 13th, etc.
+  ///
+  /// In en, this message translates to:
+  /// **'{number}th'**
+  String ordinalTh(int number);
+
+  /// Label for unit system field
+  ///
+  /// In en, this message translates to:
+  /// **'Unit System'**
+  String get unitSystemLabel;
 }
 
 class _AppLocalizationsDelegate

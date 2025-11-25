@@ -129,18 +129,19 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   }
 
   String _getOrdinal(int number) {
+    final l10n = AppLocalizations.of(context)!;
     if (number % 100 >= 11 && number % 100 <= 13) {
-      return '${number}th';
+      return l10n.ordinalTh(number);
     }
     switch (number % 10) {
       case 1:
-        return '${number}st';
+        return l10n.ordinalSt(number);
       case 2:
-        return '${number}nd';
+        return l10n.ordinalNd(number);
       case 3:
-        return '${number}rd';
+        return l10n.ordinalRd(number);
       default:
-        return '${number}th';
+        return l10n.ordinalTh(number);
     }
   }
 

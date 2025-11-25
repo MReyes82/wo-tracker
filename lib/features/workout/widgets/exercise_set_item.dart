@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../models/workout_set.dart';
 
@@ -65,8 +66,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Reps',
+                Text(
+                  AppLocalizations.of(context)!.reps,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -119,7 +120,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Weight (${widget.isUsingMetric ? 'kg' : 'lbs'})',
+                  AppLocalizations.of(context)!.weightWithUnit(widget.isUsingMetric ? 'kg' : 'lbs'),
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -221,7 +222,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             children: [
               ListTile(
                 leading: const Icon(Icons.note_add, color: AppColors.primary),
-                title: Text(widget.isEditable ? 'Add Set Notes' : 'See Set Notes'),
+                title: Text(widget.isEditable ? AppLocalizations.of(context)!.addSetNotes : AppLocalizations.of(context)!.seeSetNotes),
                 onTap: () {
                   Navigator.pop(context);
                   _showSetNotesDialog(context);
@@ -229,7 +230,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               ),
               ListTile(
                 leading: const Icon(Icons.fitness_center, color: AppColors.primary),
-                title: Text(widget.isEditable ? 'Add Effort Level' : 'See Effort Level'),
+                title: Text(widget.isEditable ? AppLocalizations.of(context)!.addEffortLevel : AppLocalizations.of(context)!.seeEffortLevel),
                 onTap: () {
                   Navigator.pop(context);
                   if (widget.isEditable) {
@@ -242,7 +243,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               if (widget.isEditable && widget.onUpdateDefaultWeight != null)
                 ListTile(
                   leading: const Icon(Icons.update, color: AppColors.primary),
-                  title: const Text('Update Exercise Default Weight'),
+                  title: Text(AppLocalizations.of(context)!.updateExerciseDefaultWeight),
                   onTap: () {
                     Navigator.pop(context);
                     _showUpdateDefaultWeightDialog(context);
@@ -262,8 +263,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Set Notes'),
-            content: const Text('No notes for this set.'),
+            title: Text(AppLocalizations.of(context)!.setNotes),
+            content: Text(AppLocalizations.of(context)!.noNotesForThisSet),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -312,8 +313,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
           content: TextField(
             controller: notesController,
             maxLines: 3,
-            decoration: const InputDecoration(
-              hintText: 'Add notes about this set...',
+ decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.addNotesAboutSet,
               border: OutlineInputBorder(),
             ),
           ),
@@ -338,8 +339,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                 ));
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Set notes saved!'),
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context)!.setNotesSaved),
                     backgroundColor: AppColors.success,
                   ),
                 );
@@ -363,13 +364,13 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Add Effort Level'),
+              title: Text(AppLocalizations.of(context)!.addEffortLevel),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Effort Unit:',
+                  Text(
+                    AppLocalizations.of(context)!.effortUnit,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 8),
@@ -406,8 +407,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Effort Value:',
+                  Text(
+                    AppLocalizations.of(context)!.effortValue,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 8),
@@ -441,8 +442,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Closeness Specifier (optional):',
+                  Text(
+                    AppLocalizations.of(context)!.closenessSpecifier,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 8),
@@ -492,7 +493,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
                 TextButton(
                   onPressed: () {
@@ -510,13 +511,13 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                     ));
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Effort level saved!'),
+                      SnackBar(
+                    content: Text(AppLocalizations.of(context)!.effortLevelSaved),
                         backgroundColor: AppColors.success,
                       ),
                     );
                   },
-                  child: const Text('Save'),
+                  child: Text(AppLocalizations.of(context)!.save),
                 ),
               ],
             );
@@ -532,8 +533,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Effort Level'),
-            content: const Text('No effort level recorded for this set.'),
+            title: Text(AppLocalizations.of(context)!.effortLevel),
+            content: Text(AppLocalizations.of(context)!.noEffortLevelRecorded),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -618,8 +619,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Mark this set\'s weight to update the exercise default weight when the workout is completed.',
+              Text(
+                AppLocalizations.of(context)!.markSetWeightMessage,
                 style: TextStyle(fontSize: 14),
               ),
               const SizedBox(height: 16),
@@ -632,8 +633,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Current Weight:',
+                    Text(
+                      AppLocalizations.of(context)!.currentWeight,
                       style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 4),
@@ -662,13 +663,13 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                 }
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Will update default weight on workout completion!'),
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context)!.willUpdateDefaultWeight),
                     backgroundColor: AppColors.success,
                   ),
                 );
               },
-              child: const Text('Mark for Update'),
+              child: Text(AppLocalizations.of(context)!.markForUpdate),
             ),
           ],
         );

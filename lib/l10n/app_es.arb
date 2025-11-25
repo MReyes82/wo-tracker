@@ -849,5 +849,73 @@
   "performedExercise": "Ejercicio Realizado:",
   "originallyPlanned": "Planeado Originalmente:",
   "plannedExercise": "Ejercicio Planeado:",
-  "exerciseChangedToSuitNeeds": "Ejercicio cambiado para ajustarse mejor a las necesidades del entrenamiento"
+  "exerciseChangedToSuitNeeds": "Ejercicio cambiado para ajustarse mejor a las necesidades del entrenamiento",
+
+  "reps": "Reps",
+  "weightWithUnit": "Peso ({unit})",
+  "@weightWithUnit": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "addSetNotes": "Agregar Notas de Serie",
+  "seeSetNotes": "Ver Notas de Serie",
+  "addEffortLevel": "Agregar Nivel de Esfuerzo",
+  "seeEffortLevel": "Ver Nivel de Esfuerzo",
+  "updateExerciseDefaultWeight": "Actualizar Peso Predeterminado del Ejercicio",
+  "setNotes": "Notas de Serie",
+  "noNotesForThisSet": "No hay notas para esta serie.",
+  "addNotesAboutSet": "Agregar notas sobre esta serie...",
+  "setNotesSaved": "¡Notas de serie guardadas!",
+  "effortLevel": "Nivel de Esfuerzo",
+  "effortUnit": "Unidad de Esfuerzo:",
+  "effortValue": "Valor de Esfuerzo:",
+  "closenessSpecifier": "Especificador de Cercanía (opcional):",
+  "effort": "Esfuerzo:",
+  "effortLevelSaved": "¡Nivel de esfuerzo guardado!",
+  "noEffortLevelRecorded": "No se registró nivel de esfuerzo para esta serie.",
+  "updateDefaultWeight": "Actualizar Peso Predeterminado",
+  "markSetWeightMessage": "Marque el peso de esta serie para actualizar el peso predeterminado del ejercicio cuando se complete el entrenamiento.",
+  "currentWeight": "Peso Actual:",
+  "willUpdateDefaultWeight": "¡Se actualizará el peso predeterminado al completar el entrenamiento!",
+  "markForUpdate": "Marcar para Actualizar",
+
+  "ordinalSt": "{number}\u00b0",
+  "@ordinalSt": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "ordinalNd": "{number}\u00b0",
+  "@ordinalNd": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "ordinalRd": "{number}\u00b0",
+  "@ordinalRd": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "ordinalTh": "{number}\u00b0",
+  "@ordinalTh": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "unitSystemLabel": "Sistema de Unidades"
 }

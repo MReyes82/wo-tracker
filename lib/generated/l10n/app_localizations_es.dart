@@ -646,4 +646,102 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get exerciseChangedToSuitNeeds =>
       'Ejercicio cambiado para ajustarse mejor a las necesidades del entrenamiento';
+
+  @override
+  String get reps => 'Reps';
+
+  @override
+  String weightWithUnit(String unit) {
+    return 'Peso ($unit)';
+  }
+
+  @override
+  String get addSetNotes => 'Agregar Notas de Serie';
+
+  @override
+  String get seeSetNotes => 'Ver Notas de Serie';
+
+  @override
+  String get addEffortLevel => 'Agregar Nivel de Esfuerzo';
+
+  @override
+  String get seeEffortLevel => 'Ver Nivel de Esfuerzo';
+
+  @override
+  String get updateExerciseDefaultWeight =>
+      'Actualizar Peso Predeterminado del Ejercicio';
+
+  @override
+  String get setNotes => 'Notas de Serie';
+
+  @override
+  String get noNotesForThisSet => 'No hay notas para esta serie.';
+
+  @override
+  String get addNotesAboutSet => 'Agregar notas sobre esta serie...';
+
+  @override
+  String get setNotesSaved => '¡Notas de serie guardadas!';
+
+  @override
+  String get effortLevel => 'Nivel de Esfuerzo';
+
+  @override
+  String get effortUnit => 'Unidad de Esfuerzo:';
+
+  @override
+  String get effortValue => 'Valor de Esfuerzo:';
+
+  @override
+  String get closenessSpecifier => 'Especificador de Cercanía (opcional):';
+
+  @override
+  String get effort => 'Esfuerzo:';
+
+  @override
+  String get effortLevelSaved => '¡Nivel de esfuerzo guardado!';
+
+  @override
+  String get noEffortLevelRecorded =>
+      'No se registró nivel de esfuerzo para esta serie.';
+
+  @override
+  String get updateDefaultWeight => 'Actualizar Peso Predeterminado';
+
+  @override
+  String get markSetWeightMessage =>
+      'Marque el peso de esta serie para actualizar el peso predeterminado del ejercicio cuando se complete el entrenamiento.';
+
+  @override
+  String get currentWeight => 'Peso Actual:';
+
+  @override
+  String get willUpdateDefaultWeight =>
+      '¡Se actualizará el peso predeterminado al completar el entrenamiento!';
+
+  @override
+  String get markForUpdate => 'Marcar para Actualizar';
+
+  @override
+  String ordinalSt(int number) {
+    return '$number°';
+  }
+
+  @override
+  String ordinalNd(int number) {
+    return '$number°';
+  }
+
+  @override
+  String ordinalRd(int number) {
+    return '$number°';
+  }
+
+  @override
+  String ordinalTh(int number) {
+    return '$number°';
+  }
+
+  @override
+  String get unitSystemLabel => 'Sistema de Unidades';
 }

@@ -176,8 +176,8 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Exercises',
+                          Text(
+                            AppLocalizations.of(context)!.exercises,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

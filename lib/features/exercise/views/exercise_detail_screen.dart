@@ -168,8 +168,8 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                         ),
                       _buildDetailCard(
                         icon: Icons.straighten,
-                        label: 'Unit System',
-                        value: _exercise!.isUsingMetric ? 'Metric (kg)' : 'Imperial (lbs)',
+                        label: AppLocalizations.of(context)!.unitSystemLabel,
+                        value: _exercise!.isUsingMetric ? AppLocalizations.of(context)!.metricKg : AppLocalizations.of(context)!.imperialLbs,
                       ),
                     ],
                   ),
