@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../../../core/themes/app_colors.dart';
@@ -79,6 +80,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return ChangeNotifierProvider.value(
       value: _viewModel,
       child: Scaffold(
@@ -86,9 +89,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text(
-            'Records',
-            style: TextStyle(
+          title: Text(
+            l10n.recordsTitle,
+            style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -153,7 +156,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search by name...',
+                      hintText: l10n.searchByName,
                       prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
@@ -214,15 +217,16 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   String _getRecordTypeLabel(RecordType type) {
+    final l10n = AppLocalizations.of(context)!;
     switch (type) {
       case RecordType.exercises:
-        return 'Exercises';
+        return l10n.exercises;
       case RecordType.workouts:
-        return 'Workouts';
+        return l10n.workouts;
       case RecordType.mesocycles:
-        return 'Mesocycles';
+        return l10n.mesocycles;
       case RecordType.sessions:
-        return 'Sessions';
+        return l10n.sessions;
     }
   }
 
@@ -253,6 +257,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildExercisesList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final exercises = viewModel.filterExercises(_searchQuery);
 
     if (exercises.isEmpty) {
@@ -267,7 +272,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No exercises found' : 'No exercises match your search',
+              _searchQuery.isEmpty ? l10n.noExercisesFound : l10n.noExercisesMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -289,6 +294,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildExerciseCard(Exercise exercise) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -335,7 +341,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 Text(
                   exercise.defaultWorkingWeight != null
                       ? '${exercise.defaultWorkingWeight} ${exercise.isUsingMetric ? "kg" : "lbs"}'
-                      : 'No default weight',
+                      : l10n.noDefaultWeight,
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -364,7 +370,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Edit'),
+            child: Text(l10n.edit),
           ),
           TextButton(
             onPressed: () {
@@ -382,7 +388,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Details'),
+            child: Text(l10n.details),
           ),
         ],
       ),
@@ -390,6 +396,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildWorkoutsList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final workouts = viewModel.filterWorkouts(_searchQuery);
 
     if (workouts.isEmpty) {
@@ -404,7 +411,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No workouts found' : 'No workouts match your search',
+              _searchQuery.isEmpty ? l10n.noWorkoutsFound : l10n.noWorkoutsMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -426,6 +433,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildWorkoutCard(WorkoutTemplate workout) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -525,6 +533,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildMesocyclesList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final mesocycles = viewModel.filterMesocycles(_searchQuery);
 
     if (mesocycles.isEmpty) {
@@ -539,7 +548,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No mesocycles found' : 'No mesocycles match your search',
+              _searchQuery.isEmpty ? l10n.noMesocyclesFound : l10n.noMesocyclesMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -660,6 +669,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildSessionsList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final sessions = viewModel.filterSessions(_searchQuery);
 
     if (sessions.isEmpty) {
@@ -674,7 +684,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty ? 'No sessions found' : 'No sessions match your search',
+              _searchQuery.isEmpty ? l10n.noSessionsFound : l10n.noSessionsMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),

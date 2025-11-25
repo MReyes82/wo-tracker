@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import '../../../core/themes/app_colors.dart';
 import '../repositories/exercise_type_repository.dart';

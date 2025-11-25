@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../exercise/views/new_exercise_screen.dart';
 import '../../workout/views/new_workout_screen.dart';
@@ -10,14 +11,16 @@ class RegisterNewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Register New',
-          style: TextStyle(
+        title: Text(
+          l10n.registerNewTitle,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -32,9 +35,9 @@ class RegisterNewScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 24),
-              const Text(
-                'What would you like to create?',
-                style: TextStyle(
+              Text(
+                l10n.whatToCreate,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textPrimary,
@@ -47,8 +50,8 @@ class RegisterNewScreen extends StatelessWidget {
               _RegisterCard(
                 icon: Icons.fitness_center,
                 iconColor: Colors.blue,
-                title: 'Add Exercise',
-                description: 'Create a new exercise for your catalog',
+                title: l10n.addExercise,
+                description: l10n.addExerciseDesc,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -64,8 +67,8 @@ class RegisterNewScreen extends StatelessWidget {
               _RegisterCard(
                 icon: Icons.assignment,
                 iconColor: Colors.green,
-                title: 'Add Workout',
-                description: 'Build a workout with exercises',
+                title: l10n.addWorkout,
+                description: l10n.addWorkoutDesc,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -81,8 +84,8 @@ class RegisterNewScreen extends StatelessWidget {
               _RegisterCard(
                 icon: Icons.calendar_month,
                 iconColor: Colors.orange,
-                title: 'Add Mesocycle',
-                description: 'Plan a training cycle with multiple workouts',
+                title: l10n.addMesocycle,
+                description: l10n.addMesocycleDesc,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -102,7 +105,7 @@ class RegisterNewScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      'MANAGE CATALOGS',
+                      l10n.manageCatalogs.toUpperCase(),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -120,9 +123,8 @@ class RegisterNewScreen extends StatelessWidget {
               _RegisterCard(
                 icon: Icons.settings,
                 iconColor: Colors.grey,
-                title: 'Manage Catalogs',
-                description:
-                    'Add exercise types, equipment, muscle groups, etc.',
+                title: l10n.manageCatalogs,
+                description: l10n.manageCatalogsDesc,
                 onTap: () {
                   Navigator.push(
                     context,

@@ -1,0 +1,836 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
+///
+/// Applications need to include `AppLocalizations.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
+/// property.
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static AppLocalizations? of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  }
+
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('es'),
+  ];
+
+  /// Application title
+  ///
+  /// In en, this message translates to:
+  /// **'WoTracker'**
+  String get appTitle;
+
+  /// Navigation label for home tab
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get navHome;
+
+  /// Navigation label for register tab
+  ///
+  /// In en, this message translates to:
+  /// **'Register new'**
+  String get navRegister;
+
+  /// Navigation label for history tab
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get navHistory;
+
+  /// Navigation label for settings tab
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get navSettings;
+
+  /// Home screen title
+  ///
+  /// In en, this message translates to:
+  /// **'My Workouts'**
+  String get homeTitle;
+
+  /// Section title for recent workouts
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Workouts'**
+  String get recentWorkouts;
+
+  /// Message shown when there are no recent workouts
+  ///
+  /// In en, this message translates to:
+  /// **'No recent workouts'**
+  String get noRecentWorkouts;
+
+  /// Message shown when no workout is scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'No workout scheduled for today'**
+  String get noWorkoutScheduled;
+
+  /// Prompt to plan a workout
+  ///
+  /// In en, this message translates to:
+  /// **'Plan your first workout'**
+  String get planFirstWorkout;
+
+  /// Button to start a workout
+  ///
+  /// In en, this message translates to:
+  /// **'Start Workout'**
+  String get startWorkout;
+
+  /// Button to plan a workout
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a Workout'**
+  String get planAWorkout;
+
+  /// Label for today's workout section
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Workout'**
+  String get todaysWorkout;
+
+  /// Button to see more items
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// Button to view details
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get details;
+
+  /// Button to edit an item
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// Button to save changes
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// Button to cancel action
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Button to delete an item
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// Button to retry an action
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// OK button text
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Error label
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// Records screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Records'**
+  String get recordsTitle;
+
+  /// Exercises label
+  ///
+  /// In en, this message translates to:
+  /// **'Exercises'**
+  String get exercises;
+
+  /// Workouts label
+  ///
+  /// In en, this message translates to:
+  /// **'Workouts'**
+  String get workouts;
+
+  /// Mesocycles label
+  ///
+  /// In en, this message translates to:
+  /// **'Mesocycles'**
+  String get mesocycles;
+
+  /// Sessions label
+  ///
+  /// In en, this message translates to:
+  /// **'Sessions'**
+  String get sessions;
+
+  /// Search field placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name...'**
+  String get searchByName;
+
+  /// Message when no exercises exist
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises found'**
+  String get noExercisesFound;
+
+  /// Message when search returns no exercises
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises match your search'**
+  String get noExercisesMatch;
+
+  /// Message when no workouts exist
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts found'**
+  String get noWorkoutsFound;
+
+  /// Message when search returns no workouts
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts match your search'**
+  String get noWorkoutsMatch;
+
+  /// Message when no mesocycles exist
+  ///
+  /// In en, this message translates to:
+  /// **'No mesocycles found'**
+  String get noMesocyclesFound;
+
+  /// Message when search returns no mesocycles
+  ///
+  /// In en, this message translates to:
+  /// **'No mesocycles match your search'**
+  String get noMesocyclesMatch;
+
+  /// Message when no sessions exist
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions found'**
+  String get noSessionsFound;
+
+  /// Message when search returns no sessions
+  ///
+  /// In en, this message translates to:
+  /// **'No sessions match your search'**
+  String get noSessionsMatch;
+
+  /// Status label for completed items
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// Label when exercise has no default weight
+  ///
+  /// In en, this message translates to:
+  /// **'No default weight'**
+  String get noDefaultWeight;
+
+  /// Register new screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Register New'**
+  String get registerNewTitle;
+
+  /// Prompt on register screen
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to create?'**
+  String get whatToCreate;
+
+  /// Card title to add exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Add Exercise'**
+  String get addExercise;
+
+  /// Description for add exercise card
+  ///
+  /// In en, this message translates to:
+  /// **'Create a new exercise for your catalog'**
+  String get addExerciseDesc;
+
+  /// Card title to add workout
+  ///
+  /// In en, this message translates to:
+  /// **'Add Workout'**
+  String get addWorkout;
+
+  /// Description for add workout card
+  ///
+  /// In en, this message translates to:
+  /// **'Build a workout with exercises'**
+  String get addWorkoutDesc;
+
+  /// Card title to add mesocycle
+  ///
+  /// In en, this message translates to:
+  /// **'Add Mesocycle'**
+  String get addMesocycle;
+
+  /// Description for add mesocycle card
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a training cycle with multiple workouts'**
+  String get addMesocycleDesc;
+
+  /// Manage catalogs section
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Catalogs'**
+  String get manageCatalogs;
+
+  /// Description for manage catalogs
+  ///
+  /// In en, this message translates to:
+  /// **'Add exercise types, equipment, muscle groups, etc.'**
+  String get manageCatalogsDesc;
+
+  /// Settings screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// Language setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Language selection prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguage;
+
+  /// English language name
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Spanish language name
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get spanish;
+
+  /// Message when workout has no exercises
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises in this workout'**
+  String get noExercisesInWorkout;
+
+  /// Confirmation message for saved notes
+  ///
+  /// In en, this message translates to:
+  /// **'Notes saved!'**
+  String get notesSaved;
+
+  /// Message when no exercises are available to select
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises available'**
+  String get noExercisesAvailable;
+
+  /// Dialog title when no more workouts exist
+  ///
+  /// In en, this message translates to:
+  /// **'No More Workouts'**
+  String get noMoreWorkoutsTitle;
+
+  /// Message showing workout count
+  ///
+  /// In en, this message translates to:
+  /// **'You have completed {count} workout{plural}. Keep training to see more history!'**
+  String workoutCount(int count, String plural);
+
+  /// Message when exercise has no sets
+  ///
+  /// In en, this message translates to:
+  /// **'No sets logged yet'**
+  String get noSetsLogged;
+
+  /// Message when set has no notes
+  ///
+  /// In en, this message translates to:
+  /// **'No notes for this set.'**
+  String get noNotesForSet;
+
+  /// Message when set has no effort level
+  ///
+  /// In en, this message translates to:
+  /// **'No effort level recorded for this set.'**
+  String get noEffortLevel;
+
+  /// Message when mesocycle has no workouts
+  ///
+  /// In en, this message translates to:
+  /// **'No workouts in this mesocycle'**
+  String get noWorkoutsInMesocycle;
+
+  /// Exercise details screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Details'**
+  String get exerciseDetails;
+
+  /// Label for default working weight
+  ///
+  /// In en, this message translates to:
+  /// **'Default Working Weight'**
+  String get defaultWorkingWeight;
+
+  /// Label for unit system
+  ///
+  /// In en, this message translates to:
+  /// **'Unit System'**
+  String get unitSystem;
+
+  /// Metric unit system label
+  ///
+  /// In en, this message translates to:
+  /// **'Metric (kg)'**
+  String get metricKg;
+
+  /// Imperial unit system label
+  ///
+  /// In en, this message translates to:
+  /// **'Imperial (lbs)'**
+  String get imperialLbs;
+
+  /// Label when value is not set
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// Default workout session title
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Session'**
+  String get workoutSession;
+
+  /// Weeks label
+  ///
+  /// In en, this message translates to:
+  /// **'weeks'**
+  String get weeks;
+
+  /// Sessions per week label
+  ///
+  /// In en, this message translates to:
+  /// **'sessions/week'**
+  String get sessionsPerWeek;
+
+  /// Created date label
+  ///
+  /// In en, this message translates to:
+  /// **'Created {date}'**
+  String createdOn(String date);
+
+  /// Workout details screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Details'**
+  String get workoutDetails;
+
+  /// Message when workout is marked complete
+  ///
+  /// In en, this message translates to:
+  /// **'Workout completed!'**
+  String get workoutCompleted;
+
+  /// Error message when workout doesn't exist
+  ///
+  /// In en, this message translates to:
+  /// **'Workout not found'**
+  String get workoutNotFound;
+
+  /// Label for active workout session
+  ///
+  /// In en, this message translates to:
+  /// **'ACTIVE WORKOUT'**
+  String get activeWorkout;
+
+  /// Label for workout notes section
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Notes'**
+  String get workoutNotes;
+
+  /// Button to add workout notes
+  ///
+  /// In en, this message translates to:
+  /// **'Add Workout Notes'**
+  String get addWorkoutNotes;
+
+  /// Placeholder for notes input field
+  ///
+  /// In en, this message translates to:
+  /// **'Add notes about your workout...'**
+  String get addNotesPlaceholder;
+
+  /// Button to mark workout start time
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Start Time'**
+  String get markStartTime;
+
+  /// Button to view workout start time
+  ///
+  /// In en, this message translates to:
+  /// **'See Start Time'**
+  String get seeStartTime;
+
+  /// Confirmation message for marking start time
+  ///
+  /// In en, this message translates to:
+  /// **'Set the workout start time to now?'**
+  String get setStartTimeNow;
+
+  /// Button to mark current time
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Now'**
+  String get markNow;
+
+  /// Confirmation that start time was saved
+  ///
+  /// In en, this message translates to:
+  /// **'Start time marked!'**
+  String get startTimeMarked;
+
+  /// Dialog title for start time
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Start Time'**
+  String get workoutStartTime;
+
+  /// Label showing when workout started
+  ///
+  /// In en, this message translates to:
+  /// **'This workout started at:'**
+  String get workoutStartedAt;
+
+  /// Close button
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// Button to swap exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Change Exercise'**
+  String get changeExercise;
+
+  /// Confirmation message for exercise swap
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise changed to {name}'**
+  String exerciseChangedTo(String name);
+
+  /// Label for default value
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get defaultLabel;
+
+  /// Title for new exercise screen
+  ///
+  /// In en, this message translates to:
+  /// **'New Exercise'**
+  String get newExercise;
+
+  /// Title for edit exercise screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Exercise'**
+  String get editExercise;
+
+  /// Label for exercise name field
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Name'**
+  String get exerciseName;
+
+  /// Label for exercise type field
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Type'**
+  String get exerciseType;
+
+  /// Label for equipment field
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment'**
+  String get equipment;
+
+  /// Label for muscle groups field
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle Groups'**
+  String get muscleGroups;
+
+  /// Button to save exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Save Exercise'**
+  String get saveExercise;
+
+  /// Confirmation that exercise was saved
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise saved!'**
+  String get exerciseSaved;
+
+  /// Title for new workout screen
+  ///
+  /// In en, this message translates to:
+  /// **'New Workout'**
+  String get newWorkout;
+
+  /// Title for edit workout screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Workout'**
+  String get editWorkout;
+
+  /// Label for workout name field
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Name'**
+  String get workoutName;
+
+  /// Label for workout type field
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Type'**
+  String get workoutType;
+
+  /// Button to select exercises
+  ///
+  /// In en, this message translates to:
+  /// **'Select Exercises'**
+  String get selectExercises;
+
+  /// Button to save workout
+  ///
+  /// In en, this message translates to:
+  /// **'Save Workout'**
+  String get saveWorkout;
+
+  /// Confirmation that workout was saved
+  ///
+  /// In en, this message translates to:
+  /// **'Workout saved!'**
+  String get workoutSaved;
+
+  /// Title for new mesocycle screen
+  ///
+  /// In en, this message translates to:
+  /// **'New Mesocycle'**
+  String get newMesocycle;
+
+  /// Title for edit mesocycle screen
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Mesocycle'**
+  String get editMesocycle;
+
+  /// Label for mesocycle name field
+  ///
+  /// In en, this message translates to:
+  /// **'Mesocycle Name'**
+  String get mesocycleName;
+
+  /// Label for duration field
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// Label for start date field
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get startDate;
+
+  /// Button to select workouts
+  ///
+  /// In en, this message translates to:
+  /// **'Select Workouts'**
+  String get selectWorkouts;
+
+  /// Button to save mesocycle
+  ///
+  /// In en, this message translates to:
+  /// **'Save Mesocycle'**
+  String get saveMesocycle;
+
+  /// Confirmation that mesocycle was saved
+  ///
+  /// In en, this message translates to:
+  /// **'Mesocycle saved!'**
+  String get mesocycleSaved;
+
+  /// Label for required fields
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// Label for optional fields
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// Validation message for empty required field
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter {field}'**
+  String pleaseEnter(String field);
+
+  /// Validation message for unselected required field
+  ///
+  /// In en, this message translates to:
+  /// **'Please select {field}'**
+  String pleaseSelect(String field);
+}
+
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
+
+  @override
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['en', 'es'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
+}
+
+AppLocalizations lookupAppLocalizations(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'en':
+      return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+  }
+
+  throw FlutterError(
+    'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.',
+  );
+}

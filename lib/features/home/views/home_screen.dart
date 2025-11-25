@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../../core/themes/app_colors.dart';
 import '../view_models/home_view_model.dart';
@@ -26,14 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'My Workouts',
-          style: TextStyle(
+        title: Text(
+          l10n.homeTitle,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -63,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Error: ${viewModel.error}',
+                    '${l10n.error}: ${viewModel.error}',
                     style: const TextStyle(
                       color: AppColors.textSecondary,
                     ),
@@ -75,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Retry'),
+                    child: Text(l10n.retry),
                   ),
                 ],
               ),
@@ -109,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 24),
 
                   // Recent Workouts Section
-                  _buildRecentWorkoutsSection(viewModel),
+                  _buildRecentWorkoutsSection(context, viewModel),
                 ],
               ),
             ),
@@ -119,11 +122,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildRecentWorkoutsSection(HomeViewModel viewModel) {
+  Widget _buildRecentWorkoutsSection(BuildContext context, HomeViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
-      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -136,9 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Recent Workouts',
-            style: TextStyle(
+          Text(
+            l10n.recentWorkouts,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
@@ -146,9 +152,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SizedBox(height: 16),
           if (viewModel.recentWorkouts.isEmpty)
-            const Center(
+            Center(
               child: Padding(
-                padding: EdgeInsets.all(32),
+                padding: const EdgeInsets.all(32),
                 child: Column(
                   children: [
                     Icon(
@@ -156,10 +162,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       size: 48,
                       color: AppColors.textSecondary,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     Text(
-                      'No recent workouts',
-                      style: TextStyle(
+                      l10n.noRecentWorkouts,
+                      style: const TextStyle(
                         fontSize: 16,
                         color: AppColors.textSecondary,
                       ),
@@ -185,14 +191,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: const Text('No More Workouts'),
+                        title: Text(l10n.noMoreWorkoutsTitle),
                         content: Text(
-                          'You have completed ${viewModel.totalCompletedWorkouts} workout${viewModel.totalCompletedWorkouts == 1 ? '' : 's'}. Keep training to see more history!',
+                          l10n.workoutCount(viewModel.totalCompletedWorkouts, viewModel.totalCompletedWorkouts == 1 ? '' : 's'),
                         ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text('OK'),
+                            child: Text(l10n.ok),
                           ),
                         ],
                       ),
@@ -205,18 +211,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.primary,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'More',
-                      style: TextStyle(
+                      l10n.more,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(width: 4),
-                    Icon(Icons.arrow_forward, size: 18),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.arrow_forward, size: 18),
                   ],
                 ),
               ),

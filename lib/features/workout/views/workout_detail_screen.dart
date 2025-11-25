@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../view_models/workout_detail_view_model.dart';
 import '../widgets/exercise_card.dart';
-import 'package:intl/intl.dart';
 
 class WorkoutDetailScreen extends StatefulWidget {
   final int sessionId;
@@ -42,8 +43,9 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
           elevation: 0,
           title: Consumer<WorkoutDetailViewModel>(
             builder: (context, viewModel, child) {
+              final l10n = AppLocalizations.of(context)!;
               return Text(
-                viewModel.session?.title ?? 'Workout Details',
+                viewModel.session?.title ?? l10n.workoutDetails,
                 style: const TextStyle(
                   color: AppColors.textPrimary,
                   fontSize: 20,
@@ -63,11 +65,12 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                   return IconButton(
                     icon: const Icon(Icons.check, color: AppColors.success),
                     onPressed: () async {
+                      final l10n = AppLocalizations.of(context)!;
                       await viewModel.completeWorkout();
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Workout completed!'),
+                          SnackBar(
+                            content: Text(l10n.workoutCompleted),
                             backgroundColor: AppColors.success,
                           ),
                         );
@@ -116,7 +119,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text('Retry'),
+                      child: Text(AppLocalizations.of(context)!.retry),
                     ),
                   ],
                 ),
@@ -124,10 +127,11 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
             }
 
             if (viewModel.session == null) {
-              return const Center(
+              final l10n = AppLocalizations.of(context)!;
+              return Center(
                 child: Text(
-                  'Workout not found',
-                  style: TextStyle(
+                  l10n.workoutNotFound,
+                  style: const TextStyle(
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -205,20 +209,25 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                       ],
                       if (widget.isEditable) ...[
                         const SizedBox(height: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: const Text(
-                            'ACTIVE WORKOUT',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
+                        Consumer<WorkoutDetailViewModel>(
+                          builder: (context, vm, child) {
+                            final l10n = AppLocalizations.of(context)!;
+                            return Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                l10n.activeWorkout,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ],
@@ -247,16 +256,21 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             const Icon(
                               Icons.note,
                               size: 16,
-                              color: Color(0xFFF57F17), // Dark yellow/amber
+                              color: Color(0xFFF57F17),
                             ),
                             const SizedBox(width: 8),
-                            const Text(
-                              'Workout Notes',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color(0xFFF57F17),
-                              ),
+                            Consumer<WorkoutDetailViewModel>(
+                              builder: (context, vm, child) {
+                                final l10n = AppLocalizations.of(context)!;
+                                return Text(
+                                  l10n.workoutNotes,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFFF57F17),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -276,41 +290,46 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                 Expanded(
                   child: viewModel.exercises.isEmpty
                       ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.fitness_center,
-                                size: 64,
-                                color: AppColors.textSecondary,
-                              ),
-                              const SizedBox(height: 16),
-                              const Text(
-                                'No exercises in this workout',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                              if (widget.isEditable) ...[
-                                const SizedBox(height: 24),
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    // TODO: Navigate to add exercise screen
-                                  },
-                                  icon: const Icon(Icons.add),
-                                  label: const Text('Add Exercise'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 12,
+                          child: Consumer<WorkoutDetailViewModel>(
+                            builder: (context, vm, child) {
+                              final l10n = AppLocalizations.of(context)!;
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.fitness_center,
+                                    size: 64,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    l10n.noExercisesInWorkout,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ],
+                                  if (widget.isEditable) ...[
+                                    const SizedBox(height: 24),
+                                    ElevatedButton.icon(
+                                      onPressed: () {
+                                        // TODO: Navigate to add exercise screen
+                                      },
+                                      icon: const Icon(Icons.add),
+                                      label: Text(l10n.addExercise),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.primary,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ],
+                              );
+                            },
                           ),
                         )
                       : ListView.builder(
@@ -351,11 +370,13 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
   }
 
   void _showWorkoutOptionsMenu(BuildContext context, WorkoutDetailViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final isPastSession = viewModel.session?.endTime != null;
 
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
+        final l10n = AppLocalizations.of(context)!;
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
@@ -364,7 +385,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
               if (!isPastSession)
                 ListTile(
                   leading: const Icon(Icons.note_add, color: AppColors.primary),
-                  title: const Text('Add Workout Notes'),
+                  title: Text(l10n.addWorkoutNotes),
                   onTap: () {
                     Navigator.pop(context);
                     _showAddNotesDialog(context, viewModel);
@@ -372,7 +393,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                 ),
               ListTile(
                 leading: const Icon(Icons.access_time, color: AppColors.primary),
-                title: Text(isPastSession ? 'See Start Time' : 'Mark Start Time'),
+                title: Text(isPastSession ? l10n.seeStartTime : l10n.markStartTime),
                 onTap: () {
                   Navigator.pop(context);
                   if (isPastSession) {
@@ -390,6 +411,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
   }
 
   void _showAddNotesDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final TextEditingController notesController = TextEditingController(
       text: viewModel.session?.notes ?? '',
     );
@@ -397,20 +419,21 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final l10n = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: const Text('Workout Notes'),
+          title: Text(l10n.workoutNotes),
           content: TextField(
             controller: notesController,
             maxLines: 5,
-            decoration: const InputDecoration(
-              hintText: 'Add notes about your workout...',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              hintText: l10n.addNotesPlaceholder,
+              border: const OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -418,14 +441,14 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Notes saved!'),
+                    SnackBar(
+                      content: Text(l10n.notesSaved),
                       backgroundColor: AppColors.success,
                     ),
                   );
                 }
               },
-              child: const Text('Save'),
+              child: Text(l10n.save),
             ),
           ],
         );
@@ -434,18 +457,20 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
   }
 
   void _showMarkStartTimeDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final l10n = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: const Text('Mark Start Time'),
+          title: Text(l10n.markStartTime),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Set the workout start time to now?',
-                style: TextStyle(fontSize: 16),
+              Text(
+                l10n.setStartTimeNow,
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
               Container(
@@ -474,7 +499,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -482,14 +507,14 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Start time marked!'),
+                    SnackBar(
+                      content: Text(l10n.startTimeMarked),
                       backgroundColor: AppColors.success,
                     ),
                   );
                 }
               },
-              child: const Text('Mark Now'),
+              child: Text(l10n.markNow),
             ),
           ],
         );
@@ -498,18 +523,20 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
   }
 
   void _showSeeStartTimeDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final l10n = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: const Text('Workout Start Time'),
+          title: Text(l10n.workoutStartTime),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'This workout started at:',
-                style: TextStyle(fontSize: 16),
+              Text(
+                l10n.workoutStartedAt,
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
               Container(
@@ -550,7 +577,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
+              child: Text(l10n.close),
             ),
           ],
         );
@@ -559,6 +586,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
   }
 
   void _showChangeExerciseDialog(BuildContext context, WorkoutDetailViewModel viewModel, int exerciseId) async {
+    final l10n = AppLocalizations.of(context)!;
     // Load available exercises from catalog
     await viewModel.loadAvailableExercises();
 
@@ -569,15 +597,16 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        final l10n = AppLocalizations.of(context)!;
         return AlertDialog(
-          title: const Text('Change Exercise'),
+          title: Text(l10n.changeExercise),
           content: SizedBox(
             width: double.maxFinite,
             child: availableExercises.isEmpty
-                ? const Center(
+                ? Center(
                     child: Padding(
-                      padding: EdgeInsets.all(32),
-                      child: Text('No exercises available'),
+                      padding: const EdgeInsets.all(32),
+                      child: Text(l10n.noExercisesAvailable),
                     ),
                   )
                 : ListView.builder(
@@ -589,7 +618,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                         leading: const Icon(Icons.fitness_center, color: AppColors.primary),
                         title: Text(exercise.name),
                         subtitle: Text(
-                          'Default: ${exercise.defaultWorkingWeight ?? "Not set"} ${exercise.isUsingMetric ? "kg" : "lbs"}',
+                          '${l10n.defaultLabel}: ${exercise.defaultWorkingWeight ?? l10n.notSet} ${exercise.isUsingMetric ? "kg" : "lbs"}',
                           style: const TextStyle(fontSize: 12),
                         ),
                         onTap: () async {
@@ -598,7 +627,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text('Exercise changed to ${exercise.name}'),
+                                content: Text(l10n.exerciseChangedTo(exercise.name)),
                                 backgroundColor: AppColors.success,
                               ),
                             );
@@ -611,7 +640,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
           ],
         );

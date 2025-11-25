@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../workout/models/workout_session.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +16,8 @@ class TodayWorkoutCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     if (workout == null) {
       return Container(
         padding: const EdgeInsets.all(20),
@@ -37,10 +40,10 @@ class TodayWorkoutCard extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
             const SizedBox(height: 12),
-            const Text(
-              'No workout scheduled for today',
-              style: TextStyle(
-                fontSize: 16,
+            Text(
+              l10n.noWorkoutScheduled,
+              style: const TextStyle(
+                fontSize: 18,
                 color: AppColors.textSecondary,
               ),
             ),
@@ -55,7 +58,7 @@ class TodayWorkoutCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text('Plan a Workout'),
+              child: Text(l10n.planAWorkout),
             ),
           ],
         ),
@@ -75,7 +78,7 @@ class TodayWorkoutCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.3),
+              color: AppColors.primary.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -93,7 +96,7 @@ class TodayWorkoutCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Today\'s Workout',
+                  l10n.todaysWorkout,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white70,
@@ -104,7 +107,7 @@ class TodayWorkoutCard extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              workout!.title ?? 'Workout',
+              workout!.title ?? l10n.workoutSession,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -136,20 +139,21 @@ class TodayWorkoutCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Row(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Start Workout',
-                        style: TextStyle(
+                        l10n.startWorkout,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
+                      const SizedBox(width: 4),
+                      const Icon(
                         Icons.arrow_forward,
                         color: Colors.white,
                         size: 18,

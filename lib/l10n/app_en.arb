@@ -1,0 +1,616 @@
+{
+  "@@locale": "en",
+  
+  "appTitle": "WoTracker",
+  "@appTitle": {
+    "description": "Application title"
+  },
+
+  "navHome": "Home",
+  "@navHome": {
+    "description": "Navigation label for home tab"
+  },
+
+  "navRegister": "Register new",
+  "@navRegister": {
+    "description": "Navigation label for register tab"
+  },
+
+  "navHistory": "History",
+  "@navHistory": {
+    "description": "Navigation label for history tab"
+  },
+
+  "navSettings": "Settings",
+  "@navSettings": {
+    "description": "Navigation label for settings tab"
+  },
+
+  "homeTitle": "My Workouts",
+  "@homeTitle": {
+    "description": "Home screen title"
+  },
+
+  "recentWorkouts": "Recent Workouts",
+  "@recentWorkouts": {
+    "description": "Section title for recent workouts"
+  },
+
+  "noRecentWorkouts": "No recent workouts",
+  "@noRecentWorkouts": {
+    "description": "Message shown when there are no recent workouts"
+  },
+
+  "noWorkoutScheduled": "No workout scheduled for today",
+  "@noWorkoutScheduled": {
+    "description": "Message shown when no workout is scheduled"
+  },
+
+  "planFirstWorkout": "Plan your first workout",
+  "@planFirstWorkout": {
+    "description": "Prompt to plan a workout"
+  },
+
+  "startWorkout": "Start Workout",
+  "@startWorkout": {
+    "description": "Button to start a workout"
+  },
+
+  "planAWorkout": "Plan a Workout",
+  "@planAWorkout": {
+    "description": "Button to plan a workout"
+  },
+
+  "todaysWorkout": "Today's Workout",
+  "@todaysWorkout": {
+    "description": "Label for today's workout section"
+  },
+
+  "more": "More",
+  "@more": {
+    "description": "Button to see more items"
+  },
+
+  "details": "Details",
+  "@details": {
+    "description": "Button to view details"
+  },
+
+  "edit": "Edit",
+  "@edit": {
+    "description": "Button to edit an item"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Button to save changes"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button to cancel action"
+  },
+
+  "delete": "Delete",
+  "@delete": {
+    "description": "Button to delete an item"
+  },
+
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button to retry an action"
+  },
+
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+
+  "error": "Error",
+  "@error": {
+    "description": "Error label"
+  },
+
+  "recordsTitle": "Records",
+  "@recordsTitle": {
+    "description": "Records screen title"
+  },
+
+  "exercises": "Exercises",
+  "@exercises": {
+    "description": "Exercises label"
+  },
+
+  "workouts": "Workouts",
+  "@workouts": {
+    "description": "Workouts label"
+  },
+
+  "mesocycles": "Mesocycles",
+  "@mesocycles": {
+    "description": "Mesocycles label"
+  },
+
+  "sessions": "Sessions",
+  "@sessions": {
+    "description": "Sessions label"
+  },
+
+  "searchByName": "Search by name...",
+  "@searchByName": {
+    "description": "Search field placeholder"
+  },
+
+  "noExercisesFound": "No exercises found",
+  "@noExercisesFound": {
+    "description": "Message when no exercises exist"
+  },
+
+  "noExercisesMatch": "No exercises match your search",
+  "@noExercisesMatch": {
+    "description": "Message when search returns no exercises"
+  },
+
+  "noWorkoutsFound": "No workouts found",
+  "@noWorkoutsFound": {
+    "description": "Message when no workouts exist"
+  },
+
+  "noWorkoutsMatch": "No workouts match your search",
+  "@noWorkoutsMatch": {
+    "description": "Message when search returns no workouts"
+  },
+
+  "noMesocyclesFound": "No mesocycles found",
+  "@noMesocyclesFound": {
+    "description": "Message when no mesocycles exist"
+  },
+
+  "noMesocyclesMatch": "No mesocycles match your search",
+  "@noMesocyclesMatch": {
+    "description": "Message when search returns no mesocycles"
+  },
+
+  "noSessionsFound": "No sessions found",
+  "@noSessionsFound": {
+    "description": "Message when no sessions exist"
+  },
+
+  "noSessionsMatch": "No sessions match your search",
+  "@noSessionsMatch": {
+    "description": "Message when search returns no sessions"
+  },
+
+  "completed": "Completed",
+  "@completed": {
+    "description": "Status label for completed items"
+  },
+
+  "noDefaultWeight": "No default weight",
+  "@noDefaultWeight": {
+    "description": "Label when exercise has no default weight"
+  },
+
+  "registerNewTitle": "Register New",
+  "@registerNewTitle": {
+    "description": "Register new screen title"
+  },
+
+  "whatToCreate": "What would you like to create?",
+  "@whatToCreate": {
+    "description": "Prompt on register screen"
+  },
+
+  "addExercise": "Add Exercise",
+  "@addExercise": {
+    "description": "Card title to add exercise"
+  },
+
+  "addExerciseDesc": "Create a new exercise for your catalog",
+  "@addExerciseDesc": {
+    "description": "Description for add exercise card"
+  },
+
+  "addWorkout": "Add Workout",
+  "@addWorkout": {
+    "description": "Card title to add workout"
+  },
+
+  "addWorkoutDesc": "Build a workout with exercises",
+  "@addWorkoutDesc": {
+    "description": "Description for add workout card"
+  },
+
+  "addMesocycle": "Add Mesocycle",
+  "@addMesocycle": {
+    "description": "Card title to add mesocycle"
+  },
+
+  "addMesocycleDesc": "Plan a training cycle with multiple workouts",
+  "@addMesocycleDesc": {
+    "description": "Description for add mesocycle card"
+  },
+
+  "manageCatalogs": "Manage Catalogs",
+  "@manageCatalogs": {
+    "description": "Manage catalogs section"
+  },
+
+  "manageCatalogsDesc": "Add exercise types, equipment, muscle groups, etc.",
+  "@manageCatalogsDesc": {
+    "description": "Description for manage catalogs"
+  },
+
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Settings screen title"
+  },
+
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {
+    "description": "Language selection prompt"
+  },
+
+  "english": "English",
+  "@english": {
+    "description": "English language name"
+  },
+
+  "spanish": "Spanish",
+  "@spanish": {
+    "description": "Spanish language name"
+  },
+
+  "noExercisesInWorkout": "No exercises in this workout",
+  "@noExercisesInWorkout": {
+    "description": "Message when workout has no exercises"
+  },
+
+  "notesSaved": "Notes saved!",
+  "@notesSaved": {
+    "description": "Confirmation message for saved notes"
+  },
+
+  "noExercisesAvailable": "No exercises available",
+  "@noExercisesAvailable": {
+    "description": "Message when no exercises are available to select"
+  },
+
+  "noMoreWorkoutsTitle": "No More Workouts",
+  "@noMoreWorkoutsTitle": {
+    "description": "Dialog title when no more workouts exist"
+  },
+
+  "workoutCount": "You have completed {count} workout{plural}. Keep training to see more history!",
+  "@workoutCount": {
+    "description": "Message showing workout count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "plural": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noSetsLogged": "No sets logged yet",
+  "@noSetsLogged": {
+    "description": "Message when exercise has no sets"
+  },
+
+  "noNotesForSet": "No notes for this set.",
+  "@noNotesForSet": {
+    "description": "Message when set has no notes"
+  },
+
+  "noEffortLevel": "No effort level recorded for this set.",
+  "@noEffortLevel": {
+    "description": "Message when set has no effort level"
+  },
+
+  "noWorkoutsInMesocycle": "No workouts in this mesocycle",
+  "@noWorkoutsInMesocycle": {
+    "description": "Message when mesocycle has no workouts"
+  },
+
+  "exerciseDetails": "Exercise Details",
+  "@exerciseDetails": {
+    "description": "Exercise details screen title"
+  },
+
+  "defaultWorkingWeight": "Default Working Weight",
+  "@defaultWorkingWeight": {
+    "description": "Label for default working weight"
+  },
+
+  "unitSystem": "Unit System",
+  "@unitSystem": {
+    "description": "Label for unit system"
+  },
+
+  "metricKg": "Metric (kg)",
+  "@metricKg": {
+    "description": "Metric unit system label"
+  },
+
+  "imperialLbs": "Imperial (lbs)",
+  "@imperialLbs": {
+    "description": "Imperial unit system label"
+  },
+
+  "notSet": "Not set",
+  "@notSet": {
+    "description": "Label when value is not set"
+  },
+
+  "workoutSession": "Workout Session",
+  "@workoutSession": {
+    "description": "Default workout session title"
+  },
+
+  "weeks": "weeks",
+  "@weeks": {
+    "description": "Weeks label"
+  },
+
+  "sessionsPerWeek": "sessions/week",
+  "@sessionsPerWeek": {
+    "description": "Sessions per week label"
+  },
+
+  "createdOn": "Created {date}",
+  "@createdOn": {
+    "description": "Created date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "workoutDetails": "Workout Details",
+  "@workoutDetails": {
+    "description": "Workout details screen title"
+  },
+
+  "workoutCompleted": "Workout completed!",
+  "@workoutCompleted": {
+    "description": "Message when workout is marked complete"
+  },
+
+  "workoutNotFound": "Workout not found",
+  "@workoutNotFound": {
+    "description": "Error message when workout doesn't exist"
+  },
+
+  "activeWorkout": "ACTIVE WORKOUT",
+  "@activeWorkout": {
+    "description": "Label for active workout session"
+  },
+
+  "workoutNotes": "Workout Notes",
+  "@workoutNotes": {
+    "description": "Label for workout notes section"
+  },
+
+  "addWorkoutNotes": "Add Workout Notes",
+  "@addWorkoutNotes": {
+    "description": "Button to add workout notes"
+  },
+
+  "addNotesPlaceholder": "Add notes about your workout...",
+  "@addNotesPlaceholder": {
+    "description": "Placeholder for notes input field"
+  },
+
+  "markStartTime": "Mark Start Time",
+  "@markStartTime": {
+    "description": "Button to mark workout start time"
+  },
+
+  "seeStartTime": "See Start Time",
+  "@seeStartTime": {
+    "description": "Button to view workout start time"
+  },
+
+  "setStartTimeNow": "Set the workout start time to now?",
+  "@setStartTimeNow": {
+    "description": "Confirmation message for marking start time"
+  },
+
+  "markNow": "Mark Now",
+  "@markNow": {
+    "description": "Button to mark current time"
+  },
+
+  "startTimeMarked": "Start time marked!",
+  "@startTimeMarked": {
+    "description": "Confirmation that start time was saved"
+  },
+
+  "workoutStartTime": "Workout Start Time",
+  "@workoutStartTime": {
+    "description": "Dialog title for start time"
+  },
+
+  "workoutStartedAt": "This workout started at:",
+  "@workoutStartedAt": {
+    "description": "Label showing when workout started"
+  },
+
+  "close": "Close",
+  "@close": {
+    "description": "Close button"
+  },
+
+  "changeExercise": "Change Exercise",
+  "@changeExercise": {
+    "description": "Button to swap exercise"
+  },
+
+  "exerciseChangedTo": "Exercise changed to {name}",
+  "@exerciseChangedTo": {
+    "description": "Confirmation message for exercise swap",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+
+  "defaultLabel": "Default",
+  "@defaultLabel": {
+    "description": "Label for default value"
+  },
+
+  "newExercise": "New Exercise",
+  "@newExercise": {
+    "description": "Title for new exercise screen"
+  },
+
+  "editExercise": "Edit Exercise",
+  "@editExercise": {
+    "description": "Title for edit exercise screen"
+  },
+
+  "exerciseName": "Exercise Name",
+  "@exerciseName": {
+    "description": "Label for exercise name field"
+  },
+
+  "exerciseType": "Exercise Type",
+  "@exerciseType": {
+    "description": "Label for exercise type field"
+  },
+
+  "equipment": "Equipment",
+  "@equipment": {
+    "description": "Label for equipment field"
+  },
+
+  "muscleGroups": "Muscle Groups",
+  "@muscleGroups": {
+    "description": "Label for muscle groups field"
+  },
+
+  "saveExercise": "Save Exercise",
+  "@saveExercise": {
+    "description": "Button to save exercise"
+  },
+
+  "exerciseSaved": "Exercise saved!",
+  "@exerciseSaved": {
+    "description": "Confirmation that exercise was saved"
+  },
+
+  "newWorkout": "New Workout",
+  "@newWorkout": {
+    "description": "Title for new workout screen"
+  },
+
+  "editWorkout": "Edit Workout",
+  "@editWorkout": {
+    "description": "Title for edit workout screen"
+  },
+
+  "workoutName": "Workout Name",
+  "@workoutName": {
+    "description": "Label for workout name field"
+  },
+
+  "workoutType": "Workout Type",
+  "@workoutType": {
+    "description": "Label for workout type field"
+  },
+
+  "selectExercises": "Select Exercises",
+  "@selectExercises": {
+    "description": "Button to select exercises"
+  },
+
+  "saveWorkout": "Save Workout",
+  "@saveWorkout": {
+    "description": "Button to save workout"
+  },
+
+  "workoutSaved": "Workout saved!",
+  "@workoutSaved": {
+    "description": "Confirmation that workout was saved"
+  },
+
+  "newMesocycle": "New Mesocycle",
+  "@newMesocycle": {
+    "description": "Title for new mesocycle screen"
+  },
+
+  "editMesocycle": "Edit Mesocycle",
+  "@editMesocycle": {
+    "description": "Title for edit mesocycle screen"
+  },
+
+  "mesocycleName": "Mesocycle Name",
+  "@mesocycleName": {
+    "description": "Label for mesocycle name field"
+  },
+
+  "duration": "Duration",
+  "@duration": {
+    "description": "Label for duration field"
+  },
+
+  "startDate": "Start Date",
+  "@startDate": {
+    "description": "Label for start date field"
+  },
+
+  "selectWorkouts": "Select Workouts",
+  "@selectWorkouts": {
+    "description": "Button to select workouts"
+  },
+
+  "saveMesocycle": "Save Mesocycle",
+  "@saveMesocycle": {
+    "description": "Button to save mesocycle"
+  },
+
+  "mesocycleSaved": "Mesocycle saved!",
+  "@mesocycleSaved": {
+    "description": "Confirmation that mesocycle was saved"
+  },
+
+  "required": "Required",
+  "@required": {
+    "description": "Label for required fields"
+  },
+
+  "optional": "Optional",
+  "@optional": {
+    "description": "Label for optional fields"
+  },
+
+  "pleaseEnter": "Please enter {field}",
+  "@pleaseEnter": {
+    "description": "Validation message for empty required field",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+
+  "pleaseSelect": "Please select {field}",
+  "@pleaseSelect": {
+    "description": "Validation message for unselected required field",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  }
+}

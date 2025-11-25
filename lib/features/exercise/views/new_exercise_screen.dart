@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../repositories/exercise_type_repository.dart';
 import '../repositories/equipment_type_repository.dart';
@@ -83,9 +84,10 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
     }
 
     if (_selectedMuscleGroupId == null) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select a muscle group'),
+        SnackBar(
+          content: Text(l10n.pleaseSelect(l10n.muscleGroups)),
           backgroundColor: AppColors.error,
         ),
       );
@@ -111,9 +113,10 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
       await _exerciseRepository.create(exercise);
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Exercise created successfully!'),
+          SnackBar(
+            content: Text(l10n.exerciseSaved),
             backgroundColor: AppColors.success,
           ),
         );
@@ -145,9 +148,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'New Exercise',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.newExercise,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -197,8 +200,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                           ),
                         ),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter an exercise name';
+                            return l10n.pleaseEnter(l10n.exerciseName);
                           }
                           return null;
                         },
@@ -239,8 +243,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             );
                           }).toList(),
                           validator: (value) {
+                            final l10n = AppLocalizations.of(context)!;
                             if (value == null) {
-                              return 'Please select an exercise type';
+                              return l10n.pleaseSelect(l10n.exerciseType);
                             }
                             return null;
                           },
@@ -282,8 +287,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             );
                           }).toList(),
                           validator: (value) {
+                            final l10n = AppLocalizations.of(context)!;
                             if (value == null) {
-                              return 'Please select an equipment type';
+                              return l10n.pleaseSelect(l10n.equipment);
                             }
                             return null;
                           },
@@ -430,9 +436,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                                     strokeWidth: 2,
                                   ),
                                 )
-                              : const Text(
-                                  'Save Exercise',
-                                  style: TextStyle(
+                              : Text(
+                                  AppLocalizations.of(context)!.saveExercise,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
