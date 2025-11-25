@@ -369,4 +369,220 @@ class AppLocalizationsEn extends AppLocalizations {
   String pleaseSelect(String field) {
     return 'Please select $field';
   }
+
+  @override
+  String get endDate => 'End Date';
+
+  @override
+  String session(int number) {
+    return 'Session $number';
+  }
+
+  @override
+  String get perWeek => 'Per Week';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get usingDefaultWeight => 'Using default weight';
+
+  @override
+  String get sets => 'sets';
+
+  @override
+  String get mesocycleDetails => 'Mesocycle Details';
+
+  @override
+  String selectWorkoutForSession(int number) {
+    return 'Please select a workout for Session $number';
+  }
+
+  @override
+  String errorCreatingMesocycle(String error) {
+    return 'Error creating mesocycle: $error';
+  }
+
+  @override
+  String get enterMesocycleName => 'Enter mesocycle name';
+
+  @override
+  String get weeksLabel => 'Weeks:';
+
+  @override
+  String get sessionsPerWeekDesc => 'Number of workout sessions per week';
+
+  @override
+  String get chooseWorkoutTemplate => 'Choose workout template';
+
+  @override
+  String get amountOfTrainingWeeks => 'Amount of Training Weeks';
+
+  @override
+  String get selectSplit => 'Select Split (Sessions of the Week)';
+
+  @override
+  String errorLoadingExercise(String error) {
+    return 'Error loading exercise: $error';
+  }
+
+  @override
+  String errorUpdatingExercise(String error) {
+    return 'Error updating exercise: $error';
+  }
+
+  @override
+  String get enterExerciseName => 'Enter exercise name';
+
+  @override
+  String get selectExerciseType => 'Select exercise type';
+
+  @override
+  String get selectEquipmentType => 'Select equipment type';
+
+  @override
+  String get selectMuscleGroup => 'Select muscle group';
+
+  @override
+  String get defaultWorkingWeightOptional =>
+      'Default Working Weight (Optional)';
+
+  @override
+  String get enterWeight => 'Enter weight';
+
+  @override
+  String errorCreatingExercise(String error) {
+    return 'Error creating exercise: $error';
+  }
+
+  @override
+  String errorLoadingWorkout(String error) {
+    return 'Error loading workout: $error';
+  }
+
+  @override
+  String errorUpdatingWorkout(String error) {
+    return 'Error updating workout: $error';
+  }
+
+  @override
+  String errorCreatingWorkout(String error) {
+    return 'Error creating workout: $error';
+  }
+
+  @override
+  String get enterWorkoutName => 'Enter workout name';
+
+  @override
+  String get selectWorkoutType => 'Select workout type';
+
+  @override
+  String get numberOfExercises => 'Number of Exercises';
+
+  @override
+  String get numberOfExercisesToPerform => 'Number of exercises to perform';
+
+  @override
+  String get chooseExercise => 'Choose exercise';
+
+  @override
+  String selectTheOrdinalExercise(String ordinal) {
+    return 'Select the $ordinal exercise';
+  }
+
+  @override
+  String pleaseSelectTheOrdinalExercise(String ordinal) {
+    return 'Please select the $ordinal exercise';
+  }
+
+  @override
+  String pleaseSelectSetsForTheOrdinalExercise(String ordinal) {
+    return 'Please select sets for the $ordinal exercise';
+  }
+
+  @override
+  String errorLoadingMesocycle(String error) {
+    return 'Error loading mesocycle: $error';
+  }
+
+  @override
+  String errorUpdatingMesocycle(String error) {
+    return 'Error updating mesocycle: $error';
+  }
+
+  @override
+  String get trainingWeeks => 'Training Weeks';
+
+  @override
+  String get durationOfMesocycleInWeeks => 'Duration of the mesocycle in weeks';
+
+  @override
+  String get workoutSchedule => 'Workout Schedule';
+
+  @override
+  String get chooseWorkout => 'Choose workout';
+
+  @override
+  String get defaultWeight => 'Default Weight';
+
+  @override
+  String get manageYourCatalogs => 'Manage your catalogs';
+
+  @override
+  String get exerciseTypes => 'Exercise Types';
+
+  @override
+  String get exerciseTypesDesc => 'Compound, Isolation, etc.';
+
+  @override
+  String get equipmentTypes => 'Equipment Types';
+
+  @override
+  String get equipmentTypesDesc => 'Barbell, Dumbbell, Machine, etc.';
+
+  @override
+  String get workoutTypes => 'Workout Types';
+
+  @override
+  String get workoutTypesDesc => 'Push, Pull, Legs, etc.';
+
+  @override
+  String get muscleGroupsDesc => 'Chest, Back, Legs, etc.';
+
+  @override
+  String addCatalog(String catalog) {
+    return 'Add $catalog';
+  }
+
+  @override
+  String get enterName => 'Enter name';
+
+  @override
+  String get pleaseEnterName => 'Please enter a name';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String catalogAddedSuccessfully(String catalog) {
+    return '$catalog added successfully!';
+  }
+
+  @override
+  String errorAddingCatalog(String catalog, String error) {
+    return 'Error adding $catalog: $error';
+  }
+
+  @override
+  String weeksCount(int count) {
+    return '$count weeks';
+  }
+
+  @override
+  String sessionsPerWeekCount(int count) {
+    return '$count sessions/week';
+  }
+
+  @override
+  String get workoutSplit => 'Workout Split';
 }

@@ -612,5 +612,76 @@
         "type": "String"
       }
     }
-  }
+  },
+
+  "endDate": "Fecha de Fin",
+  "session": "Sesión {number}",
+  "perWeek": "Por Semana",
+  "created": "Creado",
+  "usingDefaultWeight": "Usando peso predeterminado",
+  "sets": "series",
+  "mesocycleDetails": "Detalles del Mesociclo",
+
+  "selectWorkoutForSession": "Por favor seleccione una rutina para la Sesión {number}",
+  "errorCreatingMesocycle": "Error al crear mesociclo: {error}",
+  "enterMesocycleName": "Ingrese nombre del mesociclo",
+  "weeksLabel": "Semanas:",
+  "sessionsPerWeekDesc": "Número de sesiones de entrenamiento por semana",
+  "chooseWorkoutTemplate": "Elija plantilla de rutina",
+  "amountOfTrainingWeeks": "Cantidad de Semanas de Entrenamiento",
+  "selectSplit": "Seleccionar División (Sesiones de la Semana)",
+
+  "errorLoadingExercise": "Error al cargar ejercicio: {error}",
+  "errorUpdatingExercise": "Error al actualizar ejercicio: {error}",
+  "enterExerciseName": "Ingrese nombre del ejercicio",
+  "selectExerciseType": "Seleccione tipo de ejercicio",
+  "selectEquipmentType": "Seleccione tipo de equipamiento",
+  "selectMuscleGroup": "Seleccione grupo muscular",
+  "defaultWorkingWeightOptional": "Peso de Trabajo Predeterminado (Opcional)",
+  "enterWeight": "Ingrese peso",
+
+  "errorCreatingExercise": "Error al crear ejercicio: {error}",
+
+  "errorLoadingWorkout": "Error al cargar rutina: {error}",
+  "errorUpdatingWorkout": "Error al actualizar rutina: {error}",
+  "errorCreatingWorkout": "Error al crear rutina: {error}",
+  "enterWorkoutName": "Ingrese nombre de la rutina",
+  "selectWorkoutType": "Seleccione tipo de rutina",
+  "numberOfExercises": "Número de Ejercicios",
+  "numberOfExercisesToPerform": "Número de ejercicios a realizar",
+  "chooseExercise": "Elija ejercicio",
+  "selectTheOrdinalExercise": "Seleccione el {ordinal} ejercicio",
+  "pleaseSelectTheOrdinalExercise": "Por favor seleccione el {ordinal} ejercicio",
+  "pleaseSelectSetsForTheOrdinalExercise": "Por favor seleccione series para el {ordinal} ejercicio",
+  "errorLoadingMesocycle": "Error al cargar mesociclo: {error}",
+  "errorUpdatingMesocycle": "Error al actualizar mesociclo: {error}",
+  "trainingWeeks": "Semanas de Entrenamiento",
+  "durationOfMesocycleInWeeks": "Duración del mesociclo en semanas",
+  "workoutSchedule": "Horario de Entrenamiento",
+  "chooseWorkout": "Elija rutina",
+
+  "defaultWeight": "Peso Predeterminado",
+
+  "manageCatalogs": "Administrar Catálogos",
+  "manageYourCatalogs": "Administre sus catálogos",
+  "exerciseTypes": "Tipos de Ejercicio",
+  "exerciseTypesDesc": "Compuesto, Aislamiento, etc.",
+  "equipmentTypes": "Tipos de Equipamiento",
+  "equipmentTypesDesc": "Barra, Mancuerna, Máquina, etc.",
+  "workoutTypes": "Tipos de Rutina",
+  "workoutTypesDesc": "Empuje, Jalón, Piernas, etc.",
+  "muscleGroupsDesc": "Pecho, Espalda, Piernas, etc.",
+  "addCatalog": "Agregar {catalog}",
+  "enterName": "Ingrese nombre",
+  "pleaseEnterName": "Por favor ingrese un nombre",
+  "add": "Agregar",
+  "catalogAddedSuccessfully": "{catalog} agregado exitosamente!",
+  "errorAddingCatalog": "Error al agregar {catalog}: {error}",
+
+  "edit": "Editar",
+  "completed": "Completado",
+  "workoutSession": "Sesión de Entrenamiento",
+  "weeksCount": "{count} semanas",
+  "sessionsPerWeekCount": "{count} sesiones/semana",
+  "workoutSplit": "División de Entrenamiento"
 }

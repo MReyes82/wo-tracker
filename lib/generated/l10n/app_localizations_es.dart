@@ -151,7 +151,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Planifica un ciclo de entrenamiento con múltiples entrenamientos';
 
   @override
-  String get manageCatalogs => 'Gestionar Catálogos';
+  String get manageCatalogs => 'Administrar Catálogos';
 
   @override
   String get manageCatalogsDesc =>
@@ -375,4 +375,221 @@ class AppLocalizationsEs extends AppLocalizations {
   String pleaseSelect(String field) {
     return 'Por favor seleccione $field';
   }
+
+  @override
+  String get endDate => 'Fecha de Fin';
+
+  @override
+  String session(int number) {
+    return 'Sesión $number';
+  }
+
+  @override
+  String get perWeek => 'Por Semana';
+
+  @override
+  String get created => 'Creado';
+
+  @override
+  String get usingDefaultWeight => 'Usando peso predeterminado';
+
+  @override
+  String get sets => 'series';
+
+  @override
+  String get mesocycleDetails => 'Detalles del Mesociclo';
+
+  @override
+  String selectWorkoutForSession(int number) {
+    return 'Por favor seleccione una rutina para la Sesión $number';
+  }
+
+  @override
+  String errorCreatingMesocycle(String error) {
+    return 'Error al crear mesociclo: $error';
+  }
+
+  @override
+  String get enterMesocycleName => 'Ingrese nombre del mesociclo';
+
+  @override
+  String get weeksLabel => 'Semanas:';
+
+  @override
+  String get sessionsPerWeekDesc =>
+      'Número de sesiones de entrenamiento por semana';
+
+  @override
+  String get chooseWorkoutTemplate => 'Elija plantilla de rutina';
+
+  @override
+  String get amountOfTrainingWeeks => 'Cantidad de Semanas de Entrenamiento';
+
+  @override
+  String get selectSplit => 'Seleccionar División (Sesiones de la Semana)';
+
+  @override
+  String errorLoadingExercise(String error) {
+    return 'Error al cargar ejercicio: $error';
+  }
+
+  @override
+  String errorUpdatingExercise(String error) {
+    return 'Error al actualizar ejercicio: $error';
+  }
+
+  @override
+  String get enterExerciseName => 'Ingrese nombre del ejercicio';
+
+  @override
+  String get selectExerciseType => 'Seleccione tipo de ejercicio';
+
+  @override
+  String get selectEquipmentType => 'Seleccione tipo de equipamiento';
+
+  @override
+  String get selectMuscleGroup => 'Seleccione grupo muscular';
+
+  @override
+  String get defaultWorkingWeightOptional =>
+      'Peso de Trabajo Predeterminado (Opcional)';
+
+  @override
+  String get enterWeight => 'Ingrese peso';
+
+  @override
+  String errorCreatingExercise(String error) {
+    return 'Error al crear ejercicio: $error';
+  }
+
+  @override
+  String errorLoadingWorkout(String error) {
+    return 'Error al cargar rutina: $error';
+  }
+
+  @override
+  String errorUpdatingWorkout(String error) {
+    return 'Error al actualizar rutina: $error';
+  }
+
+  @override
+  String errorCreatingWorkout(String error) {
+    return 'Error al crear rutina: $error';
+  }
+
+  @override
+  String get enterWorkoutName => 'Ingrese nombre de la rutina';
+
+  @override
+  String get selectWorkoutType => 'Seleccione tipo de rutina';
+
+  @override
+  String get numberOfExercises => 'Número de Ejercicios';
+
+  @override
+  String get numberOfExercisesToPerform => 'Número de ejercicios a realizar';
+
+  @override
+  String get chooseExercise => 'Elija ejercicio';
+
+  @override
+  String selectTheOrdinalExercise(String ordinal) {
+    return 'Seleccione el $ordinal ejercicio';
+  }
+
+  @override
+  String pleaseSelectTheOrdinalExercise(String ordinal) {
+    return 'Por favor seleccione el $ordinal ejercicio';
+  }
+
+  @override
+  String pleaseSelectSetsForTheOrdinalExercise(String ordinal) {
+    return 'Por favor seleccione series para el $ordinal ejercicio';
+  }
+
+  @override
+  String errorLoadingMesocycle(String error) {
+    return 'Error al cargar mesociclo: $error';
+  }
+
+  @override
+  String errorUpdatingMesocycle(String error) {
+    return 'Error al actualizar mesociclo: $error';
+  }
+
+  @override
+  String get trainingWeeks => 'Semanas de Entrenamiento';
+
+  @override
+  String get durationOfMesocycleInWeeks => 'Duración del mesociclo en semanas';
+
+  @override
+  String get workoutSchedule => 'Horario de Entrenamiento';
+
+  @override
+  String get chooseWorkout => 'Elija rutina';
+
+  @override
+  String get defaultWeight => 'Peso Predeterminado';
+
+  @override
+  String get manageYourCatalogs => 'Administre sus catálogos';
+
+  @override
+  String get exerciseTypes => 'Tipos de Ejercicio';
+
+  @override
+  String get exerciseTypesDesc => 'Compuesto, Aislamiento, etc.';
+
+  @override
+  String get equipmentTypes => 'Tipos de Equipamiento';
+
+  @override
+  String get equipmentTypesDesc => 'Barra, Mancuerna, Máquina, etc.';
+
+  @override
+  String get workoutTypes => 'Tipos de Rutina';
+
+  @override
+  String get workoutTypesDesc => 'Empuje, Jalón, Piernas, etc.';
+
+  @override
+  String get muscleGroupsDesc => 'Pecho, Espalda, Piernas, etc.';
+
+  @override
+  String addCatalog(String catalog) {
+    return 'Agregar $catalog';
+  }
+
+  @override
+  String get enterName => 'Ingrese nombre';
+
+  @override
+  String get pleaseEnterName => 'Por favor ingrese un nombre';
+
+  @override
+  String get add => 'Agregar';
+
+  @override
+  String catalogAddedSuccessfully(String catalog) {
+    return '$catalog agregado exitosamente!';
+  }
+
+  @override
+  String errorAddingCatalog(String catalog, String error) {
+    return 'Error al agregar $catalog: $error';
+  }
+
+  @override
+  String weeksCount(int count) {
+    return '$count semanas';
+  }
+
+  @override
+  String sessionsPerWeekCount(int count) {
+    return '$count sesiones/semana';
+  }
+
+  @override
+  String get workoutSplit => 'División de Entrenamiento';
 }

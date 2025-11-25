@@ -188,7 +188,7 @@ abstract class AppLocalizations {
   /// **'Details'**
   String get details;
 
-  /// Button to edit an item
+  /// Edit button label
   ///
   /// In en, this message translates to:
   /// **'Edit'**
@@ -374,7 +374,7 @@ abstract class AppLocalizations {
   /// **'Plan a training cycle with multiple workouts'**
   String get addMesocycleDesc;
 
-  /// Manage catalogs section
+  /// Title for manage catalogs screen
   ///
   /// In en, this message translates to:
   /// **'Manage Catalogs'**
@@ -506,7 +506,7 @@ abstract class AppLocalizations {
   /// **'Not set'**
   String get notSet;
 
-  /// Default workout session title
+  /// Default title for workout session
   ///
   /// In en, this message translates to:
   /// **'Workout Session'**
@@ -799,6 +799,360 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select {field}'**
   String pleaseSelect(String field);
+
+  /// Label for end date field
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get endDate;
+
+  /// Session label with number
+  ///
+  /// In en, this message translates to:
+  /// **'Session {number}'**
+  String session(int number);
+
+  /// Label for per week
+  ///
+  /// In en, this message translates to:
+  /// **'Per Week'**
+  String get perWeek;
+
+  /// Created label
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// Label for using default weight
+  ///
+  /// In en, this message translates to:
+  /// **'Using default weight'**
+  String get usingDefaultWeight;
+
+  /// Sets label
+  ///
+  /// In en, this message translates to:
+  /// **'sets'**
+  String get sets;
+
+  /// Mesocycle details screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Mesocycle Details'**
+  String get mesocycleDetails;
+
+  /// Error message when workout is not selected for a session
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a workout for Session {number}'**
+  String selectWorkoutForSession(int number);
+
+  /// Error message for mesocycle creation failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating mesocycle: {error}'**
+  String errorCreatingMesocycle(String error);
+
+  /// Hint text for mesocycle name field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter mesocycle name'**
+  String get enterMesocycleName;
+
+  /// Label for weeks count
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks:'**
+  String get weeksLabel;
+
+  /// Description for sessions per week slider
+  ///
+  /// In en, this message translates to:
+  /// **'Number of workout sessions per week'**
+  String get sessionsPerWeekDesc;
+
+  /// Hint text for workout template dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Choose workout template'**
+  String get chooseWorkoutTemplate;
+
+  /// Section title for training weeks
+  ///
+  /// In en, this message translates to:
+  /// **'Amount of Training Weeks'**
+  String get amountOfTrainingWeeks;
+
+  /// Section title for workout split selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select Split (Sessions of the Week)'**
+  String get selectSplit;
+
+  /// Error message for loading exercise failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading exercise: {error}'**
+  String errorLoadingExercise(String error);
+
+  /// Error message for updating exercise failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating exercise: {error}'**
+  String errorUpdatingExercise(String error);
+
+  /// Hint text for exercise name field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter exercise name'**
+  String get enterExerciseName;
+
+  /// Hint text for exercise type dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select exercise type'**
+  String get selectExerciseType;
+
+  /// Hint text for equipment type dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select equipment type'**
+  String get selectEquipmentType;
+
+  /// Hint text for muscle group dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select muscle group'**
+  String get selectMuscleGroup;
+
+  /// Label for default working weight field (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Default Working Weight (Optional)'**
+  String get defaultWorkingWeightOptional;
+
+  /// Hint text for weight field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter weight'**
+  String get enterWeight;
+
+  /// Error message for creating exercise failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating exercise: {error}'**
+  String errorCreatingExercise(String error);
+
+  /// Error message for loading workout failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading workout: {error}'**
+  String errorLoadingWorkout(String error);
+
+  /// Error message for updating workout failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating workout: {error}'**
+  String errorUpdatingWorkout(String error);
+
+  /// Error message for creating workout failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating workout: {error}'**
+  String errorCreatingWorkout(String error);
+
+  /// Hint text for workout name field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter workout name'**
+  String get enterWorkoutName;
+
+  /// Hint text for workout type dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select workout type'**
+  String get selectWorkoutType;
+
+  /// Section title for number of exercises
+  ///
+  /// In en, this message translates to:
+  /// **'Number of Exercises'**
+  String get numberOfExercises;
+
+  /// Description for number of exercises slider
+  ///
+  /// In en, this message translates to:
+  /// **'Number of exercises to perform'**
+  String get numberOfExercisesToPerform;
+
+  /// Hint text for exercise dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Choose exercise'**
+  String get chooseExercise;
+
+  /// Prompt to select exercise with ordinal number
+  ///
+  /// In en, this message translates to:
+  /// **'Select the {ordinal} exercise'**
+  String selectTheOrdinalExercise(String ordinal);
+
+  /// Error message for unselected exercise with ordinal
+  ///
+  /// In en, this message translates to:
+  /// **'Please select the {ordinal} exercise'**
+  String pleaseSelectTheOrdinalExercise(String ordinal);
+
+  /// Error message for unselected sets with ordinal
+  ///
+  /// In en, this message translates to:
+  /// **'Please select sets for the {ordinal} exercise'**
+  String pleaseSelectSetsForTheOrdinalExercise(String ordinal);
+
+  /// Error message for loading mesocycle failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading mesocycle: {error}'**
+  String errorLoadingMesocycle(String error);
+
+  /// Error message for updating mesocycle failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating mesocycle: {error}'**
+  String errorUpdatingMesocycle(String error);
+
+  /// Label for training weeks
+  ///
+  /// In en, this message translates to:
+  /// **'Training Weeks'**
+  String get trainingWeeks;
+
+  /// Description for mesocycle duration slider
+  ///
+  /// In en, this message translates to:
+  /// **'Duration of the mesocycle in weeks'**
+  String get durationOfMesocycleInWeeks;
+
+  /// Section title for workout schedule
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Schedule'**
+  String get workoutSchedule;
+
+  /// Hint text for workout dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Choose workout'**
+  String get chooseWorkout;
+
+  /// Label for default weight
+  ///
+  /// In en, this message translates to:
+  /// **'Default Weight'**
+  String get defaultWeight;
+
+  /// Description for manage catalogs screen
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your catalogs'**
+  String get manageYourCatalogs;
+
+  /// Label for exercise types catalog
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Types'**
+  String get exerciseTypes;
+
+  /// Description for exercise types
+  ///
+  /// In en, this message translates to:
+  /// **'Compound, Isolation, etc.'**
+  String get exerciseTypesDesc;
+
+  /// Label for equipment types catalog
+  ///
+  /// In en, this message translates to:
+  /// **'Equipment Types'**
+  String get equipmentTypes;
+
+  /// Description for equipment types
+  ///
+  /// In en, this message translates to:
+  /// **'Barbell, Dumbbell, Machine, etc.'**
+  String get equipmentTypesDesc;
+
+  /// Label for workout types catalog
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Types'**
+  String get workoutTypes;
+
+  /// Description for workout types
+  ///
+  /// In en, this message translates to:
+  /// **'Push, Pull, Legs, etc.'**
+  String get workoutTypesDesc;
+
+  /// Description for muscle groups
+  ///
+  /// In en, this message translates to:
+  /// **'Chest, Back, Legs, etc.'**
+  String get muscleGroupsDesc;
+
+  /// Title for add catalog dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Add {catalog}'**
+  String addCatalog(String catalog);
+
+  /// Hint text for name field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter name'**
+  String get enterName;
+
+  /// Validation message for empty name field
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a name'**
+  String get pleaseEnterName;
+
+  /// Add button label
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// Success message for adding catalog
+  ///
+  /// In en, this message translates to:
+  /// **'{catalog} added successfully!'**
+  String catalogAddedSuccessfully(String catalog);
+
+  /// Error message for adding catalog failure
+  ///
+  /// In en, this message translates to:
+  /// **'Error adding {catalog}: {error}'**
+  String errorAddingCatalog(String catalog, String error);
+
+  /// Weeks count label
+  ///
+  /// In en, this message translates to:
+  /// **'{count} weeks'**
+  String weeksCount(int count);
+
+  /// Sessions per week count label
+  ///
+  /// In en, this message translates to:
+  /// **'{count} sessions/week'**
+  String sessionsPerWeekCount(int count);
+
+  /// Label for workout split section
+  ///
+  /// In en, this message translates to:
+  /// **'Workout Split'**
+  String get workoutSplit;
 }
 
 class _AppLocalizationsDelegate

@@ -94,7 +94,7 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          _template?.name ?? 'Workout Details',
+          _template?.name ?? AppLocalizations.of(context)!.workoutDetails,
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
@@ -159,7 +159,7 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
                             if (_template!.createdAt != null) ...[
                               const SizedBox(height: 4),
                               Text(
-                                'Created ${DateFormat('MMM d, y').format(_template!.createdAt!)}',
+                                '${AppLocalizations.of(context)!.created} ${DateFormat('MMM d, y').format(_template!.createdAt!)}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: AppColors.textSecondary,
@@ -191,7 +191,7 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              '${_exercises.length} exercises',
+                              '${_exercises.length} ${AppLocalizations.of(context)!.exercises}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -311,7 +311,7 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
                 const Icon(Icons.repeat, size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Text(
-                  '${detail.templateExercise.plannedSets} sets',
+                  '${detail.templateExercise.plannedSets} ${AppLocalizations.of(context)!.sets}',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -322,9 +322,9 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
                   const SizedBox(width: 16),
                   const Icon(Icons.check_circle, size: 16, color: AppColors.success),
                   const SizedBox(width: 4),
-                  const Text(
-                    'Using default weight',
-                    style: TextStyle(
+                  Text(
+                    AppLocalizations.of(context)!.usingDefaultWeight,
+                    style: const TextStyle(
                       fontSize: 12,
                       color: AppColors.success,
                     ),

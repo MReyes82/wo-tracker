@@ -83,7 +83,7 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          _mesocycle?.name ?? 'Mesocycle Details',
+          _mesocycle?.name ?? AppLocalizations.of(context)!.mesocycleDetails,
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
@@ -164,8 +164,8 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
                                 Expanded(
                                   child: _buildInfoTile(
                                     icon: Icons.calendar_today,
-                                    label: 'Duration',
-                                    value: '${_mesocycle!.weeksQuantity} weeks',
+                                    label: AppLocalizations.of(context)!.duration,
+                                    value: '${_mesocycle!.weeksQuantity} ${AppLocalizations.of(context)!.weeks}',
                                   ),
                                 ),
                                 Container(
@@ -176,8 +176,8 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
                                 Expanded(
                                   child: _buildInfoTile(
                                     icon: Icons.repeat,
-                                    label: 'Per Week',
-                                    value: '${_mesocycle!.sessionsPerWeek} sessions',
+                                    label: AppLocalizations.of(context)!.perWeek,
+                                    value: '${_mesocycle!.sessionsPerWeek} ${AppLocalizations.of(context)!.sessions}',
                                   ),
                                 ),
                               ],
@@ -188,7 +188,7 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
                                 Expanded(
                                   child: _buildInfoTile(
                                     icon: Icons.play_circle_outline,
-                                    label: 'Start Date',
+                                    label: AppLocalizations.of(context)!.startDate,
                                     value: DateFormat('MMM d, y').format(_mesocycle!.startDate),
                                   ),
                                 ),
@@ -200,7 +200,7 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
                                 Expanded(
                                   child: _buildInfoTile(
                                     icon: Icons.flag,
-                                    label: 'End Date',
+                                    label: AppLocalizations.of(context)!.endDate,
                                     value: DateFormat('MMM d, y').format(_mesocycle!.endDate),
                                   ),
                                 ),
@@ -216,8 +216,8 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Workout Split',
+                          Text(
+                            AppLocalizations.of(context)!.workoutSplit,
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -231,7 +231,7 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              '${_workouts.length} workouts',
+                              '${_workouts.length} ${AppLocalizations.of(context)!.workouts}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -340,7 +340,7 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Session $position',
+                  AppLocalizations.of(context)!.session(position),
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,

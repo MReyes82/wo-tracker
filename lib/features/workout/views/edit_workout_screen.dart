@@ -103,7 +103,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error loading workout: $e'),
+            content: Text(AppLocalizations.of(context)!.errorLoadingWorkout(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -154,7 +154,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       if (_exerciseSelections[i].exerciseId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Please select the ${_getOrdinal(i + 1)} exercise'),
+            content: Text(AppLocalizations.of(context)!.pleaseSelectTheOrdinalExercise(_getOrdinal(i + 1))),
             backgroundColor: AppColors.error,
           ),
         );
@@ -163,7 +163,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       if (_exerciseSelections[i].plannedSets < 1) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Please select sets for the ${_getOrdinal(i + 1)} exercise'),
+            content: Text(AppLocalizations.of(context)!.pleaseSelectSetsForTheOrdinalExercise(_getOrdinal(i + 1))),
             backgroundColor: AppColors.error,
           ),
         );
@@ -209,9 +209,10 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       }
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Workout updated successfully!'),
+          SnackBar(
+            content: Text(l10n.workoutSaved),
             backgroundColor: AppColors.success,
           ),
         );
@@ -222,7 +223,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error updating workout: $e'),
+            content: Text(AppLocalizations.of(context)!.errorUpdatingWorkout(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -243,9 +244,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Edit Workout',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.editWorkout,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -273,12 +274,12 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                       const SizedBox(height: 8),
 
                       // Workout Name Field
-                      _buildSectionTitle('Workout Name'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.workoutName),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _workoutNameController,
                         decoration: InputDecoration(
-                          hintText: 'Enter workout name',
+                          hintText: AppLocalizations.of(context)!.enterWorkoutName,
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -295,8 +296,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                           ),
                         ),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter a workout name';
+                            return l10n.pleaseEnter(l10n.workoutName);
                           }
                           return null;
                         },
@@ -310,7 +312,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                       const SizedBox(height: 24),
 
                       // Workout Type Dropdown
-                      _buildSectionTitle('Workout Type'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.workoutType),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<int>(
                         value: _selectedWorkoutTypeId,
@@ -330,7 +332,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                             borderSide: const BorderSide(color: AppColors.primary, width: 2),
                           ),
                         ),
-                        hint: const Text('Select workout type'),
+                        hint: Text(AppLocalizations.of(context)!.selectWorkoutType),
                         items: _workoutTypes.map((type) {
                           return DropdownMenuItem<int>(
                             value: type.id!,
@@ -338,8 +340,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                           );
                         }).toList(),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null) {
-                            return 'Please select a workout type';
+                            return l10n.pleaseSelect(l10n.workoutType);
                           }
                           return null;
                         },
@@ -353,7 +356,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                       const SizedBox(height: 24),
 
                       // Number of Exercises Slider
-                      _buildSectionTitle('Number of Exercises'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.numberOfExercises),
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -368,7 +371,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Exercises: $_numberOfExercises',
+                                  '${AppLocalizations.of(context)!.exercises}: $_numberOfExercises',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -403,9 +406,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                                 _updateExerciseCount(value.toInt());
                               },
                             ),
-                            const Text(
-                              'Number of exercises to perform',
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.numberOfExercisesToPerform,
+                              style: const TextStyle(
                                 fontSize: 12,
                                 color: AppColors.textSecondary,
                               ),
@@ -417,7 +420,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                       const SizedBox(height: 24),
 
                       // Exercise Selection List
-                      _buildSectionTitle('Select Exercises'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.selectExercises),
                       const SizedBox(height: 16),
                       
                       ...List.generate(_exerciseSelections.length, (index) {
@@ -446,9 +449,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'Update Workout',
-                                style: TextStyle(
+                            : Text(
+                                AppLocalizations.of(context)!.saveWorkout,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -482,7 +485,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Select the ${_getOrdinal(index + 1)} exercise',
+            AppLocalizations.of(context)!.selectTheOrdinalExercise(_getOrdinal(index + 1)),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
@@ -513,7 +516,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                   borderSide: const BorderSide(color: AppColors.primary, width: 2),
                 ),
               ),
-              hint: const Text('Choose exercise'),
+              hint: Text(AppLocalizations.of(context)!.chooseExercise),
               items: _exercises.map((exercise) {
                 return DropdownMenuItem<int>(
                   value: exercise.id!,
@@ -538,9 +541,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Sets',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.sets,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,
@@ -598,9 +601,9 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Default Weight',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.defaultWeight,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textSecondary,
@@ -621,7 +624,7 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
                               child: Text(
                                 selectedExercise?.defaultWorkingWeight != null
                                     ? '${selectedExercise!.defaultWorkingWeight} ${selectedExercise.isUsingMetric ? 'kg' : 'lbs'}'
-                                    : 'Not set',
+                                    : AppLocalizations.of(context)!.notSet,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: selectedExercise?.defaultWorkingWeight != null

@@ -612,5 +612,418 @@
         "type": "String"
       }
     }
+  },
+  
+  "endDate": "End Date",
+  "@endDate": {
+    "description": "Label for end date field"
+  },
+
+  "session": "Session {number}",
+  "@session": {
+    "description": "Session label with number",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "perWeek": "Per Week",
+  "@perWeek": {
+    "description": "Label for per week"
+  },
+
+  "created": "Created",
+  "@created": {
+    "description": "Created label"
+  },
+
+  "usingDefaultWeight": "Using default weight",
+  "@usingDefaultWeight": {
+    "description": "Label for using default weight"
+  },
+
+  "sets": "sets",
+  "@sets": {
+    "description": "Sets label"
+  },
+
+  "mesocycleDetails": "Mesocycle Details",
+  "@mesocycleDetails": {
+    "description": "Mesocycle details screen title"
+  },
+
+  "selectWorkoutForSession": "Please select a workout for Session {number}",
+  "@selectWorkoutForSession": {
+    "description": "Error message when workout is not selected for a session",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "errorCreatingMesocycle": "Error creating mesocycle: {error}",
+  "@errorCreatingMesocycle": {
+    "description": "Error message for mesocycle creation failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "enterMesocycleName": "Enter mesocycle name",
+  "@enterMesocycleName": {
+    "description": "Hint text for mesocycle name field"
+  },
+
+  "weeksLabel": "Weeks:",
+  "@weeksLabel": {
+    "description": "Label for weeks count"
+  },
+
+  "sessionsPerWeekDesc": "Number of workout sessions per week",
+  "@sessionsPerWeekDesc": {
+    "description": "Description for sessions per week slider"
+  },
+
+  "chooseWorkoutTemplate": "Choose workout template",
+  "@chooseWorkoutTemplate": {
+    "description": "Hint text for workout template dropdown"
+  },
+
+  "amountOfTrainingWeeks": "Amount of Training Weeks",
+  "@amountOfTrainingWeeks": {
+    "description": "Section title for training weeks"
+  },
+
+  "selectSplit": "Select Split (Sessions of the Week)",
+  "@selectSplit": {
+    "description": "Section title for workout split selection"
+  },
+
+  "errorLoadingExercise": "Error loading exercise: {error}",
+  "@errorLoadingExercise": {
+    "description": "Error message for loading exercise failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorUpdatingExercise": "Error updating exercise: {error}",
+  "@errorUpdatingExercise": {
+    "description": "Error message for updating exercise failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "enterExerciseName": "Enter exercise name",
+  "@enterExerciseName": {
+    "description": "Hint text for exercise name field"
+  },
+
+  "selectExerciseType": "Select exercise type",
+  "@selectExerciseType": {
+    "description": "Hint text for exercise type dropdown"
+  },
+
+  "selectEquipmentType": "Select equipment type",
+  "@selectEquipmentType": {
+    "description": "Hint text for equipment type dropdown"
+  },
+
+  "selectMuscleGroup": "Select muscle group",
+  "@selectMuscleGroup": {
+    "description": "Hint text for muscle group dropdown"
+  },
+
+  "defaultWorkingWeightOptional": "Default Working Weight (Optional)",
+  "@defaultWorkingWeightOptional": {
+    "description": "Label for default working weight field (optional)"
+  },
+
+  "enterWeight": "Enter weight",
+  "@enterWeight": {
+    "description": "Hint text for weight field"
+  },
+
+  "errorCreatingExercise": "Error creating exercise: {error}",
+  "@errorCreatingExercise": {
+    "description": "Error message for creating exercise failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorLoadingWorkout": "Error loading workout: {error}",
+  "@errorLoadingWorkout": {
+    "description": "Error message for loading workout failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorUpdatingWorkout": "Error updating workout: {error}",
+  "@errorUpdatingWorkout": {
+    "description": "Error message for updating workout failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorCreatingWorkout": "Error creating workout: {error}",
+  "@errorCreatingWorkout": {
+    "description": "Error message for creating workout failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "enterWorkoutName": "Enter workout name",
+  "@enterWorkoutName": {
+    "description": "Hint text for workout name field"
+  },
+
+  "selectWorkoutType": "Select workout type",
+  "@selectWorkoutType": {
+    "description": "Hint text for workout type dropdown"
+  },
+
+  "numberOfExercises": "Number of Exercises",
+  "@numberOfExercises": {
+    "description": "Section title for number of exercises"
+  },
+
+  "numberOfExercisesToPerform": "Number of exercises to perform",
+  "@numberOfExercisesToPerform": {
+    "description": "Description for number of exercises slider"
+  },
+
+  "chooseExercise": "Choose exercise",
+  "@chooseExercise": {
+    "description": "Hint text for exercise dropdown"
+  },
+
+  "selectTheOrdinalExercise": "Select the {ordinal} exercise",
+  "@selectTheOrdinalExercise": {
+    "description": "Prompt to select exercise with ordinal number",
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+
+  "pleaseSelectTheOrdinalExercise": "Please select the {ordinal} exercise",
+  "@pleaseSelectTheOrdinalExercise": {
+    "description": "Error message for unselected exercise with ordinal",
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+
+  "pleaseSelectSetsForTheOrdinalExercise": "Please select sets for the {ordinal} exercise",
+  "@pleaseSelectSetsForTheOrdinalExercise": {
+    "description": "Error message for unselected sets with ordinal",
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorLoadingMesocycle": "Error loading mesocycle: {error}",
+  "@errorLoadingMesocycle": {
+    "description": "Error message for loading mesocycle failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorUpdatingMesocycle": "Error updating mesocycle: {error}",
+  "@errorUpdatingMesocycle": {
+    "description": "Error message for updating mesocycle failure",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "trainingWeeks": "Training Weeks",
+  "@trainingWeeks": {
+    "description": "Label for training weeks"
+  },
+
+  "durationOfMesocycleInWeeks": "Duration of the mesocycle in weeks",
+  "@durationOfMesocycleInWeeks": {
+    "description": "Description for mesocycle duration slider"
+  },
+
+  "workoutSchedule": "Workout Schedule",
+  "@workoutSchedule": {
+    "description": "Section title for workout schedule"
+  },
+
+  "chooseWorkout": "Choose workout",
+  "@chooseWorkout": {
+    "description": "Hint text for workout dropdown"
+  },
+
+  "defaultWeight": "Default Weight",
+  "@defaultWeight": {
+    "description": "Label for default weight"
+  },
+
+  "manageCatalogs": "Manage Catalogs",
+  "@manageCatalogs": {
+    "description": "Title for manage catalogs screen"
+  },
+
+  "manageYourCatalogs": "Manage your catalogs",
+  "@manageYourCatalogs": {
+    "description": "Description for manage catalogs screen"
+  },
+
+  "exerciseTypes": "Exercise Types",
+  "@exerciseTypes": {
+    "description": "Label for exercise types catalog"
+  },
+
+  "exerciseTypesDesc": "Compound, Isolation, etc.",
+  "@exerciseTypesDesc": {
+    "description": "Description for exercise types"
+  },
+
+  "equipmentTypes": "Equipment Types",
+  "@equipmentTypes": {
+    "description": "Label for equipment types catalog"
+  },
+
+  "equipmentTypesDesc": "Barbell, Dumbbell, Machine, etc.",
+  "@equipmentTypesDesc": {
+    "description": "Description for equipment types"
+  },
+
+  "workoutTypes": "Workout Types",
+  "@workoutTypes": {
+    "description": "Label for workout types catalog"
+  },
+
+  "workoutTypesDesc": "Push, Pull, Legs, etc.",
+  "@workoutTypesDesc": {
+    "description": "Description for workout types"
+  },
+
+  "muscleGroupsDesc": "Chest, Back, Legs, etc.",
+  "@muscleGroupsDesc": {
+    "description": "Description for muscle groups"
+  },
+
+  "addCatalog": "Add {catalog}",
+  "@addCatalog": {
+    "description": "Title for add catalog dialog",
+    "placeholders": {
+      "catalog": {
+        "type": "String"
+      }
+    }
+  },
+
+  "enterName": "Enter name",
+  "@enterName": {
+    "description": "Hint text for name field"
+  },
+
+  "pleaseEnterName": "Please enter a name",
+  "@pleaseEnterName": {
+    "description": "Validation message for empty name field"
+  },
+
+  "add": "Add",
+  "@add": {
+    "description": "Add button label"
+  },
+
+  "catalogAddedSuccessfully": "{catalog} added successfully!",
+  "@catalogAddedSuccessfully": {
+    "description": "Success message for adding catalog",
+    "placeholders": {
+      "catalog": {
+        "type": "String"
+      }
+    }
+  },
+
+  "errorAddingCatalog": "Error adding {catalog}: {error}",
+  "@errorAddingCatalog": {
+    "description": "Error message for adding catalog failure",
+    "placeholders": {
+      "catalog": {
+        "type": "String"
+      },
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit button label"
+  },
+
+  "completed": "Completed",
+  "@completed": {
+    "description": "Status label for completed items"
+  },
+
+  "workoutSession": "Workout Session",
+  "@workoutSession": {
+    "description": "Default title for workout session"
+  },
+
+  "weeksCount": "{count} weeks",
+  "@weeksCount": {
+    "description": "Weeks count label",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "sessionsPerWeekCount": "{count} sessions/week",
+  "@sessionsPerWeekCount": {
+    "description": "Sessions per week count label",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "workoutSplit": "Workout Split",
+  "@workoutSplit": {
+    "description": "Label for workout split section"
   }
 }

@@ -74,7 +74,7 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          _exercise?.name ?? 'Exercise Details',
+          _exercise?.name ?? AppLocalizations.of(context)!.exerciseDetails,
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
@@ -135,9 +135,9 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
                       const SizedBox(height: 20),
 
                       // Details section
-                      const Text(
-                        'Details',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.details,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
@@ -147,23 +147,23 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
 
                       _buildDetailCard(
                         icon: Icons.category,
-                        label: 'Exercise Type',
+                        label: AppLocalizations.of(context)!.exerciseType,
                         value: _exerciseType ?? 'Unknown',
                       ),
                       _buildDetailCard(
                         icon: Icons.build,
-                        label: 'Equipment',
+                        label: AppLocalizations.of(context)!.equipment,
                         value: _equipmentType ?? 'Unknown',
                       ),
                       _buildDetailCard(
                         icon: Icons.fitness_center,
-                        label: 'Muscle Group',
+                        label: AppLocalizations.of(context)!.muscleGroups,
                         value: _muscleGroup ?? 'Unknown',
                       ),
                       if (_exercise!.defaultWorkingWeight != null)
                         _buildDetailCard(
                           icon: Icons.monitor_weight,
-                          label: 'Default Working Weight',
+                          label: AppLocalizations.of(context)!.defaultWorkingWeight,
                           value: '${_exercise!.defaultWorkingWeight} ${_exercise!.isUsingMetric ? "kg" : "lbs"}',
                         ),
                       _buildDetailCard(

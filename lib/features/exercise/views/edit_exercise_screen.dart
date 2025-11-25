@@ -100,7 +100,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error loading exercise: $e'),
+            content: Text(AppLocalizations.of(context)!.errorLoadingExercise(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -114,9 +114,10 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
     }
 
     if (_selectedMuscleGroupId == null) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select a muscle group'),
+        SnackBar(
+          content: Text(l10n.pleaseSelect(l10n.muscleGroups)),
           backgroundColor: AppColors.error,
         ),
       );
@@ -143,9 +144,10 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
       await _exerciseRepository.update(updatedExercise);
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Exercise updated successfully!'),
+          SnackBar(
+            content: Text(l10n.exerciseSaved),
             backgroundColor: AppColors.success,
           ),
         );
@@ -156,7 +158,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error updating exercise: $e'),
+            content: Text(AppLocalizations.of(context)!.errorUpdatingExercise(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -177,9 +179,9 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Edit Exercise',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.editExercise,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -207,12 +209,12 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                       const SizedBox(height: 8),
 
                       // Exercise Name Field
-                      _buildSectionTitle('Exercise Name'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.exerciseName),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _exerciseNameController,
                         decoration: InputDecoration(
-                          hintText: 'Enter exercise name',
+                          hintText: AppLocalizations.of(context)!.enterExerciseName,
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -229,8 +231,9 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                           ),
                         ),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter an exercise name';
+                            return l10n.pleaseEnter(l10n.exerciseName);
                           }
                           return null;
                         },
@@ -244,7 +247,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                       const SizedBox(height: 24),
 
                       // Exercise Type Dropdown
-                      _buildSectionTitle('Exercise Type'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.exerciseType),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<int>(
                         value: _selectedExerciseTypeId,
@@ -264,7 +267,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                             borderSide: const BorderSide(color: AppColors.primary, width: 2),
                           ),
                         ),
-                        hint: const Text('Select exercise type'),
+                        hint: Text(AppLocalizations.of(context)!.selectExerciseType),
                         items: _exerciseTypes.map((type) {
                           return DropdownMenuItem<int>(
                             value: type.id!,
@@ -272,8 +275,9 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                           );
                         }).toList(),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null) {
-                            return 'Please select an exercise type';
+                            return l10n.pleaseSelect(l10n.exerciseType);
                           }
                           return null;
                         },
@@ -287,7 +291,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                       const SizedBox(height: 24),
 
                       // Equipment Type Dropdown
-                      _buildSectionTitle('Equipment Type'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.equipment),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<int>(
                         value: _selectedEquipmentTypeId,
@@ -307,7 +311,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                             borderSide: const BorderSide(color: AppColors.primary, width: 2),
                           ),
                         ),
-                        hint: const Text('Select equipment type'),
+                        hint: Text(AppLocalizations.of(context)!.selectEquipmentType),
                         items: _equipmentTypes.map((type) {
                           return DropdownMenuItem<int>(
                             value: type.id!,
@@ -315,8 +319,9 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                           );
                         }).toList(),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null) {
-                            return 'Please select an equipment type';
+                            return l10n.pleaseSelect(l10n.equipment);
                           }
                           return null;
                         },
@@ -330,7 +335,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                       const SizedBox(height: 24),
 
                       // Muscle Group Dropdown
-                      _buildSectionTitle('Muscle Group'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.muscleGroups),
                       const SizedBox(height: 8),
                       DropdownButtonFormField<int>(
                         value: _selectedMuscleGroupId,
@@ -350,7 +355,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                             borderSide: const BorderSide(color: AppColors.primary, width: 2),
                           ),
                         ),
-                        hint: const Text('Select muscle group'),
+                        hint: Text(AppLocalizations.of(context)!.selectMuscleGroup),
                         items: _muscleGroups.map((group) {
                           return DropdownMenuItem<int>(
                             value: group.id!,
@@ -367,7 +372,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                       const SizedBox(height: 24),
 
                       // Default Weight Field
-                      _buildSectionTitle('Default Working Weight (Optional)'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.defaultWorkingWeightOptional),
                       const SizedBox(height: 8),
                       Row(
                         children: [
@@ -379,7 +384,7 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                               ],
                               decoration: InputDecoration(
-                                hintText: 'Enter weight',
+                                hintText: AppLocalizations.of(context)!.enterWeight,
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
@@ -462,9 +467,9 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'Update Exercise',
-                                style: TextStyle(
+                            : Text(
+                                AppLocalizations.of(context)!.saveExercise,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),

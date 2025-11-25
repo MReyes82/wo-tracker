@@ -507,7 +507,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Edit'),
+            child: Text(l10n.edit),
           ),
           TextButton(
             onPressed: () {
@@ -525,7 +525,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Details'),
+            child: Text(l10n.details),
           ),
         ],
       ),
@@ -570,6 +570,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildMesocycleCard(Mesocycle mesocycle) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -614,7 +615,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${mesocycle.weeksQuantity} weeks, ${mesocycle.sessionsPerWeek} sessions/week',
+                  '${l10n.weeksCount(mesocycle.weeksQuantity)}, ${l10n.sessionsPerWeekCount(mesocycle.sessionsPerWeek)}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -643,7 +644,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Edit'),
+            child: Text(l10n.edit),
           ),
           TextButton(
             onPressed: () {
@@ -661,7 +662,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Details'),
+            child: Text(l10n.details),
           ),
         ],
       ),
@@ -706,6 +707,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildSessionCard(WorkoutSession session) {
+    final l10n = AppLocalizations.of(context)!;
     final isCompleted = session.endTime != null;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -748,7 +750,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  session.title ?? 'Workout Session',
+                  session.title ?? l10n.workoutSession,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -764,8 +766,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   ),
                 ),
                 if (isCompleted)
-                  const Text(
-                    'Completed',
+                  Text(
+                    l10n.completed,
                     style: TextStyle(
                       fontSize: 12,
                       color: AppColors.success,
@@ -792,7 +794,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             style: TextButton.styleFrom(
               foregroundColor: AppColors.primary,
             ),
-            child: const Text('Details'),
+            child: Text(l10n.details),
           ),
         ],
       ),

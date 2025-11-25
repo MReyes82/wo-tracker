@@ -109,7 +109,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error loading mesocycle: $e'),
+            content: Text(AppLocalizations.of(context)!.errorLoadingMesocycle(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -145,7 +145,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
       if (_workoutSelections[i].workoutTemplateId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Please select a workout for Session ${i + 1}'),
+            content: Text(AppLocalizations.of(context)!.selectWorkoutForSession(i + 1)),
             backgroundColor: AppColors.error,
           ),
         );
@@ -294,9 +294,10 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
       }
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Mesocycle updated successfully!'),
+          SnackBar(
+            content: Text(l10n.mesocycleSaved),
             backgroundColor: AppColors.success,
           ),
         );
@@ -307,7 +308,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error updating mesocycle: $e'),
+            content: Text(AppLocalizations.of(context)!.errorUpdatingMesocycle(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -328,9 +329,9 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Edit Mesocycle',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.editMesocycle,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -358,12 +359,12 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                       const SizedBox(height: 8),
 
                       // Mesocycle Name Field
-                      _buildSectionTitle('Mesocycle Name'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.mesocycleName),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _mesocycleNameController,
                         decoration: InputDecoration(
-                          hintText: 'Enter mesocycle name',
+                          hintText: AppLocalizations.of(context)!.enterMesocycleName,
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -380,8 +381,9 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                           ),
                         ),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter a mesocycle name';
+                            return l10n.pleaseEnter(l10n.mesocycleName);
                           }
                           return null;
                         },
@@ -395,7 +397,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                       const SizedBox(height: 24),
 
                       // Training Weeks Slider
-                      _buildSectionTitle('Training Weeks'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.trainingWeeks),
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -410,7 +412,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Weeks: $_trainingWeeks',
+                                  '${AppLocalizations.of(context)!.weeksLabel} $_trainingWeeks',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -447,13 +449,13 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                                 });
                               },
                             ),
-                            const Text(
-                              'Duration of the mesocycle in weeks',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
+                            Text(
+                                AppLocalizations.of(context)!.durationOfMesocycleInWeeks,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.textSecondary,
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -461,7 +463,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                       const SizedBox(height: 24),
 
                       // Sessions Per Week Slider
-                      _buildSectionTitle('Sessions Per Week'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.sessionsPerWeek),
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -476,7 +478,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Sessions: $_sessionsPerWeek',
+                                  '${AppLocalizations.of(context)!.sessions}: $_sessionsPerWeek',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -511,13 +513,13 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                                 _updateSessionsPerWeek(value.toInt());
                               },
                             ),
-                            const Text(
-                              'Number of workout sessions per week',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.textSecondary,
+                            Text(
+                                AppLocalizations.of(context)!.sessionsPerWeekDesc,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.textSecondary,
+                                ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -525,7 +527,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                       const SizedBox(height: 24),
 
                       // Workout Selection List
-                      _buildSectionTitle('Workout Schedule'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.workoutSchedule),
                       const SizedBox(height: 16),
                       
                       ...List.generate(_workoutSelections.length, (index) {
@@ -554,9 +556,9 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'Update Mesocycle',
-                                style: TextStyle(
+                            : Text(
+                                AppLocalizations.of(context)!.saveMesocycle,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -593,7 +595,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              'Session ${index + 1}',
+              AppLocalizations.of(context)!.session(index + 1),
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -623,7 +625,7 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
                 borderSide: const BorderSide(color: AppColors.primary, width: 2),
               ),
             ),
-            hint: const Text('Choose workout'),
+            hint: Text(AppLocalizations.of(context)!.chooseWorkout),
             items: _workoutTemplates.map((workout) {
               return DropdownMenuItem<int>(
                 value: workout.id!,
