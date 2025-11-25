@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../view_models/workout_detail_view_model.dart';
 import '../repositories/template_exercise_repository.dart';
@@ -111,7 +112,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      widget.exerciseData.muscleGroupName ?? 'Unknown',
+                      widget.exerciseData.muscleGroupName ?? AppLocalizations.of(context)!.unknown,
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -138,7 +139,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        widget.exerciseData.equipmentName ?? 'Unknown',
+                        widget.exerciseData.equipmentName ?? AppLocalizations.of(context)!.unknown,
                         style: const TextStyle(
                           fontSize: 13,
                           color: AppColors.textSecondary,
@@ -212,8 +213,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Sets',
+                Text(
+                  AppLocalizations.of(context)!.sets,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -243,9 +244,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
                         style: BorderStyle.solid,
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'No sets logged yet',
+                        AppLocalizations.of(context)!.noSetsLoggedYet,
                         style: TextStyle(
                           color: AppColors.textSecondary,
                         ),
@@ -262,7 +263,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                         child: OutlinedButton.icon(
                           onPressed: () => widget.onAddSet(widget.exerciseData.exercise.id!),
                           icon: const Icon(Icons.add),
-                          label: const Text('Add Set'),
+                          label: Text(AppLocalizations.of(context)!.addSet),
                           style: OutlinedButton.styleFrom(
                             foregroundColor: AppColors.primary,
                             side: const BorderSide(color: AppColors.primary),
@@ -276,7 +277,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                           child: OutlinedButton.icon(
                             onPressed: () => widget.onDeleteSet(widget.exerciseData.exercise.id!),
                             icon: const Icon(Icons.remove),
-                            label: const Text('Delete Last'),
+                            label: Text(AppLocalizations.of(context)!.deleteLast),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: AppColors.error,
                               side: const BorderSide(color: AppColors.error),
@@ -310,7 +311,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
               if (!isPastSession) ...[
                 ListTile(
                   leading: const Icon(Icons.note_add, color: AppColors.primary),
-                  title: const Text('Add Exercise Notes'),
+                  title: Text(AppLocalizations.of(context)!.addExerciseNotes),
                   onTap: () {
                     Navigator.pop(context);
                     _showAddExerciseNotesDialog(context);
@@ -318,7 +319,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.swap_horiz, color: AppColors.primary),
-                  title: const Text('Change Exercise'),
+                  title: Text(AppLocalizations.of(context)!.changeExercise),
                   onTap: () {
                     Navigator.pop(context);
                     widget.onChangeExercise(widget.exerciseData.exercise.id!);
@@ -332,7 +333,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                     widget.exerciseData.exercise.templateExerciseId != null)
                   ListTile(
                     leading: const Icon(Icons.history, color: AppColors.primary),
-                    title: const Text('See Original Planned Exercise'),
+                    title: Text(AppLocalizations.of(context)!.seeOriginalPlannedExercise),
                     onTap: () {
                       Navigator.pop(context);
                       _showOriginalExerciseDialog(context);
@@ -355,19 +356,19 @@ class _ExerciseCardState extends State<ExerciseCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Exercise Notes'),
+          title: Text(AppLocalizations.of(context)!.exerciseNotes),
           content: TextField(
             controller: notesController,
             maxLines: 5,
-            decoration: const InputDecoration(
-              hintText: 'Add notes about this exercise...',
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.addNotesAboutExercise,
               border: OutlineInputBorder(),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -377,13 +378,13 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 );
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Exercise notes saved!'),
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context)!.exerciseNotesSaved),
                     backgroundColor: AppColors.success,
                   ),
                 );
               },
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)!.save),
             ),
           ],
         );
@@ -398,15 +399,15 @@ class _ExerciseCardState extends State<ExerciseCard> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Original Exercise'),
-            content: const Text(
-              'This exercise was not swapped. It is the original planned exercise.',
+            title: Text(AppLocalizations.of(context)!.originalExercise),
+            content: Text(
+              AppLocalizations.of(context)!.exerciseNotSwapped,
               style: TextStyle(fontSize: 14),
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Close'),
+                child: Text(AppLocalizations.of(context)!.close),
               ),
             ],
           );
@@ -416,7 +417,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
     }
 
     // Fetch the original template exercise and its name
-    String originalExerciseName = 'Unknown';
+    String originalExerciseName = AppLocalizations.of(context)!.unknown;
 
     try {
       final templateExerciseRepo = TemplateExerciseRepository();
@@ -448,7 +449,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Original Planned Exercise'),
+          title: Text(AppLocalizations.of(context)!.originalPlannedExercise),
           content: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -466,8 +467,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
                       const Icon(Icons.swap_horiz, color: AppColors.primary),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: const Text(
-                          'This exercise was swapped during the workout',
+                        child: Text(
+                          AppLocalizations.of(context)!.exerciseSwappedDuringWorkout,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -479,8 +480,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 if (wasSwapped) const SizedBox(height: 16),
                 if (wasSwapped) const SizedBox(height: 16),
                 if (wasSwapped) ...[
-                  const Text(
-                    'Performed Exercise:',
+                  Text(
+                    AppLocalizations.of(context)!.performedExercise,
                     style: TextStyle(
                       fontSize: 12,
                       color: AppColors.textSecondary,
@@ -498,7 +499,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   const SizedBox(height: 16),
                 ],
                 Text(
-                  wasSwapped ? 'Originally Planned:' : 'Planned Exercise:',
+                  wasSwapped ? AppLocalizations.of(context)!.originallyPlanned : AppLocalizations.of(context)!.plannedExercise,
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -520,13 +521,13 @@ class _ExerciseCardState extends State<ExerciseCard> {
                       color: Colors.blue.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Icon(Icons.info_outline, size: 16, color: Colors.blue),
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Exercise was changed to better suit workout needs',
+                            AppLocalizations.of(context)!.exerciseChangedToSuitNeeds,
                             style: TextStyle(fontSize: 12, color: Colors.blue),
                           ),
                         ),
@@ -540,7 +541,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Close'),
+              child: Text(AppLocalizations.of(context)!.close),
             ),
           ],
         );

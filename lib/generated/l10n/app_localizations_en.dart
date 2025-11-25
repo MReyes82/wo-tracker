@@ -585,4 +585,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workoutSplit => 'Workout Split';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get noSetsLoggedYet => 'No sets logged yet';
+
+  @override
+  String get addSet => 'Add Set';
+
+  @override
+  String get deleteLast => 'Delete Last';
+
+  @override
+  String get addExerciseNotes => 'Add Exercise Notes';
+
+  @override
+  String get seeOriginalPlannedExercise => 'See Original Planned Exercise';
+
+  @override
+  String get exerciseNotes => 'Exercise Notes';
+
+  @override
+  String get addNotesAboutExercise => 'Add notes about this exercise...';
+
+  @override
+  String get exerciseNotesSaved => 'Exercise notes saved!';
+
+  @override
+  String get originalExercise => 'Original Exercise';
+
+  @override
+  String get exerciseNotSwapped =>
+      'This exercise was not swapped. It is the original planned exercise.';
+
+  @override
+  String get originalPlannedExercise => 'Original Planned Exercise';
+
+  @override
+  String get exerciseSwappedDuringWorkout =>
+      'This exercise was swapped during the workout';
+
+  @override
+  String get performedExercise => 'Performed Exercise:';
+
+  @override
+  String get originallyPlanned => 'Originally Planned:';
+
+  @override
+  String get plannedExercise => 'Planned Exercise:';
+
+  @override
+  String get exerciseChangedToSuitNeeds =>
+      'Exercise was changed to better suit workout needs';
 }

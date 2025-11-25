@@ -616,6 +616,13 @@
 
   "endDate": "Fecha de Fin",
   "session": "Sesión {number}",
+  "@session": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
   "perWeek": "Por Semana",
   "created": "Creado",
   "usingDefaultWeight": "Usando peso predeterminado",
@@ -623,7 +630,22 @@
   "mesocycleDetails": "Detalles del Mesociclo",
 
   "selectWorkoutForSession": "Por favor seleccione una rutina para la Sesión {number}",
+  "@selectWorkoutForSession": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
   "errorCreatingMesocycle": "Error al crear mesociclo: {error}",
+  "@errorCreatingMesocycle": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "enterMesocycleName": "Ingrese nombre del mesociclo",
   "weeksLabel": "Semanas:",
   "sessionsPerWeekDesc": "Número de sesiones de entrenamiento por semana",
@@ -632,7 +654,22 @@
   "selectSplit": "Seleccionar División (Sesiones de la Semana)",
 
   "errorLoadingExercise": "Error al cargar ejercicio: {error}",
+  "@errorLoadingExercise": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
   "errorUpdatingExercise": "Error al actualizar ejercicio: {error}",
+  "@errorUpdatingExercise": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "enterExerciseName": "Ingrese nombre del ejercicio",
   "selectExerciseType": "Seleccione tipo de ejercicio",
   "selectEquipmentType": "Seleccione tipo de equipamiento",
@@ -641,20 +678,88 @@
   "enterWeight": "Ingrese peso",
 
   "errorCreatingExercise": "Error al crear ejercicio: {error}",
+  "@errorCreatingExercise": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
 
   "errorLoadingWorkout": "Error al cargar rutina: {error}",
+  "@errorLoadingWorkout": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
   "errorUpdatingWorkout": "Error al actualizar rutina: {error}",
+  "@errorUpdatingWorkout": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
   "errorCreatingWorkout": "Error al crear rutina: {error}",
+  "@errorCreatingWorkout": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "enterWorkoutName": "Ingrese nombre de la rutina",
   "selectWorkoutType": "Seleccione tipo de rutina",
   "numberOfExercises": "Número de Ejercicios",
   "numberOfExercisesToPerform": "Número de ejercicios a realizar",
   "chooseExercise": "Elija ejercicio",
   "selectTheOrdinalExercise": "Seleccione el {ordinal} ejercicio",
+  "@selectTheOrdinalExercise": {
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+
   "pleaseSelectTheOrdinalExercise": "Por favor seleccione el {ordinal} ejercicio",
+  "@pleaseSelectTheOrdinalExercise": {
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
+
   "pleaseSelectSetsForTheOrdinalExercise": "Por favor seleccione series para el {ordinal} ejercicio",
+  "@pleaseSelectSetsForTheOrdinalExercise": {
+    "placeholders": {
+      "ordinal": {
+        "type": "String"
+      }
+    }
+  },
   "errorLoadingMesocycle": "Error al cargar mesociclo: {error}",
+  "@errorLoadingMesocycle": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
   "errorUpdatingMesocycle": "Error al actualizar mesociclo: {error}",
+  "@errorUpdatingMesocycle": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "trainingWeeks": "Semanas de Entrenamiento",
   "durationOfMesocycleInWeeks": "Duración del mesociclo en semanas",
   "workoutSchedule": "Horario de Entrenamiento",
@@ -672,16 +777,77 @@
   "workoutTypesDesc": "Empuje, Jalón, Piernas, etc.",
   "muscleGroupsDesc": "Pecho, Espalda, Piernas, etc.",
   "addCatalog": "Agregar {catalog}",
+  "@addCatalog": {
+    "placeholders": {
+      "catalog": {
+        "type": "String"
+      }
+    }
+  },
   "enterName": "Ingrese nombre",
   "pleaseEnterName": "Por favor ingrese un nombre",
   "add": "Agregar",
   "catalogAddedSuccessfully": "{catalog} agregado exitosamente!",
+  "@catalogAddedSuccessfully": {
+    "placeholders": {
+      "catalog": {
+        "type": "String"
+      }
+    }
+  },
+
   "errorAddingCatalog": "Error al agregar {catalog}: {error}",
+  "@errorAddingCatalog": {
+    "placeholders": {
+      "catalog": {
+        "type": "String"
+      },
+      "error": {
+        "type": "String"
+      }
+    }
+  },
 
   "edit": "Editar",
   "completed": "Completado",
   "workoutSession": "Sesión de Entrenamiento",
   "weeksCount": "{count} semanas",
+  "@weeksCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
   "sessionsPerWeekCount": "{count} sesiones/semana",
-  "workoutSplit": "División de Entrenamiento"
+  "@sessionsPerWeekCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "workoutSplit": "División de Entrenamiento",
+
+  "unknown": "Desconocido",
+  "noSetsLoggedYet": "Aún no se han registrado series",
+  "addSet": "Agregar Serie",
+  "deleteLast": "Eliminar Última",
+  "addExerciseNotes": "Agregar Notas de Ejercicio",
+  "changeExercise": "Cambiar Ejercicio",
+  "seeOriginalPlannedExercise": "Ver Ejercicio Planeado Original",
+  "exerciseNotes": "Notas de Ejercicio",
+  "addNotesAboutExercise": "Agregar notas sobre este ejercicio...",
+  "save": "Guardar",
+  "exerciseNotesSaved": "¡Notas de ejercicio guardadas!",
+  "originalExercise": "Ejercicio Original",
+  "exerciseNotSwapped": "Este ejercicio no fue cambiado. Es el ejercicio planeado original.",
+  "close": "Cerrar",
+  "originalPlannedExercise": "Ejercicio Planeado Original",
+  "exerciseSwappedDuringWorkout": "Este ejercicio fue cambiado durante el entrenamiento",
+  "performedExercise": "Ejercicio Realizado:",
+  "originallyPlanned": "Planeado Originalmente:",
+  "plannedExercise": "Ejercicio Planeado:",
+  "exerciseChangedToSuitNeeds": "Ejercicio cambiado para ajustarse mejor a las necesidades del entrenamiento"
 }

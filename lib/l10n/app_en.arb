@@ -1025,5 +1025,105 @@
   "workoutSplit": "Workout Split",
   "@workoutSplit": {
     "description": "Label for workout split section"
+  },
+
+  "unknown": "Unknown",
+  "@unknown": {
+    "description": "Label for unknown values"
+  },
+
+  "noSetsLoggedYet": "No sets logged yet",
+  "@noSetsLoggedYet": {
+    "description": "Empty state message for sets"
+  },
+
+  "addSet": "Add Set",
+  "@addSet": {
+    "description": "Button to add a new set"
+  },
+
+  "deleteLast": "Delete Last",
+  "@deleteLast": {
+    "description": "Button to delete last set"
+  },
+
+  "addExerciseNotes": "Add Exercise Notes",
+  "@addExerciseNotes": {
+    "description": "Menu option to add notes to exercise"
+  },
+
+  "changeExercise": "Change Exercise",
+  "@changeExercise": {
+    "description": "Menu option to swap exercise"
+  },
+
+  "seeOriginalPlannedExercise": "See Original Planned Exercise",
+  "@seeOriginalPlannedExercise": {
+    "description": "Menu option to view original planned exercise"
+  },
+
+  "exerciseNotes": "Exercise Notes",
+  "@exerciseNotes": {
+    "description": "Dialog title for exercise notes"
+  },
+
+  "addNotesAboutExercise": "Add notes about this exercise...",
+  "@addNotesAboutExercise": {
+    "description": "Hint text for exercise notes field"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Save button label"
+  },
+
+  "exerciseNotesSaved": "Exercise notes saved!",
+  "@exerciseNotesSaved": {
+    "description": "Success message for saving exercise notes"
+  },
+
+  "originalExercise": "Original Exercise",
+  "@originalExercise": {
+    "description": "Dialog title for original exercise"
+  },
+
+  "exerciseNotSwapped": "This exercise was not swapped. It is the original planned exercise.",
+  "@exerciseNotSwapped": {
+    "description": "Message when exercise was not changed"
+  },
+
+  "close": "Close",
+  "@close": {
+    "description": "Close button label"
+  },
+
+  "originalPlannedExercise": "Original Planned Exercise",
+  "@originalPlannedExercise": {
+    "description": "Dialog title for original planned exercise"
+  },
+
+  "exerciseSwappedDuringWorkout": "This exercise was swapped during the workout",
+  "@exerciseSwappedDuringWorkout": {
+    "description": "Message when exercise was changed during workout"
+  },
+
+  "performedExercise": "Performed Exercise:",
+  "@performedExercise": {
+    "description": "Label for performed exercise"
+  },
+
+  "originallyPlanned": "Originally Planned:",
+  "@originallyPlanned": {
+    "description": "Label for originally planned exercise"
+  },
+
+  "plannedExercise": "Planned Exercise:",
+  "@plannedExercise": {
+    "description": "Label for planned exercise"
+  },
+
+  "exerciseChangedToSuitNeeds": "Exercise was changed to better suit workout needs",
+  "@exerciseChangedToSuitNeeds": {
+    "description": "Info message about exercise swap"
   }
 }

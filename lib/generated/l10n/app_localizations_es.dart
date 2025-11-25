@@ -592,4 +592,58 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get workoutSplit => 'División de Entrenamiento';
+
+  @override
+  String get unknown => 'Desconocido';
+
+  @override
+  String get noSetsLoggedYet => 'Aún no se han registrado series';
+
+  @override
+  String get addSet => 'Agregar Serie';
+
+  @override
+  String get deleteLast => 'Eliminar Última';
+
+  @override
+  String get addExerciseNotes => 'Agregar Notas de Ejercicio';
+
+  @override
+  String get seeOriginalPlannedExercise => 'Ver Ejercicio Planeado Original';
+
+  @override
+  String get exerciseNotes => 'Notas de Ejercicio';
+
+  @override
+  String get addNotesAboutExercise => 'Agregar notas sobre este ejercicio...';
+
+  @override
+  String get exerciseNotesSaved => '¡Notas de ejercicio guardadas!';
+
+  @override
+  String get originalExercise => 'Ejercicio Original';
+
+  @override
+  String get exerciseNotSwapped =>
+      'Este ejercicio no fue cambiado. Es el ejercicio planeado original.';
+
+  @override
+  String get originalPlannedExercise => 'Ejercicio Planeado Original';
+
+  @override
+  String get exerciseSwappedDuringWorkout =>
+      'Este ejercicio fue cambiado durante el entrenamiento';
+
+  @override
+  String get performedExercise => 'Ejercicio Realizado:';
+
+  @override
+  String get originallyPlanned => 'Planeado Originalmente:';
+
+  @override
+  String get plannedExercise => 'Ejercicio Planeado:';
+
+  @override
+  String get exerciseChangedToSuitNeeds =>
+      'Ejercicio cambiado para ajustarse mejor a las necesidades del entrenamiento';
 }

@@ -194,7 +194,7 @@ abstract class AppLocalizations {
   /// **'Edit'**
   String get edit;
 
-  /// Button to save changes
+  /// Save button label
   ///
   /// In en, this message translates to:
   /// **'Save'**
@@ -614,13 +614,13 @@ abstract class AppLocalizations {
   /// **'This workout started at:'**
   String get workoutStartedAt;
 
-  /// Close button
+  /// Close button label
   ///
   /// In en, this message translates to:
   /// **'Close'**
   String get close;
 
-  /// Button to swap exercise
+  /// Menu option to swap exercise
   ///
   /// In en, this message translates to:
   /// **'Change Exercise'**
@@ -1153,6 +1153,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workout Split'**
   String get workoutSplit;
+
+  /// Label for unknown values
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// Empty state message for sets
+  ///
+  /// In en, this message translates to:
+  /// **'No sets logged yet'**
+  String get noSetsLoggedYet;
+
+  /// Button to add a new set
+  ///
+  /// In en, this message translates to:
+  /// **'Add Set'**
+  String get addSet;
+
+  /// Button to delete last set
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Last'**
+  String get deleteLast;
+
+  /// Menu option to add notes to exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Add Exercise Notes'**
+  String get addExerciseNotes;
+
+  /// Menu option to view original planned exercise
+  ///
+  /// In en, this message translates to:
+  /// **'See Original Planned Exercise'**
+  String get seeOriginalPlannedExercise;
+
+  /// Dialog title for exercise notes
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise Notes'**
+  String get exerciseNotes;
+
+  /// Hint text for exercise notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Add notes about this exercise...'**
+  String get addNotesAboutExercise;
+
+  /// Success message for saving exercise notes
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise notes saved!'**
+  String get exerciseNotesSaved;
+
+  /// Dialog title for original exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Original Exercise'**
+  String get originalExercise;
+
+  /// Message when exercise was not changed
+  ///
+  /// In en, this message translates to:
+  /// **'This exercise was not swapped. It is the original planned exercise.'**
+  String get exerciseNotSwapped;
+
+  /// Dialog title for original planned exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Original Planned Exercise'**
+  String get originalPlannedExercise;
+
+  /// Message when exercise was changed during workout
+  ///
+  /// In en, this message translates to:
+  /// **'This exercise was swapped during the workout'**
+  String get exerciseSwappedDuringWorkout;
+
+  /// Label for performed exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Performed Exercise:'**
+  String get performedExercise;
+
+  /// Label for originally planned exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Originally Planned:'**
+  String get originallyPlanned;
+
+  /// Label for planned exercise
+  ///
+  /// In en, this message translates to:
+  /// **'Planned Exercise:'**
+  String get plannedExercise;
+
+  /// Info message about exercise swap
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise was changed to better suit workout needs'**
+  String get exerciseChangedToSuitNeeds;
 }
 
 class _AppLocalizationsDelegate
