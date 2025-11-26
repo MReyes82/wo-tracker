@@ -1423,6 +1423,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unit System'**
   String get unitSystemLabel;
+
+  /// Label shown when a workout has not been started
+  ///
+  /// In en, this message translates to:
+  /// **'Not started yet'**
+  String get notStartedYet;
+
+  /// Short label for not started status
+  ///
+  /// In en, this message translates to:
+  /// **'Not started'**
+  String get notStarted;
 }
 
 class _AppLocalizationsDelegate

@@ -735,4 +735,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unitSystemLabel => 'Unit System';
+
+  @override
+  String get notStartedYet => 'Not started yet';
+
+  @override
+  String get notStarted => 'Not started';
 }

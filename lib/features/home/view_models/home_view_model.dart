@@ -27,47 +27,49 @@ class HomeViewModel extends ChangeNotifier {
       final allSessions = await _sessionRepository.getAll();
       print('HomeViewModel: Loaded ${allSessions.length} sessions');
 
-      // Sort by start_time ascending to find the first upcoming workout
-      allSessions.sort((a, b) => a.startTime.compareTo(b.startTime));
+      // Sort by week_number and session_order for mesocycle sessions, and by startTime for others
+      allSessions.sort((a, b) {
+        // Completed sessions go to the end
+        if (a.endTime != null && b.endTime == null) return 1;
+        if (a.endTime == null && b.endTime != null) return -1;
+
+        // Unstarted sessions (null startTime) come first, sorted by week/order
+        if (a.startTime == null && b.startTime != null) return -1;
+        if (a.startTime != null && b.startTime == null) return 1;
+
+        // Both have startTime null - sort by week_number and session_order
+        if (a.startTime == null && b.startTime == null) {
+          if (a.weekNumber != null && b.weekNumber != null) {
+            final weekCompare = a.weekNumber!.compareTo(b.weekNumber!);
+            if (weekCompare != 0) return weekCompare;
+            if (a.sessionOrder != null && b.sessionOrder != null) {
+              return a.sessionOrder!.compareTo(b.sessionOrder!);
+            }
+          }
+          return 0;
+        }
+
+        // Both have startTime - sort by startTime
+        return a.startTime!.compareTo(b.startTime!);
+      });
 
       for (var session in allSessions) {
-        print('  - Session: id=${session.id}, title=${session.title}, startTime=${session.startTime}');
+        print('  - Session: id=${session.id}, title=${session.title}, startTime=${session.startTime}, week=${session.weekNumber}, order=${session.sessionOrder}, endTime=${session.endTime}');
       }
 
-      final now = DateTime.now();
-
-      // Find the first upcoming incomplete workout session (including today)
+      // Find the current workout:
+      // Priority 1: First incomplete session with null startTime (not yet started)
+      // Priority 2: First incomplete session with startTime (already started)
       if (allSessions.isNotEmpty) {
         try {
           _todayWorkout = allSessions.firstWhere(
-            (session) {
-              // Must be incomplete
-              if (session.endTime != null) return false;
-
-              // Check if it's today
-              final isToday = session.startTime.year == now.year &&
-                              session.startTime.month == now.month &&
-                              session.startTime.day == now.day;
-
-              // Check if it's in the future
-              final isFuture = session.startTime.isAfter(now);
-
-              return isToday || isFuture;
-            },
+            (session) => session.endTime == null, // Must be incomplete
           );
-          print('HomeViewModel: Found upcoming workout: ${_todayWorkout?.title} on ${_todayWorkout?.startTime}');
+          print('HomeViewModel: Found current workout: ${_todayWorkout?.title} (startTime: ${_todayWorkout?.startTime})');
         } catch (e) {
-          // No upcoming workout, try to find the first incomplete workout from the past
-          try {
-            _todayWorkout = allSessions.firstWhere(
-              (session) => session.endTime == null,
-            );
-            print('HomeViewModel: Found incomplete workout from past: ${_todayWorkout?.title}');
-          } catch (e2) {
-            // No incomplete workouts at all
-            print('HomeViewModel: No incomplete workouts found');
-            _todayWorkout = null;
-          }
+          // No incomplete workouts at all
+          print('HomeViewModel: No incomplete workouts found');
+          _todayWorkout = null;
         }
       } else {
         _todayWorkout = null;
@@ -79,7 +81,15 @@ class HomeViewModel extends ChangeNotifier {
               session.id != _todayWorkout?.id && // Exclude today's workout
               session.endTime != null) // Only show completed workouts
           .toList()
-          ..sort((a, b) => b.startTime.compareTo(a.startTime)); // Sort descending (newest first)
+          ..sort((a, b) {
+            // For completed workouts, sort by endTime if available, otherwise by startTime
+            final aTime = a.endTime ?? a.startTime;
+            final bTime = b.endTime ?? b.startTime;
+            if (aTime == null && bTime == null) return 0;
+            if (aTime == null) return 1;
+            if (bTime == null) return -1;
+            return bTime.compareTo(aTime); // Sort descending (newest first)
+          });
 
       // Store total count
       _totalCompletedWorkouts = completedWorkouts.length;

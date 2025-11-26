@@ -1290,5 +1290,15 @@
   "unitSystemLabel": "Unit System",
   "@unitSystemLabel": {
     "description": "Label for unit system field"
+  },
+
+  "notStartedYet": "Not started yet",
+  "@notStartedYet": {
+    "description": "Label shown when a workout has not been started"
+  },
+
+  "notStarted": "Not started",
+  "@notStarted": {
+    "description": "Short label for not started status"
   }
 }

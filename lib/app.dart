@@ -4,6 +4,7 @@ import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'core/themes/app_colors.dart';
 import 'features/navigation/main_navigation.dart';
+import 'features/auth/views/login_screen.dart';
 import 'features/home/view_models/home_view_model.dart';
 import 'features/settings/view_models/settings_view_model.dart';
 
@@ -56,7 +57,7 @@ class WoTrackerApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: MainNavigation(key: mainNavigationKey),
+            home: const LoginScreen(),
           );
         },
       ),

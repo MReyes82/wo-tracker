@@ -240,14 +240,14 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
           final template = await _workoutTemplateRepository.getById(selection.workoutTemplateId!);
 
           if (template != null) {
-            // Calculate the date for this session
-            final sessionDate = startDate.add(Duration(days: week * 7 + sessionInWeek));
-
+            // Don't set the date - it will be set when user marks the start time
             final session = WorkoutSession(
               templateId: template.id,
               title: template.name,
-              startTime: sessionDate,
+              startTime: null, // Don't set date until user marks start time
               mesocycleId: widget.mesocycleId,
+              weekNumber: week + 1, // 1-indexed
+              sessionOrder: sessionInWeek + 1, // 1-indexed
               createdAt: DateTime.now(),
             );
 

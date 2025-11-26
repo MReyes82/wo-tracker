@@ -156,15 +156,14 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
           final template = await _workoutTemplateRepository.getById(selection.workoutTemplateId!);
 
           if (template != null) {
-            // Calculate the date for this session
-            // Assuming sessions start from day 0 (today) and follow the order they were selected
-            final sessionDate = startDate.add(Duration(days: week * 7 + i));
-
+            // Don't set the date - it will be set when user marks the start time
             final session = WorkoutSession(
               templateId: template.id,
               title: template.name,
-              startTime: sessionDate,
+              startTime: null, // Don't set date until user marks start time
               mesocycleId: mesocycleId,
+              weekNumber: week + 1, // 1-indexed
+              sessionOrder: i + 1, // 1-indexed
               createdAt: DateTime.now(),
             );
 

@@ -78,7 +78,7 @@ class TodayWorkoutCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primary.withOpacity(0.3),
+              color: AppColors.primary.withValues(alpha: 0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -124,7 +124,9 @@ class TodayWorkoutCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  DateFormat('h:mm a').format(workout!.startTime),
+                  workout!.startTime != null
+                      ? DateFormat.jm(Localizations.localeOf(context).toString()).format(workout!.startTime!)
+                      : l10n.notStarted,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white70,
@@ -139,7 +141,7 @@ class TodayWorkoutCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(

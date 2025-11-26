@@ -34,6 +34,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ChangeNotifierProvider.value(
       value: _viewModel,
       child: Scaffold(
@@ -43,7 +45,6 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
           elevation: 0,
           title: Consumer<WorkoutDetailViewModel>(
             builder: (context, viewModel, child) {
-              final l10n = AppLocalizations.of(context)!;
               return Text(
                 viewModel.session?.title ?? l10n.workoutDetails,
                 style: const TextStyle(
@@ -166,7 +167,9 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              DateFormat('EEEE, MMMM d, yyyy').format(viewModel.session!.startTime),
+                              viewModel.session!.startTime != null
+                                  ? DateFormat.yMMMMEEEEd(Localizations.localeOf(context).toString()).format(viewModel.session!.startTime!)
+                                  : l10n.notStartedYet,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: AppColors.textSecondary,
@@ -187,7 +190,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                       ),
                       if (viewModel.session!.endTime != null) ...[
                         const SizedBox(height: 8),
-                        Row(
+                        if (viewModel.session!.startTime != null) Row(
                           children: [
                             const Icon(
                               Icons.access_time,
@@ -197,7 +200,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                             const SizedBox(width: 8),
                             Text(
                               _formatDuration(
-                                viewModel.session!.endTime!.difference(viewModel.session!.startTime),
+                                viewModel.session!.endTime!.difference(viewModel.session!.startTime!),
                               ),
                               style: const TextStyle(
                                 fontSize: 14,
@@ -524,6 +527,8 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
 
   void _showSeeStartTimeDialog(BuildContext context, WorkoutDetailViewModel viewModel) {
     final l10n = AppLocalizations.of(context)!;
+    final startTime = viewModel.session!.startTime;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -535,7 +540,7 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                l10n.workoutStartedAt,
+                startTime != null ? l10n.workoutStartedAt : l10n.notStartedYet,
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 16),
@@ -549,26 +554,36 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                   children: [
                     const Icon(Icons.access_time, color: AppColors.primary),
                     const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          DateFormat('EEEE, MMMM d, yyyy').format(viewModel.session!.startTime),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.textSecondary,
+                    if (startTime != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat.yMMMMEEEEd(Localizations.localeOf(context).toString()).format(startTime),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: AppColors.textSecondary,
+                            ),
                           ),
-                        ),
-                        Text(
-                          DateFormat('h:mm a').format(viewModel.session!.startTime),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
+                          Text(
+                            DateFormat.jm(Localizations.localeOf(context).toString()).format(startTime),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
                           ),
+                        ],
+                      )
+                    else
+                      Text(
+                        l10n.notStarted,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textSecondary,
                         ),
-                      ],
-                    ),
+                      ),
                   ],
                 ),
               ),

@@ -759,7 +759,11 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  DateFormat('MMM d, y').format(session.startTime),
+                  session.startTime != null
+                      ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(session.startTime!)
+                      : (session.endTime != null
+                          ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(session.endTime!)
+                          : l10n.notStarted),
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,

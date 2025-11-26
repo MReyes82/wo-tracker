@@ -744,4 +744,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get unitSystemLabel => 'Sistema de Unidades';
+
+  @override
+  String get notStartedYet => 'Aún no iniciado';
+
+  @override
+  String get notStarted => 'No iniciado';
 }

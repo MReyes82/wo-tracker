@@ -211,6 +211,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         title: _session!.title,
         startTime: _session!.startTime,
         mesocycleId: _session!.mesocycleId,
+        weekNumber: _session!.weekNumber,
+        sessionOrder: _session!.sessionOrder,
         endTime: _session!.endTime,
         notes: notes,
         createdAt: _session!.createdAt,
@@ -233,8 +235,10 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         id: _session!.id,
         templateId: _session!.templateId,
         title: _session!.title,
-        startTime: DateTime.now(), // Mark start time to NOW
+        startTime: _session!.startTime ?? DateTime.now(), // Only set if not already set
         mesocycleId: _session!.mesocycleId,
+        weekNumber: _session!.weekNumber,
+        sessionOrder: _session!.sessionOrder,
         endTime: _session!.endTime,
         notes: _session!.notes,
         createdAt: _session!.createdAt,
@@ -243,7 +247,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       await _sessionRepository.update(updatedSession);
       _session = updatedSession;
       notifyListeners();
-      print('WorkoutDetailViewModel: Marked start time to now');
+      print('WorkoutDetailViewModel: Marked start time to ${updatedSession.startTime}');
     } catch (e) {
       print('Error marking start time: $e');
     }
@@ -388,6 +392,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         title: _session!.title,
         startTime: _session!.startTime,
         mesocycleId: _session!.mesocycleId,
+        weekNumber: _session!.weekNumber,
+        sessionOrder: _session!.sessionOrder,
         endTime: DateTime.now(),
         notes: _session!.notes,
         createdAt: _session!.createdAt,
