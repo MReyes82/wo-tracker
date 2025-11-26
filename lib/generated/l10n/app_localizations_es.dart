@@ -750,4 +750,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notStarted => 'No iniciado';
+
+  @override
+  String get loginTitle => 'Iniciar sesión';
+
+  @override
+  String get emailHint => 'ejemplo@gmail.com';
+
+  @override
+  String get passwordHint => 'contraseña';
+
+  @override
+  String get loginButton => 'Ingresar';
+
+  @override
+  String get alternativeLoginText => 'también puedes iniciar sesión con...';
+
+  @override
+  String get googleLogin => 'Google';
+
+  @override
+  String get appleLogin => 'Iniciar sesión con Apple';
 }

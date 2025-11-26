@@ -919,5 +919,12 @@
   },
   "unitSystemLabel": "Sistema de Unidades",
   "notStartedYet": "Aún no iniciado",
-  "notStarted": "No iniciado"
+  "notStarted": "No iniciado",
+  "loginTitle": "Iniciar sesión",
+  "emailHint": "ejemplo@gmail.com",
+  "passwordHint": "contraseña",
+  "loginButton": "Ingresar",
+  "alternativeLoginText": "también puedes iniciar sesión con...",
+  "googleLogin": "Google",
+  "appleLogin": "Iniciar sesión con Apple"
 }

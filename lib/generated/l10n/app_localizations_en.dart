@@ -741,4 +741,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notStarted => 'Not started';
+
+  @override
+  String get loginTitle => 'Sign In';
+
+  @override
+  String get emailHint => 'example@gmail.com';
+
+  @override
+  String get passwordHint => 'password';
+
+  @override
+  String get loginButton => 'Sign In';
+
+  @override
+  String get alternativeLoginText => 'or you can also sign in with...';
+
+  @override
+  String get googleLogin => 'Google';
+
+  @override
+  String get appleLogin => 'Sign in with Apple';
 }

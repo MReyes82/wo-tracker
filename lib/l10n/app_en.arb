@@ -1300,5 +1300,40 @@
   "notStarted": "Not started",
   "@notStarted": {
     "description": "Short label for not started status"
+  },
+
+  "loginTitle": "Sign In",
+  "@loginTitle": {
+    "description": "Title for login screen"
+  },
+
+  "emailHint": "example@gmail.com",
+  "@emailHint": {
+    "description": "Hint text for email field"
+  },
+
+  "passwordHint": "password",
+  "@passwordHint": {
+    "description": "Hint text for password field"
+  },
+
+  "loginButton": "Sign In",
+  "@loginButton": {
+    "description": "Login button text"
+  },
+
+  "alternativeLoginText": "or you can also sign in with...",
+  "@alternativeLoginText": {
+    "description": "Text before social login options"
+  },
+
+  "googleLogin": "Google",
+  "@googleLogin": {
+    "description": "Google login button text"
+  },
+
+  "appleLogin": "Sign in with Apple",
+  "@appleLogin": {
+    "description": "Apple login button text"
   }
 }

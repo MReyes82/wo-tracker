@@ -1435,6 +1435,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not started'**
   String get notStarted;
+
+  /// Title for login screen
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get loginTitle;
+
+  /// Hint text for email field
+  ///
+  /// In en, this message translates to:
+  /// **'example@gmail.com'**
+  String get emailHint;
+
+  /// Hint text for password field
+  ///
+  /// In en, this message translates to:
+  /// **'password'**
+  String get passwordHint;
+
+  /// Login button text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get loginButton;
+
+  /// Text before social login options
+  ///
+  /// In en, this message translates to:
+  /// **'or you can also sign in with...'**
+  String get alternativeLoginText;
+
+  /// Google login button text
+  ///
+  /// In en, this message translates to:
+  /// **'Google'**
+  String get googleLogin;
+
+  /// Apple login button text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get appleLogin;
 }
 
 class _AppLocalizationsDelegate
