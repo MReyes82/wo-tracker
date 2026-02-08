@@ -71,7 +71,6 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading catalogs: $e');
       setState(() {
         _isLoading = false;
       });
@@ -123,7 +122,6 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
         Navigator.pop(context);
       }
     } catch (e) {
-      print('Error saving exercise: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

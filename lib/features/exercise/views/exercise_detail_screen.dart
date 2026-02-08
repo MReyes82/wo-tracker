@@ -59,7 +59,6 @@ class _ExerciseDetailScreenState extends State<ExerciseDetailScreen> {
         });
       }
     } catch (e) {
-      print('Error loading exercise details: $e');
       setState(() {
         _isLoading = false;
       });

@@ -316,7 +316,6 @@ class _WorkoutDetailScreenState extends State<WorkoutDetailScreen> {
                                     const SizedBox(height: 24),
                                     ElevatedButton.icon(
                                       onPressed: () {
-                                        // TODO: Navigate to add exercise screen
                                       },
                                       icon: const Icon(Icons.add),
                                       label: Text(l10n.addExercise),

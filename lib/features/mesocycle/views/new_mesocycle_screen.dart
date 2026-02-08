@@ -73,7 +73,6 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading workout templates: $e');
       setState(() {
         _isLoading = false;
       });
@@ -217,7 +216,6 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
         Navigator.pop(context);
       }
     } catch (e) {
-      print('Error saving mesocycle: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

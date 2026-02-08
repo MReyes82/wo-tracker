@@ -68,7 +68,6 @@ class _MesocycleDetailScreenState extends State<MesocycleDetailScreen> {
         });
       }
     } catch (e) {
-      print('Error loading mesocycle details: $e');
       setState(() {
         _isLoading = false;
       });

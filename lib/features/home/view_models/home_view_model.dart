@@ -25,7 +25,6 @@ class HomeViewModel extends ChangeNotifier {
     try {
       // Load all workouts
       final allSessions = await _sessionRepository.getAll();
-      print('HomeViewModel: Loaded ${allSessions.length} sessions');
 
       // Sort by week_number and session_order for mesocycle sessions, and by startTime for others
       allSessions.sort((a, b) {
@@ -53,10 +52,6 @@ class HomeViewModel extends ChangeNotifier {
         return a.startTime!.compareTo(b.startTime!);
       });
 
-      for (var session in allSessions) {
-        print('  - Session: id=${session.id}, title=${session.title}, startTime=${session.startTime}, week=${session.weekNumber}, order=${session.sessionOrder}, endTime=${session.endTime}');
-      }
-
       // Find the current workout:
       // Priority 1: First incomplete session with null startTime (not yet started)
       // Priority 2: First incomplete session with startTime (already started)
@@ -65,10 +60,7 @@ class HomeViewModel extends ChangeNotifier {
           _todayWorkout = allSessions.firstWhere(
             (session) => session.endTime == null, // Must be incomplete
           );
-          print('HomeViewModel: Found current workout: ${_todayWorkout?.title} (startTime: ${_todayWorkout?.startTime})');
         } catch (e) {
-          // No incomplete workouts at all
-          print('HomeViewModel: No incomplete workouts found');
           _todayWorkout = null;
         }
       } else {
@@ -97,13 +89,9 @@ class HomeViewModel extends ChangeNotifier {
       // Take only the first 5 for display
       _recentWorkouts = completedWorkouts.take(5).toList();
 
-      print('HomeViewModel: ${_recentWorkouts.length} recent workouts (excluding today)');
-
       _isLoading = false;
       notifyListeners();
     } catch (e) {
-      // Log error but don't crash - show empty state instead
-      print('HomeViewModel: Error loading home data: $e');
       _error = null; // Don't show error for empty database
       _recentWorkouts = [];
       _todayWorkout = null;

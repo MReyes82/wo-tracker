@@ -436,7 +436,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         }
       }
     } catch (e) {
-      print('Error fetching original exercise: $e');
+      // Error fetching original exercise
     }
 
     if (!context.mounted) return;

@@ -28,7 +28,7 @@ class SettingsViewModel extends ChangeNotifier {
         _currentLocale = Locale(savedLanguageCode);
       }
     } catch (e) {
-      print('Error initializing settings: $e');
+      // Error initializing settings
     }
 
     _isLoading = false;
@@ -50,12 +50,9 @@ class SettingsViewModel extends ChangeNotifier {
       
       if (success) {
         _currentLocale = Locale(language.code);
-        print('SettingsViewModel: Language changed to ${language.name}');
-      } else {
-        print('SettingsViewModel: Failed to save language preference');
       }
     } catch (e) {
-      print('Error changing language: $e');
+      // Error changing language
     }
 
     _isLoading = false;

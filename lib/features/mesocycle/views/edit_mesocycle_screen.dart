@@ -102,7 +102,6 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
         });
       }
     } catch (e) {
-      print('Error loading data: $e');
       setState(() {
         _isLoading = false;
       });
@@ -304,7 +303,6 @@ class _EditMesocycleScreenState extends State<EditMesocycleScreen> {
         Navigator.pop(context, true); // Return true to indicate success
       }
     } catch (e) {
-      print('Error updating mesocycle: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

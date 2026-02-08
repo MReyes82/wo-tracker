@@ -259,8 +259,6 @@ class DatabaseHelper {
 
     // Re-enable foreign keys
     await db.execute('PRAGMA foreign_keys = ON');
-
-    print('✓ All tables dropped successfully');
   }
 
   /// Delete the entire database file and reset the instance
@@ -270,7 +268,6 @@ class DatabaseHelper {
     String path = await getDatabasePath();
     await databaseFactory.deleteDatabase(path);
     _database = null;
-    print('✓ Database file deleted: $path');
   }
 
   /// Reset the database by dropping all tables and recreating them
@@ -279,8 +276,6 @@ class DatabaseHelper {
 
     // Recreate all tables
     await _onCreate(await database, 1);
-
-    print('✓ Database reset successfully');
   }
 }
 

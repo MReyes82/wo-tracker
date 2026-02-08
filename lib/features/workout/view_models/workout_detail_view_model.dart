@@ -145,7 +145,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error adding set: $e');
+      // Error adding set
     }
   }
 
@@ -171,7 +171,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error deleting set: $e');
+      // Error deleting set
     }
   }
 
@@ -197,7 +197,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error updating set: $e');
+      // Error updating set
     }
   }
 
@@ -221,9 +221,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       await _sessionRepository.update(updatedSession);
       _session = updatedSession;
       notifyListeners();
-      print('WorkoutDetailViewModel: Updated workout notes');
     } catch (e) {
-      print('Error updating notes: $e');
+      // Error updating notes
     }
   }
 
@@ -247,9 +246,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       await _sessionRepository.update(updatedSession);
       _session = updatedSession;
       notifyListeners();
-      print('WorkoutDetailViewModel: Marked start time to ${updatedSession.startTime}');
     } catch (e) {
-      print('Error marking start time: $e');
+      // Error marking start time
     }
   }
 
@@ -281,12 +279,11 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           );
 
           notifyListeners();
-          print('WorkoutDetailViewModel: Updated exercise notes');
           break;
         }
       }
     } catch (e) {
-      print('Error updating exercise notes: $e');
+      // Error updating exercise notes
     }
   }
 
@@ -294,9 +291,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
     try {
       _availableExercises = await _exerciseCatalogRepository.getAll();
       notifyListeners();
-      print('WorkoutDetailViewModel: Loaded ${_availableExercises.length} available exercises');
     } catch (e) {
-      print('Error loading available exercises: $e');
+      // Error loading available exercises
     }
   }
 
@@ -308,7 +304,6 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           // Get the new exercise details from catalog
           final newExercise = await _exerciseCatalogRepository.getById(newCatalogExerciseId);
           if (newExercise == null) {
-            print('Error: New exercise not found in catalog');
             return;
           }
 
@@ -365,12 +360,11 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           );
 
           notifyListeners();
-          print('WorkoutDetailViewModel: Swapped exercise to ${newExercise.name} and updated ${updatedSets.length} sets with default weight $newDefaultWeight');
           break;
         }
       }
     } catch (e) {
-      print('Error swapping exercise: $e');
+      // Error swapping exercise
     }
   }
 
@@ -461,7 +455,6 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           await _updateFutureSessionWeights(exerciseData.exercise.exerciseName, newDefaultWeight);
         }
       } catch (e) {
-        print('Error updating exercise weight: $e');
         // Silent fail - don't block workout completion
       }
     }

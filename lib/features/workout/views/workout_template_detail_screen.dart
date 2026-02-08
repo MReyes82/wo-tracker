@@ -79,7 +79,6 @@ class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScree
         });
       }
     } catch (e) {
-      print('Error loading workout template details: $e');
       setState(() {
         _isLoading = false;
       });

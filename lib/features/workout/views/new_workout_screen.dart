@@ -65,7 +65,6 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading catalogs: $e');
       setState(() {
         _isLoading = false;
       });
@@ -172,7 +171,6 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         Navigator.pop(context);
       }
     } catch (e) {
-      print('Error saving workout: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

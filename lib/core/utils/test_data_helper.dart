@@ -2,15 +2,10 @@ import '../db/database_helper.dart';
 
 class TestDataHelper {
   static Future<void> seedDatabase() async {
-    print('=== Starting database seeding ===');
-
     final dbHelper = DatabaseHelper();
     final db = await dbHelper.database;
-    
-    print('Database instance obtained');
 
     try {
-      print('Seeding test data...');
       
       // Add muscle groups
       await db.insert('muscle_group', {'id': 1, 'name': 'Chest'});
@@ -204,10 +199,9 @@ class TestDataHelper {
           });
         }
       }
-      
-      print('Test data seeded successfully!');
     } catch (e) {
-      print('Error seeding test data: $e');
+      // Error seeding test data
+      rethrow;
     }
   }
 }

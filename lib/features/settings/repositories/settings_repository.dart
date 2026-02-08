@@ -9,7 +9,6 @@ class SettingsRepository {
       final prefs = await SharedPreferences.getInstance();
       return await prefs.setString(_languageKey, languageCode);
     } catch (e) {
-      print('Error saving language: $e');
       return false;
     }
   }
@@ -20,7 +19,6 @@ class SettingsRepository {
       final prefs = await SharedPreferences.getInstance();
       return prefs.getString(_languageKey);
     } catch (e) {
-      print('Error getting language: $e');
       return null;
     }
   }
@@ -31,7 +29,6 @@ class SettingsRepository {
       final prefs = await SharedPreferences.getInstance();
       return await prefs.remove(_languageKey);
     } catch (e) {
-      print('Error clearing language: $e');
       return false;
     }
   }

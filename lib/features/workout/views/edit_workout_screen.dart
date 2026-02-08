@@ -26,20 +26,17 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   final _formKey = GlobalKey<FormState>();
   final _workoutNameController = TextEditingController();
 
-  // Repositories
   final _workoutTypeRepository = WorkoutTypeRepository();
   final _workoutTemplateRepository = WorkoutTemplateRepository();
   final _templateExerciseRepository = TemplateExerciseRepository();
   final _exerciseRepository = ExerciseRepository();
 
-  // Form state
   WorkoutTemplate? _workout;
   String? _workoutName;
   int? _selectedWorkoutTypeId;
   int _numberOfExercises = 1;
   List<_ExerciseSelection> _exerciseSelections = [];
 
-  // Catalog data
   List<WorkoutType> _workoutTypes = [];
   List<Exercise> _exercises = [];
 
@@ -96,7 +93,6 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
         });
       }
     } catch (e) {
-      print('Error loading data: $e');
       setState(() {
         _isLoading = false;
       });
@@ -220,7 +216,6 @@ class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
         Navigator.pop(context, true); // Return true to indicate success
       }
     } catch (e) {
-      print('Error updating workout: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

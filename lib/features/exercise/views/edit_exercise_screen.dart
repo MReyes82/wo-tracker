@@ -93,7 +93,6 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
         });
       }
     } catch (e) {
-      print('Error loading data: $e');
       setState(() {
         _isLoading = false;
       });
@@ -154,7 +153,6 @@ class _EditExerciseScreenState extends State<EditExerciseScreen> {
         Navigator.pop(context, true); // Return true to indicate success
       }
     } catch (e) {
-      print('Error updating exercise: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
