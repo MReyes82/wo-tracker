@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../repositories/mesocycle_repository.dart';
 import '../repositories/mesocycle_workout_repository.dart';
@@ -72,7 +73,6 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading workout templates: $e');
       setState(() {
         _isLoading = false;
       });
@@ -82,7 +82,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
   void _updateSessionsPerWeek(int count) {
     setState(() {
       _sessionsPerWeek = count;
-
+      
       // Adjust the workout selections list
       if (_workoutSelections.length < count) {
         // Add new selections
@@ -107,7 +107,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
       if (_workoutSelections[i].workoutTemplateId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Please select a workout for Session ${i + 1}'),
+            content: Text(AppLocalizations.of(context)!.selectWorkoutForSession(i + 1)),
             backgroundColor: AppColors.error,
           ),
         );
@@ -152,34 +152,28 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
       for (int week = 0; week < _trainingWeeks; week++) {
         for (int i = 0; i < _workoutSelections.length; i++) {
           final selection = _workoutSelections[i];
-          final template = await _workoutTemplateRepository.getById(
-            selection.workoutTemplateId!,
-          );
+          final template = await _workoutTemplateRepository.getById(selection.workoutTemplateId!);
 
           if (template != null) {
-            // Calculate the date for this session
-            // Assuming sessions start from day 0 (today) and follow the order they were selected
-            final sessionDate = startDate.add(Duration(days: week * 7 + i));
-
+            // Don't set the date - it will be set when user marks the start time
             final session = WorkoutSession(
               templateId: template.id,
               title: template.name,
-              startTime: sessionDate,
+              startTime: null, // Don't set date until user marks start time
               mesocycleId: mesocycleId,
+              weekNumber: week + 1, // 1-indexed
+              sessionOrder: i + 1, // 1-indexed
               createdAt: DateTime.now(),
             );
 
             final sessionId = await _workoutSessionRepository.create(session);
 
             // Copy exercises from template to session
-            final templateExercises = await _templateExerciseRepository
-                .getByTemplate(template.id!);
+            final templateExercises = await _templateExerciseRepository.getByTemplate(template.id!);
 
             for (final templateExercise in templateExercises) {
               // Get exercise details
-              final exercise = await _exerciseRepository.getById(
-                templateExercise.exerciseId,
-              );
+              final exercise = await _exerciseRepository.getById(templateExercise.exerciseId);
 
               if (exercise != null) {
                 final workoutExercise = WorkoutExercise(
@@ -191,22 +185,15 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                   position: templateExercise.position,
                 );
 
-                final workoutExerciseId = await _workoutExerciseRepository
-                    .create(workoutExercise);
+                final workoutExerciseId = await _workoutExerciseRepository.create(workoutExercise);
 
                 // Create workout sets based on planned sets
-                for (
-                  int setNum = 1;
-                  setNum <= templateExercise.plannedSets;
-                  setNum++
-                ) {
+                for (int setNum = 1; setNum <= templateExercise.plannedSets; setNum++) {
                   final workoutSet = WorkoutSet(
                     workoutExerciseId: workoutExerciseId,
                     setNumber: setNum,
                     // Only pre-fill weight if useDefaultWeight is true
-                    weight: templateExercise.useDefaultWeight
-                        ? exercise.defaultWorkingWeight
-                        : null,
+                    weight: templateExercise.useDefaultWeight ? exercise.defaultWorkingWeight : null,
                     completed: false,
                   );
 
@@ -219,20 +206,20 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
       }
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Mesocycle created successfully!'),
+          SnackBar(
+            content: Text(l10n.mesocycleSaved),
             backgroundColor: AppColors.success,
           ),
         );
         Navigator.pop(context);
       }
     } catch (e) {
-      print('Error saving mesocycle: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error creating mesocycle: $e'),
+            content: Text(AppLocalizations.of(context)!.errorCreatingMesocycle(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -253,9 +240,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'New Mesocycle',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.newMesocycle,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -268,7 +255,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
       ),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
+              child: CircularProgressIndicator(
+                color: AppColors.primary,
+              ),
             )
           : SingleChildScrollView(
               child: Padding(
@@ -281,45 +270,37 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                       const SizedBox(height: 8),
 
                       // Mesocycle Name Field (Always visible)
-                      _buildSectionTitle('Mesocycle Name'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.mesocycleName),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _mesocycleNameController,
                         decoration: InputDecoration(
-                          hintText: 'Enter mesocycle name',
+                          hintText: AppLocalizations.of(context)!.enterMesocycleName,
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: AppColors.borderColor,
-                            ),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: AppColors.borderColor,
-                            ),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(
-                              color: AppColors.primary,
-                              width: 2,
-                            ),
+                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
                           ),
                         ),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter a mesocycle name';
+                            return l10n.pleaseEnter(l10n.mesocycleName);
                           }
                           return null;
                         },
                         onChanged: (value) {
                           setState(() {
-                            _mesocycleName = value.trim().isNotEmpty
-                                ? value.trim()
-                                : null;
+                            _mesocycleName = value.trim().isNotEmpty ? value.trim() : null;
                           });
                         },
                       ),
@@ -327,7 +308,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                       // Training Weeks Picker (Appears after name is filled)
                       if (_mesocycleName != null) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle('Amount of Training Weeks'),
+                        _buildSectionTitle(AppLocalizations.of(context)!.amountOfTrainingWeeks),
                         const SizedBox(height: 8),
                         Container(
                           padding: const EdgeInsets.all(16),
@@ -339,9 +320,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Weeks:',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.weeksLabel,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.textPrimary,
@@ -350,9 +331,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                               Row(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(
-                                      Icons.remove_circle_outline,
-                                    ),
+                                    icon: const Icon(Icons.remove_circle_outline),
                                     color: AppColors.primary,
                                     onPressed: _trainingWeeks > 1
                                         ? () {
@@ -363,14 +342,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                                         : null,
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 8,
-                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(
-                                        alpha: 0.1,
-                                      ),
+                                      color: AppColors.primary.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: Text(
@@ -401,7 +375,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                       // Sessions Per Week Slider (Appears after training weeks is set)
                       if (_trainingWeeks >= 1) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle('Sessions Per Week'),
+                        _buildSectionTitle(AppLocalizations.of(context)!.sessionsPerWeek),
                         const SizedBox(height: 8),
                         Container(
                           padding: const EdgeInsets.all(16),
@@ -413,11 +387,10 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Sessions: $_sessionsPerWeek',
+                                    '${AppLocalizations.of(context)!.sessions}: $_sessionsPerWeek',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -425,14 +398,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                     decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(
-                                        alpha: 0.1,
-                                      ),
+                                      color: AppColors.primary.withValues(alpha: 0.1),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Text(
@@ -457,9 +425,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                                   _updateSessionsPerWeek(value.toInt());
                                 },
                               ),
-                              const Text(
-                                'Number of workout sessions per week',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.sessionsPerWeekDesc,
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: AppColors.textSecondary,
                                 ),
@@ -472,11 +440,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                       // Workout Split Selection (Appears after sessions per week is set)
                       if (_workoutSelections.isNotEmpty) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle(
-                          'Select Split (Sessions of the Week)',
-                        ),
+                        _buildSectionTitle(AppLocalizations.of(context)!.selectSplit),
                         const SizedBox(height: 16),
-
+                        
                         ...List.generate(_workoutSelections.length, (index) {
                           return _buildWorkoutSelector(index);
                         }),
@@ -503,9 +469,9 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                                     strokeWidth: 2,
                                   ),
                                 )
-                              : const Text(
-                                  'Save Mesocycle',
-                                  style: TextStyle(
+                              : Text(
+                                  AppLocalizations.of(context)!.saveMesocycle,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -535,7 +501,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Session ${index + 1}',
+            AppLocalizations.of(context)!.session(index + 1),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
@@ -543,7 +509,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
             ),
           ),
           const SizedBox(height: 12),
-
+          
           // Workout Template Dropdown
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
@@ -551,10 +517,7 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
               decoration: InputDecoration(
                 filled: true,
                 fillColor: AppColors.background,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                   borderSide: const BorderSide(color: AppColors.borderColor),
@@ -565,13 +528,10 @@ class _NewMesocycleScreenState extends State<NewMesocycleScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 2,
-                  ),
+                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
                 ),
               ),
-              hint: const Text('Choose workout template'),
+              hint: Text(AppLocalizations.of(context)!.chooseWorkoutTemplate),
               items: _workoutTemplates.map((template) {
                 return DropdownMenuItem<int>(
                   value: template.id!,
@@ -606,5 +566,9 @@ class _WorkoutSelection {
   int? workoutTemplateId;
   int dayOfWeek;
 
-  _WorkoutSelection({this.workoutTemplateId, required this.dayOfWeek});
+  _WorkoutSelection({
+    this.workoutTemplateId,
+    required this.dayOfWeek,
+  });
 }
+

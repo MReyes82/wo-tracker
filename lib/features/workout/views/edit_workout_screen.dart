@@ -10,30 +10,33 @@ import '../models/workout_template.dart';
 import '../models/template_exercise.dart';
 import '../../exercise/models/exercise.dart';
 
-class NewWorkoutScreen extends StatefulWidget {
-  const NewWorkoutScreen({Key? key}) : super(key: key);
+class EditWorkoutScreen extends StatefulWidget {
+  final int workoutId;
+
+  const EditWorkoutScreen({
+    Key? key,
+    required this.workoutId,
+  }) : super(key: key);
 
   @override
-  State<NewWorkoutScreen> createState() => _NewWorkoutScreenState();
+  State<EditWorkoutScreen> createState() => _EditWorkoutScreenState();
 }
 
-class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
+class _EditWorkoutScreenState extends State<EditWorkoutScreen> {
   final _formKey = GlobalKey<FormState>();
   final _workoutNameController = TextEditingController();
 
-  // Repositories
   final _workoutTypeRepository = WorkoutTypeRepository();
   final _workoutTemplateRepository = WorkoutTemplateRepository();
   final _templateExerciseRepository = TemplateExerciseRepository();
   final _exerciseRepository = ExerciseRepository();
 
-  // Form state
+  WorkoutTemplate? _workout;
   String? _workoutName;
   int? _selectedWorkoutTypeId;
   int _numberOfExercises = 1;
   List<_ExerciseSelection> _exerciseSelections = [];
 
-  // Catalog data
   List<WorkoutType> _workoutTypes = [];
   List<Exercise> _exercises = [];
 
@@ -43,9 +46,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   @override
   void initState() {
     super.initState();
-    _loadCatalogs();
-    // Initialize with default exercise count (1)
-    _updateExerciseCount(_numberOfExercises);
+    _loadData();
   }
 
   @override
@@ -54,20 +55,55 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     super.dispose();
   }
 
-  Future<void> _loadCatalogs() async {
+  Future<void> _loadData() async {
     try {
+      // Load catalogs
       final workoutTypes = await _workoutTypeRepository.getAll();
       final exercises = await _exerciseRepository.getAll();
 
-      setState(() {
-        _workoutTypes = workoutTypes;
-        _exercises = exercises;
-        _isLoading = false;
-      });
+      // Load workout data
+      final workout = await _workoutTemplateRepository.getById(widget.workoutId);
+      
+      if (workout != null) {
+        _workoutNameController.text = workout.name;
+
+        // Load template exercises
+        final templateExercises = await _templateExerciseRepository.getByTemplate(workout.id!);
+        
+        // Convert to exercise selections
+        final selections = <_ExerciseSelection>[];
+        for (var te in templateExercises) {
+          selections.add(_ExerciseSelection(
+            exerciseId: te.exerciseId,
+            plannedSets: te.plannedSets,
+            useDefaultWeight: te.useDefaultWeight,
+            templateExerciseId: te.id,
+          ));
+        }
+
+        setState(() {
+          _workout = workout;
+          _workoutTypes = workoutTypes;
+          _exercises = exercises;
+          _workoutName = workout.name;
+          _selectedWorkoutTypeId = workout.typeId;
+          _numberOfExercises = selections.length;
+          _exerciseSelections = selections;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.errorLoadingWorkout(e.toString())),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 
@@ -105,7 +141,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     }
   }
 
-  Future<void> _saveWorkout() async {
+  Future<void> _updateWorkout() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -137,21 +173,30 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     });
 
     try {
-      // Create workout template
-      final template = WorkoutTemplate(
+      // Update workout template
+      final updatedTemplate = WorkoutTemplate(
+        id: widget.workoutId,
         name: _workoutName!,
         typeId: _selectedWorkoutTypeId!,
-        createdAt: DateTime.now(),
+        createdAt: _workout!.createdAt,
         updatedAt: DateTime.now(),
       );
 
-      final templateId = await _workoutTemplateRepository.create(template);
+      await _workoutTemplateRepository.update(updatedTemplate);
 
-      // Create template exercises
+      // Delete old template exercises
+      final oldTemplateExercises = await _templateExerciseRepository.getByTemplate(widget.workoutId);
+      for (var te in oldTemplateExercises) {
+        if (te.id != null) {
+          await _templateExerciseRepository.delete(te.id!);
+        }
+      }
+
+      // Create new template exercises
       for (int i = 0; i < _exerciseSelections.length; i++) {
         final selection = _exerciseSelections[i];
         final templateExercise = TemplateExercise(
-          templateId: templateId,
+          templateId: widget.workoutId,
           exerciseId: selection.exerciseId!,
           position: i,
           plannedSets: selection.plannedSets,
@@ -168,13 +213,13 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             backgroundColor: AppColors.success,
           ),
         );
-        Navigator.pop(context);
+        Navigator.pop(context, true); // Return true to indicate success
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.errorCreatingWorkout(e.toString())),
+            content: Text(AppLocalizations.of(context)!.errorUpdatingWorkout(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -196,7 +241,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          AppLocalizations.of(context)!.newWorkout,
+          AppLocalizations.of(context)!.editWorkout,
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
@@ -224,7 +269,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                     children: [
                       const SizedBox(height: 8),
 
-                      // Workout Name Field (Always visible)
+                      // Workout Name Field
                       _buildSectionTitle(AppLocalizations.of(context)!.workoutName),
                       const SizedBox(height: 8),
                       TextFormField(
@@ -260,156 +305,154 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                         },
                       ),
 
-                      // Workout Type Dropdown (Appears after name is filled)
-                      if (_workoutName != null) ...[
-                        const SizedBox(height: 24),
-                        _buildSectionTitle(AppLocalizations.of(context)!.workoutType),
-                        const SizedBox(height: 8),
-                        DropdownButtonFormField<int>(
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.primary, width: 2),
-                            ),
-                          ),
-                          hint: Text(AppLocalizations.of(context)!.selectWorkoutType),
-                          items: _workoutTypes.map((type) {
-                            return DropdownMenuItem<int>(
-                              value: type.id!,
-                              child: Text(type.name),
-                            );
-                          }).toList(),
-                          validator: (value) {
-                            final l10n = AppLocalizations.of(context)!;
-                            if (value == null) {
-                              return l10n.pleaseSelect(l10n.workoutType);
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedWorkoutTypeId = value;
-                            });
-                          },
-                        ),
-                      ],
+                      const SizedBox(height: 24),
 
-                      // Number of Exercises Slider (Appears after workout type is selected)
-                      if (_selectedWorkoutTypeId != null) ...[
-                        const SizedBox(height: 24),
-                        _buildSectionTitle(AppLocalizations.of(context)!.numberOfExercises),
-                        const SizedBox(height: 8),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
+                      // Workout Type Dropdown
+                      _buildSectionTitle(AppLocalizations.of(context)!.workoutType),
+                      const SizedBox(height: 8),
+                      DropdownButtonFormField<int>(
+                        value: _selectedWorkoutTypeId,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: AppColors.borderColor),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
                           ),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${AppLocalizations.of(context)!.exercises}: $_numberOfExercises',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.textPrimary,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Text(
-                                      _numberOfExercises.toString(),
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.primary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Slider(
-                                value: _numberOfExercises.toDouble(),
-                                min: 1,
-                                max: 10,
-                                divisions: 9,
-                                activeColor: AppColors.primary,
-                                label: _numberOfExercises.toString(),
-                                onChanged: (value) {
-                                  _updateExerciseCount(value.toInt());
-                                },
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.numberOfExercisesToPerform,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.borderColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
                           ),
                         ),
-                      ],
+                        hint: Text(AppLocalizations.of(context)!.selectWorkoutType),
+                        items: _workoutTypes.map((type) {
+                          return DropdownMenuItem<int>(
+                            value: type.id!,
+                            child: Text(type.name),
+                          );
+                        }).toList(),
+                        validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
+                          if (value == null) {
+                            return l10n.pleaseSelect(l10n.workoutType);
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedWorkoutTypeId = value;
+                          });
+                        },
+                      ),
 
-                      // Exercise Selection List (Appears after number of exercises is set)
-                      if (_exerciseSelections.isNotEmpty) ...[
-                        const SizedBox(height: 24),
-                        _buildSectionTitle(AppLocalizations.of(context)!.selectExercises),
-                        const SizedBox(height: 16),
-                        
-                        ...List.generate(_exerciseSelections.length, (index) {
-                          return _buildExerciseSelector(index);
-                        }),
+                      const SizedBox(height: 24),
 
-                        const SizedBox(height: 32),
-
-                        // Save Button
-                        ElevatedButton(
-                          onPressed: _isSaving ? null : _saveWorkout,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: _isSaving
-                              ? const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : Text(
-                                  AppLocalizations.of(context)!.saveWorkout,
+                      // Number of Exercises Slider
+                      _buildSectionTitle(AppLocalizations.of(context)!.numberOfExercises),
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: AppColors.borderColor),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '${AppLocalizations.of(context)!.exercises}: $_numberOfExercises',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    _numberOfExercises.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Slider(
+                              value: _numberOfExercises.toDouble(),
+                              min: 1,
+                              max: 10,
+                              divisions: 9,
+                              activeColor: AppColors.primary,
+                              label: _numberOfExercises.toString(),
+                              onChanged: (value) {
+                                _updateExerciseCount(value.toInt());
+                              },
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.numberOfExercisesToPerform,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Exercise Selection List
+                      _buildSectionTitle(AppLocalizations.of(context)!.selectExercises),
+                      const SizedBox(height: 16),
+                      
+                      ...List.generate(_exerciseSelections.length, (index) {
+                        return _buildExerciseSelector(index);
+                      }),
+
+                      const SizedBox(height: 32),
+
+                      // Update Button
+                      ElevatedButton(
+                        onPressed: _isSaving ? null : _updateWorkout,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: _isSaving
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                AppLocalizations.of(context)!.saveWorkout,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                      ),
 
                       const SizedBox(height: 24),
                     ],
@@ -451,6 +494,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
             child: DropdownButtonFormField<int>(
+              value: selection.exerciseId,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: AppColors.background,
@@ -483,7 +527,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             ),
           ),
 
-          // Sets and Default Weight options (Appears after exercise is selected)
+          // Sets and Default Weight options
           if (selection.exerciseId != null) ...[
             const SizedBox(height: 16),
             Row(
@@ -626,11 +670,13 @@ class _ExerciseSelection {
   int? exerciseId;
   int plannedSets;
   bool useDefaultWeight;
+  int? templateExerciseId;
 
   _ExerciseSelection({
     this.exerciseId,
     this.plannedSets = 3,
     this.useDefaultWeight = false,
+    this.templateExerciseId,
   });
 }
 

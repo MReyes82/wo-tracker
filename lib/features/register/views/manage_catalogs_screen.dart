@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../exercise/repositories/exercise_type_repository.dart';
 import '../../exercise/repositories/equipment_type_repository.dart';
@@ -25,12 +26,13 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Manage Catalogs',
+        title: Text(
+          AppLocalizations.of(context)!.manageCatalogs,
           style: TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
@@ -42,29 +44,35 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 8),
-            const Text(
-              'Manage your catalogs',
-              style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: 24),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 8),
+              Text(
+                AppLocalizations.of(context)!.manageYourCatalogs,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 24),
 
-            // Exercise Type Card
-            _CatalogCard(
+              // Exercise Type Card
+              _CatalogCard(
               icon: Icons.category,
               iconColor: Colors.blue,
-              title: 'Exercise Types',
-              description: 'Compound, Isolation, etc.',
-              onTap: () => _showAddDialog(context, 'Exercise Type', (
-                name,
-              ) async {
-                await _exerciseTypeRepository.create(ExerciseType(name: name));
-              }),
+              title: AppLocalizations.of(context)!.exerciseTypes,
+              description: AppLocalizations.of(context)!.exerciseTypesDesc,
+              onTap: () => _showAddDialog(
+                context,
+                AppLocalizations.of(context)!.exerciseType,
+                (name) async {
+                  await _exerciseTypeRepository.create(ExerciseType(name: name));
+                },
+              ),
             ),
             const SizedBox(height: 12),
 
@@ -72,14 +80,15 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
             _CatalogCard(
               icon: Icons.fitness_center,
               iconColor: Colors.green,
-              title: 'Equipment Types',
-              description: 'Barbell, Dumbbell, Machine, etc.',
-              onTap: () =>
-                  _showAddDialog(context, 'Equipment Type', (name) async {
-                    await _equipmentTypeRepository.create(
-                      EquipmentType(name: name),
-                    );
-                  }),
+              title: AppLocalizations.of(context)!.equipmentTypes,
+              description: AppLocalizations.of(context)!.equipmentTypesDesc,
+              onTap: () => _showAddDialog(
+                context,
+                AppLocalizations.of(context)!.equipment,
+                (name) async {
+                  await _equipmentTypeRepository.create(EquipmentType(name: name));
+                },
+              ),
             ),
             const SizedBox(height: 12),
 
@@ -87,13 +96,15 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
             _CatalogCard(
               icon: Icons.accessibility_new,
               iconColor: Colors.orange,
-              title: 'Muscle Groups',
-              description: 'Chest, Back, Legs, etc.',
-              onTap: () => _showAddDialog(context, 'Muscle Group', (
-                name,
-              ) async {
-                await _muscleGroupRepository.create(MuscleGroup(name: name));
-              }),
+              title: AppLocalizations.of(context)!.muscleGroups,
+              description: AppLocalizations.of(context)!.muscleGroupsDesc,
+              onTap: () => _showAddDialog(
+                context,
+                AppLocalizations.of(context)!.muscleGroups,
+                (name) async {
+                  await _muscleGroupRepository.create(MuscleGroup(name: name));
+                },
+              ),
             ),
             const SizedBox(height: 12),
 
@@ -101,16 +112,19 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
             _CatalogCard(
               icon: Icons.assignment,
               iconColor: Colors.purple,
-              title: 'Workout Types',
-              description: 'Push, Pull, Legs, etc.',
-              onTap: () => _showAddDialog(context, 'Workout Type', (
-                name,
-              ) async {
-                await _workoutTypeRepository.create(WorkoutType(name: name));
-              }),
+              title: AppLocalizations.of(context)!.workoutTypes,
+              description: AppLocalizations.of(context)!.workoutTypesDesc,
+              onTap: () => _showAddDialog(
+                context,
+                AppLocalizations.of(context)!.workoutType,
+                (name) async {
+                  await _workoutTypeRepository.create(WorkoutType(name: name));
+                },
+              ),
             ),
           ],
         ),
+      ),
       ),
     );
   }
@@ -127,13 +141,13 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Add $catalogName'),
+          title: Text(AppLocalizations.of(context)!.addCatalog(catalogName)),
           content: Form(
             key: formKey,
             child: TextFormField(
               controller: nameController,
               decoration: InputDecoration(
-                hintText: 'Enter name',
+                hintText: AppLocalizations.of(context)!.enterName,
                 filled: true,
                 fillColor: AppColors.background,
                 border: OutlineInputBorder(
@@ -146,15 +160,12 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 2,
-                  ),
+                  borderSide: const BorderSide(color: AppColors.primary, width: 2),
                 ),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Please enter a name';
+                  return AppLocalizations.of(context)!.pleaseEnterName;
                 }
                 return null;
               },
@@ -164,7 +175,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -174,7 +185,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('$catalogName added successfully!'),
+                          content: Text(AppLocalizations.of(context)!.catalogAddedSuccessfully(catalogName)),
                           backgroundColor: AppColors.success,
                         ),
                       );
@@ -184,7 +195,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
                     if (context.mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Error adding $catalogName: $e'),
+                          content: Text(AppLocalizations.of(context)!.errorAddingCatalog(catalogName, e.toString())),
                           backgroundColor: AppColors.error,
                         ),
                       );
@@ -196,7 +207,7 @@ class _ManageCatalogsScreenState extends State<ManageCatalogsScreen> {
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
               ),
-              child: const Text('Add'),
+              child: Text(AppLocalizations.of(context)!.add),
             ),
           ],
         );
@@ -243,10 +254,14 @@ class _CatalogCard extends StatelessWidget {
                 color: iconColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: iconColor, size: 24),
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: 24,
+              ),
             ),
             const SizedBox(width: 12),
-
+            
             // Text content
             Expanded(
               child: Column(
@@ -271,7 +286,7 @@ class _CatalogCard extends StatelessWidget {
                 ],
               ),
             ),
-
+            
             // Add icon
             const Icon(
               Icons.add_circle_outline,
@@ -284,3 +299,4 @@ class _CatalogCard extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../core/themes/app_colors.dart';
 import '../home/views/home_screen.dart';
 import '../settings/views/settings_screen.dart';
@@ -6,8 +7,7 @@ import '../register/views/register_new_screen.dart';
 import '../history/views/records_screen.dart';
 
 // Global key to access MainNavigation state from anywhere
-final GlobalKey<_MainNavigationState> mainNavigationKey =
-    GlobalKey<_MainNavigationState>();
+final GlobalKey<_MainNavigationState> mainNavigationKey = GlobalKey<_MainNavigationState>();
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -45,6 +45,8 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       body: _getScreen(_currentIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -58,23 +60,29 @@ class _MainNavigationState extends State<MainNavigation> {
         backgroundColor: Colors.white,
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.textSecondary,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+        ),
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Register new',
+            icon: const Icon(Icons.home),
+            label: l10n.navHome,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.view_list),
-            label: 'History',
+            icon: const Icon(Icons.add_circle_outline),
+            label: l10n.navRegister,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: const Icon(Icons.view_list),
+            label: l10n.navHistory,
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings),
+            label: l10n.navSettings,
           ),
         ],
       ),
     );
   }
 }
+

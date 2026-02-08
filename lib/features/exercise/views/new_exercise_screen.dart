@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../repositories/exercise_type_repository.dart';
 import '../repositories/equipment_type_repository.dart';
@@ -70,7 +71,6 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
         _isLoading = false;
       });
     } catch (e) {
-      print('Error loading catalogs: $e');
       setState(() {
         _isLoading = false;
       });
@@ -83,9 +83,10 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
     }
 
     if (_selectedMuscleGroupId == null) {
+      final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please select a muscle group'),
+        SnackBar(
+          content: Text(l10n.pleaseSelect(l10n.muscleGroups)),
           backgroundColor: AppColors.error,
         ),
       );
@@ -111,20 +112,20 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
       await _exerciseRepository.create(exercise);
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Exercise created successfully!'),
+          SnackBar(
+            content: Text(l10n.exerciseSaved),
             backgroundColor: AppColors.success,
           ),
         );
         Navigator.pop(context);
       }
     } catch (e) {
-      print('Error saving exercise: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error creating exercise: $e'),
+            content: Text(AppLocalizations.of(context)!.errorCreatingExercise(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -145,9 +146,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'New Exercise',
-          style: TextStyle(
+        title: Text(
+          AppLocalizations.of(context)!.newExercise,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -173,12 +174,12 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                       const SizedBox(height: 8),
 
                       // Exercise Name Field (Always visible)
-                      _buildSectionTitle('Exercise Name'),
+                      _buildSectionTitle(AppLocalizations.of(context)!.exerciseName),
                       const SizedBox(height: 8),
                       TextFormField(
                         controller: _exerciseNameController,
                         decoration: InputDecoration(
-                          hintText: 'Enter exercise name',
+                          hintText: AppLocalizations.of(context)!.enterExerciseName,
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
@@ -202,8 +203,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                           ),
                         ),
                         validator: (value) {
+                          final l10n = AppLocalizations.of(context)!;
                           if (value == null || value.trim().isEmpty) {
-                            return 'Please enter an exercise name';
+                            return l10n.pleaseEnter(l10n.exerciseName);
                           }
                           return null;
                         },
@@ -219,7 +221,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                       // Exercise Type Dropdown (Appears after name is filled)
                       if (_exerciseName != null) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle('Exercise Type'),
+                        _buildSectionTitle(AppLocalizations.of(context)!.exerciseType),
                         const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
                           decoration: InputDecoration(
@@ -245,7 +247,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                               ),
                             ),
                           ),
-                          hint: const Text('Select exercise type'),
+                          hint: Text(AppLocalizations.of(context)!.selectExerciseType),
                           items: _exerciseTypes.map((type) {
                             return DropdownMenuItem<int>(
                               value: type.id!,
@@ -253,8 +255,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             );
                           }).toList(),
                           validator: (value) {
+                            final l10n = AppLocalizations.of(context)!;
                             if (value == null) {
-                              return 'Please select an exercise type';
+                              return l10n.pleaseSelect(l10n.exerciseType);
                             }
                             return null;
                           },
@@ -269,7 +272,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                       // Equipment Type Dropdown (Appears after exercise type is selected)
                       if (_selectedExerciseTypeId != null) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle('Equipment Type'),
+                        _buildSectionTitle(AppLocalizations.of(context)!.equipment),
                         const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
                           decoration: InputDecoration(
@@ -295,7 +298,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                               ),
                             ),
                           ),
-                          hint: const Text('Select equipment type'),
+                          hint: Text(AppLocalizations.of(context)!.selectEquipmentType),
                           items: _equipmentTypes.map((type) {
                             return DropdownMenuItem<int>(
                               value: type.id!,
@@ -303,8 +306,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             );
                           }).toList(),
                           validator: (value) {
+                            final l10n = AppLocalizations.of(context)!;
                             if (value == null) {
-                              return 'Please select an equipment type';
+                              return l10n.pleaseSelect(l10n.equipment);
                             }
                             return null;
                           },
@@ -319,7 +323,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                       // Muscle Group Dropdown (Appears after equipment type is selected)
                       if (_selectedEquipmentTypeId != null) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle('Muscle Group'),
+                        _buildSectionTitle(AppLocalizations.of(context)!.muscleGroups),
                         const SizedBox(height: 8),
                         DropdownButtonFormField<int>(
                           decoration: InputDecoration(
@@ -345,7 +349,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                               ),
                             ),
                           ),
-                          hint: const Text('Select muscle group'),
+                          hint: Text(AppLocalizations.of(context)!.selectMuscleGroup),
                           items: _muscleGroups.map((group) {
                             return DropdownMenuItem<int>(
                               value: group.id!,
@@ -363,7 +367,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                       // Default Weight Field (Appears after muscle group is selected)
                       if (_selectedMuscleGroupId != null) ...[
                         const SizedBox(height: 24),
-                        _buildSectionTitle('Default Working Weight (Optional)'),
+                        _buildSectionTitle(AppLocalizations.of(context)!.defaultWorkingWeightOptional),
                         const SizedBox(height: 8),
                         Row(
                           children: [
@@ -380,7 +384,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                                   ),
                                 ],
                                 decoration: InputDecoration(
-                                  hintText: 'Enter weight',
+                                  hintText: AppLocalizations.of(context)!.enterWeight,
                                   filled: true,
                                   fillColor: Colors.white,
                                   border: OutlineInputBorder(
@@ -470,9 +474,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                                     strokeWidth: 2,
                                   ),
                                 )
-                              : const Text(
-                                  'Save Exercise',
-                                  style: TextStyle(
+                              : Text(
+                                  AppLocalizations.of(context)!.saveExercise,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                   ),

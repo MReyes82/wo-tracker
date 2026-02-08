@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../../../core/themes/app_colors.dart';
@@ -8,11 +9,20 @@ import '../../workout/models/workout_template.dart';
 import '../../mesocycle/models/mesocycle.dart';
 import '../../workout/models/workout_session.dart';
 import '../../workout/views/workout_detail_screen.dart';
+import '../../workout/views/workout_detail_screen.dart';
 import '../../exercise/views/exercise_detail_screen.dart';
+import '../../exercise/views/edit_exercise_screen.dart';
 import '../../workout/views/workout_template_detail_screen.dart';
+import '../../workout/views/edit_workout_screen.dart';
 import '../../mesocycle/views/mesocycle_detail_screen.dart';
+import '../../mesocycle/views/edit_mesocycle_screen.dart';
 
-enum RecordType { exercises, workouts, mesocycles, sessions }
+enum RecordType {
+  exercises,
+  workouts,
+  mesocycles,
+  sessions,
+}
 
 class RecordsScreen extends StatefulWidget {
   const RecordsScreen({Key? key}) : super(key: key);
@@ -70,6 +80,8 @@ class _RecordsScreenState extends State<RecordsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return ChangeNotifierProvider.value(
       value: _viewModel,
       child: Scaffold(
@@ -77,9 +89,9 @@ class _RecordsScreenState extends State<RecordsScreen> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0,
-          title: const Text(
-            'Records',
-            style: TextStyle(
+          title: Text(
+            l10n.recordsTitle,
+            style: const TextStyle(
               color: AppColors.textPrimary,
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -98,10 +110,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   // Record type dropdown button
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 4,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.background,
                       borderRadius: BorderRadius.circular(12),
@@ -110,10 +119,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<RecordType>(
                         value: _selectedType,
-                        icon: const Icon(
-                          Icons.arrow_drop_down,
-                          color: AppColors.primary,
-                        ),
+                        icon: const Icon(Icons.arrow_drop_down, color: AppColors.primary),
                         isExpanded: true,
                         style: const TextStyle(
                           fontSize: 16,
@@ -125,11 +131,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                             value: type,
                             child: Row(
                               children: [
-                                Icon(
-                                  _getRecordTypeIcon(type),
-                                  color: AppColors.primary,
-                                  size: 20,
-                                ),
+                                Icon(_getRecordTypeIcon(type), color: AppColors.primary, size: 20),
                                 const SizedBox(width: 12),
                                 Text(_getRecordTypeLabel(type)),
                               ],
@@ -154,17 +156,11 @@ class _RecordsScreenState extends State<RecordsScreen> {
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search by name...',
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: AppColors.textSecondary,
-                      ),
+                      hintText: l10n.searchByName,
+                      prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
                       suffixIcon: _searchQuery.isNotEmpty
                           ? IconButton(
-                              icon: const Icon(
-                                Icons.clear,
-                                color: AppColors.textSecondary,
-                              ),
+                              icon: const Icon(Icons.clear, color: AppColors.textSecondary),
                               onPressed: () {
                                 setState(() {
                                   _searchController.clear();
@@ -179,10 +175,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -200,9 +193,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 builder: (context, viewModel, child) {
                   if (viewModel.isLoading) {
                     return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                      ),
+                      child: CircularProgressIndicator(color: AppColors.primary),
                     );
                   }
 
@@ -226,15 +217,16 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   String _getRecordTypeLabel(RecordType type) {
+    final l10n = AppLocalizations.of(context)!;
     switch (type) {
       case RecordType.exercises:
-        return 'Exercises';
+        return l10n.exercises;
       case RecordType.workouts:
-        return 'Workouts';
+        return l10n.workouts;
       case RecordType.mesocycles:
-        return 'Mesocycles';
+        return l10n.mesocycles;
       case RecordType.sessions:
-        return 'Sessions';
+        return l10n.sessions;
     }
   }
 
@@ -265,6 +257,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildExercisesList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final exercises = viewModel.filterExercises(_searchQuery);
 
     if (exercises.isEmpty) {
@@ -279,9 +272,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty
-                  ? 'No exercises found'
-                  : 'No exercises match your search',
+              _searchQuery.isEmpty ? l10n.noExercisesFound : l10n.noExercisesMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -303,6 +294,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildExerciseCard(Exercise exercise) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -349,7 +341,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 Text(
                   exercise.defaultWorkingWeight != null
                       ? '${exercise.defaultWorkingWeight} ${exercise.isUsingMetric ? "kg" : "lbs"}'
-                      : 'No default weight',
+                      : l10n.noDefaultWeight,
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -359,19 +351,44 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
           ),
           TextButton(
+            onPressed: () async {
+              if (exercise.id != null) {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditExerciseScreen(
+                      exerciseId: exercise.id!,
+                    ),
+                  ),
+                );
+                // Reload data if edit was successful
+                if (result == true) {
+                  _loadData();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.edit),
+          ),
+          TextButton(
             onPressed: () {
               if (exercise.id != null) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        ExerciseDetailScreen(exerciseId: exercise.id!),
+                    builder: (context) => ExerciseDetailScreen(
+                      exerciseId: exercise.id!,
+                    ),
                   ),
                 );
               }
             },
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-            child: const Text('Details'),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.details),
           ),
         ],
       ),
@@ -379,6 +396,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildWorkoutsList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final workouts = viewModel.filterWorkouts(_searchQuery);
 
     if (workouts.isEmpty) {
@@ -393,9 +411,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty
-                  ? 'No workouts found'
-                  : 'No workouts match your search',
+              _searchQuery.isEmpty ? l10n.noWorkoutsFound : l10n.noWorkoutsMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -417,6 +433,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildWorkoutCard(WorkoutTemplate workout) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -471,19 +488,44 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
           ),
           TextButton(
+            onPressed: () async {
+              if (workout.id != null) {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditWorkoutScreen(
+                      workoutId: workout.id!,
+                    ),
+                  ),
+                );
+                // Reload data if edit was successful
+                if (result == true) {
+                  _loadData();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.edit),
+          ),
+          TextButton(
             onPressed: () {
               if (workout.id != null) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        WorkoutTemplateDetailScreen(templateId: workout.id!),
+                    builder: (context) => WorkoutTemplateDetailScreen(
+                      templateId: workout.id!,
+                    ),
                   ),
                 );
               }
             },
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-            child: const Text('Details'),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.details),
           ),
         ],
       ),
@@ -491,6 +533,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildMesocyclesList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final mesocycles = viewModel.filterMesocycles(_searchQuery);
 
     if (mesocycles.isEmpty) {
@@ -505,9 +548,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty
-                  ? 'No mesocycles found'
-                  : 'No mesocycles match your search',
+              _searchQuery.isEmpty ? l10n.noMesocyclesFound : l10n.noMesocyclesMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -529,6 +570,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildMesocycleCard(Mesocycle mesocycle) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -573,7 +615,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${mesocycle.weeksQuantity} weeks, ${mesocycle.sessionsPerWeek} sessions/week',
+                  '${l10n.weeksCount(mesocycle.weeksQuantity)}, ${l10n.sessionsPerWeekCount(mesocycle.sessionsPerWeek)}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
@@ -583,19 +625,44 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
           ),
           TextButton(
+            onPressed: () async {
+              if (mesocycle.id != null) {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditMesocycleScreen(
+                      mesocycleId: mesocycle.id!,
+                    ),
+                  ),
+                );
+                // Reload data if edit was successful
+                if (result == true) {
+                  _loadData();
+                }
+              }
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.edit),
+          ),
+          TextButton(
             onPressed: () {
               if (mesocycle.id != null) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        MesocycleDetailScreen(mesocycleId: mesocycle.id!),
+                    builder: (context) => MesocycleDetailScreen(
+                      mesocycleId: mesocycle.id!,
+                    ),
                   ),
                 );
               }
             },
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-            child: const Text('Details'),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.details),
           ),
         ],
       ),
@@ -603,6 +670,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildSessionsList(RecordsViewModel viewModel) {
+    final l10n = AppLocalizations.of(context)!;
     final sessions = viewModel.filterSessions(_searchQuery);
 
     if (sessions.isEmpty) {
@@ -617,9 +685,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              _searchQuery.isEmpty
-                  ? 'No sessions found'
-                  : 'No sessions match your search',
+              _searchQuery.isEmpty ? l10n.noSessionsFound : l10n.noSessionsMatch,
               style: TextStyle(
                 fontSize: 16,
                 color: AppColors.textSecondary.withValues(alpha: 0.7),
@@ -641,6 +707,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
   }
 
   Widget _buildSessionCard(WorkoutSession session) {
+    final l10n = AppLocalizations.of(context)!;
     final isCompleted = session.endTime != null;
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -649,9 +716,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isCompleted
-              ? AppColors.success.withValues(alpha: 0.3)
-              : AppColors.divider,
+          color: isCompleted ? AppColors.success.withValues(alpha: 0.3) : AppColors.divider,
           width: isCompleted ? 2 : 1,
         ),
         boxShadow: [
@@ -685,7 +750,7 @@ class _RecordsScreenState extends State<RecordsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  session.title ?? 'Workout Session',
+                  session.title ?? l10n.workoutSession,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -694,15 +759,19 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  DateFormat('MMM d, y').format(session.startTime),
+                  session.startTime != null
+                      ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(session.startTime!)
+                      : (session.endTime != null
+                          ? DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(session.endTime!)
+                          : l10n.notStarted),
                   style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.textSecondary,
                   ),
                 ),
                 if (isCompleted)
-                  const Text(
-                    'Completed',
+                  Text(
+                    l10n.completed,
                     style: TextStyle(
                       fontSize: 12,
                       color: AppColors.success,
@@ -726,11 +795,14 @@ class _RecordsScreenState extends State<RecordsScreen> {
                 );
               }
             },
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-            child: const Text('Details'),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.primary,
+            ),
+            child: Text(l10n.details),
           ),
         ],
       ),
     );
   }
 }
+

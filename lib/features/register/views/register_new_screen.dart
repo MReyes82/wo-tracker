@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../../exercise/views/new_exercise_screen.dart';
 import '../../workout/views/new_workout_screen.dart';
@@ -10,14 +11,16 @@ class RegisterNewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Register New',
-          style: TextStyle(
+        title: Text(
+          l10n.registerNewTitle,
+          style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -25,112 +28,114 @@ class RegisterNewScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 24),
-            const Text(
-              'What would you like to create?',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 24),
+              Text(
+                l10n.whatToCreate,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 32),
+              const SizedBox(height: 32),
 
-            // Add Exercise Card
-            _RegisterCard(
-              icon: Icons.fitness_center,
-              iconColor: Colors.blue,
-              title: 'Add Exercise',
-              description: 'Create a new exercise for your catalog',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NewExerciseScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
+              // Add Exercise Card
+              _RegisterCard(
+                icon: Icons.fitness_center,
+                iconColor: Colors.blue,
+                title: l10n.addExercise,
+                description: l10n.addExerciseDesc,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewExerciseScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
 
-            // Add Workout Card
-            _RegisterCard(
-              icon: Icons.assignment,
-              iconColor: Colors.green,
-              title: 'Add Workout',
-              description: 'Build a workout with exercises',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NewWorkoutScreen(),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 16),
+              // Add Workout Card
+              _RegisterCard(
+                icon: Icons.assignment,
+                iconColor: Colors.green,
+                title: l10n.addWorkout,
+                description: l10n.addWorkoutDesc,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewWorkoutScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
 
-            // Add Mesocycle Card
-            _RegisterCard(
-              icon: Icons.calendar_month,
-              iconColor: Colors.orange,
-              title: 'Add Mesocycle',
-              description: 'Plan a training cycle with multiple workouts',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NewMesocycleScreen(),
-                  ),
-                );
-              },
-            ),
+              // Add Mesocycle Card
+              _RegisterCard(
+                icon: Icons.calendar_month,
+                iconColor: Colors.orange,
+                title: l10n.addMesocycle,
+                description: l10n.addMesocycleDesc,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewMesocycleScreen(),
+                    ),
+                  );
+                },
+              ),
 
-            const SizedBox(height: 32),
+              const SizedBox(height: 32),
 
-            // Divider
-            Row(
-              children: [
-                const Expanded(child: Divider()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'MANAGE CATALOGS',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondary.withValues(alpha: 0.6),
+              // Divider
+              Row(
+                children: [
+                  const Expanded(child: Divider()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      l10n.manageCatalogs.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondary.withValues(alpha: 0.6),
+                      ),
                     ),
                   ),
-                ),
-                const Expanded(child: Divider()),
-              ],
-            ),
+                  const Expanded(child: Divider()),
+                ],
+              ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // Manage Catalogs Card
-            _RegisterCard(
-              icon: Icons.settings,
-              iconColor: Colors.grey,
-              title: 'Manage Catalogs',
-              description: 'Add exercise types, equipment, muscle groups, etc.',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ManageCatalogsScreen(),
-                  ),
-                );
-              },
-            ),
-          ],
+              // Manage Catalogs Card
+              _RegisterCard(
+                icon: Icons.settings,
+                iconColor: Colors.grey,
+                title: l10n.manageCatalogs,
+                description: l10n.manageCatalogsDesc,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageCatalogsScreen(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

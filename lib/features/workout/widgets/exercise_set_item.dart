@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import '../../../core/themes/app_colors.dart';
 import '../models/workout_set.dart';
 
@@ -23,6 +24,7 @@ class ExerciseSetItem extends StatefulWidget {
 }
 
 class _ExerciseSetItemState extends State<ExerciseSetItem> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,9 +45,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: widget.set.completed
-                  ? AppColors.primary
-                  : AppColors.cardBackground,
+              color: widget.set.completed ? AppColors.primary : AppColors.cardBackground,
               borderRadius: BorderRadius.circular(16),
             ),
             child: Center(
@@ -54,9 +54,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
-                  color: widget.set.completed
-                      ? Colors.white
-                      : AppColors.textPrimary,
+                  color: widget.set.completed ? Colors.white : AppColors.textPrimary,
                 ),
               ),
             ),
@@ -68,8 +66,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Reps',
+                Text(
+                  AppLocalizations.of(context)!.reps,
                   style: TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -84,29 +82,23 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                         decoration: const InputDecoration(
                           hintText: '0',
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 8,
-                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                           border: OutlineInputBorder(),
                         ),
                         onChanged: (value) {
                           final reps = int.tryParse(value);
-                          widget.onSetUpdated(
-                            WorkoutSet(
-                              id: widget.set.id,
-                              workoutExerciseId: widget.set.workoutExerciseId,
-                              setNumber: widget.set.setNumber,
-                              reps: reps,
-                              weight: widget.set.weight,
-                              effortLevel: widget.set.effortLevel,
-                              effortLevelSpecifier:
-                                  widget.set.effortLevelSpecifier,
-                              completed: widget.set.completed,
-                              completedAt: widget.set.completedAt,
-                              notes: widget.set.notes,
-                            ),
-                          );
+                          widget.onSetUpdated(WorkoutSet(
+                            id: widget.set.id,
+                            workoutExerciseId: widget.set.workoutExerciseId,
+                            setNumber: widget.set.setNumber,
+                            reps: reps,
+                            weight: widget.set.weight,
+                            effortLevel: widget.set.effortLevel,
+                            effortLevelSpecifier: widget.set.effortLevelSpecifier,
+                            completed: widget.set.completed,
+                            completedAt: widget.set.completedAt,
+                            notes: widget.set.notes,
+                          ));
                         },
                       )
                     : Text(
@@ -128,7 +120,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Weight (${widget.isUsingMetric ? 'kg' : 'lbs'})',
+                  AppLocalizations.of(context)!.weightWithUnit(widget.isUsingMetric ? 'kg' : 'lbs'),
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.textSecondary,
@@ -137,40 +129,30 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                 const SizedBox(height: 4),
                 widget.isEditable
                     ? TextFormField(
-                        key: ValueKey(
-                          'weight-${widget.set.id}-${widget.set.weight}',
-                        ), // Force rebuild when weight changes
+                        key: ValueKey('weight-${widget.set.id}-${widget.set.weight}'), // Force rebuild when weight changes
                         initialValue: widget.set.weight?.toString() ?? '',
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         style: const TextStyle(fontSize: 16),
                         decoration: const InputDecoration(
                           hintText: '0.0',
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 8,
-                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                           border: OutlineInputBorder(),
                         ),
                         onChanged: (value) {
                           final weight = double.tryParse(value);
-                          widget.onSetUpdated(
-                            WorkoutSet(
-                              id: widget.set.id,
-                              workoutExerciseId: widget.set.workoutExerciseId,
-                              setNumber: widget.set.setNumber,
-                              reps: widget.set.reps,
-                              weight: weight,
-                              effortLevel: widget.set.effortLevel,
-                              effortLevelSpecifier:
-                                  widget.set.effortLevelSpecifier,
-                              completed: widget.set.completed,
-                              completedAt: widget.set.completedAt,
-                              notes: widget.set.notes,
-                            ),
-                          );
+                          widget.onSetUpdated(WorkoutSet(
+                            id: widget.set.id,
+                            workoutExerciseId: widget.set.workoutExerciseId,
+                            setNumber: widget.set.setNumber,
+                            reps: widget.set.reps,
+                            weight: weight,
+                            effortLevel: widget.set.effortLevel,
+                            effortLevelSpecifier: widget.set.effortLevelSpecifier,
+                            completed: widget.set.completed,
+                            completedAt: widget.set.completedAt,
+                            notes: widget.set.notes,
+                          ));
                         },
                       )
                     : Text(
@@ -192,24 +174,26 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               value: widget.set.completed,
               activeColor: AppColors.primary,
               onChanged: (value) {
-                widget.onSetUpdated(
-                  WorkoutSet(
-                    id: widget.set.id,
-                    workoutExerciseId: widget.set.workoutExerciseId,
-                    setNumber: widget.set.setNumber,
-                    reps: widget.set.reps,
-                    weight: widget.set.weight,
-                    effortLevel: widget.set.effortLevel,
-                    effortLevelSpecifier: widget.set.effortLevelSpecifier,
-                    completed: value ?? false,
-                    completedAt: value == true ? DateTime.now() : null,
-                    notes: widget.set.notes,
-                  ),
-                );
+                widget.onSetUpdated(WorkoutSet(
+                  id: widget.set.id,
+                  workoutExerciseId: widget.set.workoutExerciseId,
+                  setNumber: widget.set.setNumber,
+                  reps: widget.set.reps,
+                  weight: widget.set.weight,
+                  effortLevel: widget.set.effortLevel,
+                  effortLevelSpecifier: widget.set.effortLevelSpecifier,
+                  completed: value ?? false,
+                  completedAt: value == true ? DateTime.now() : null,
+                  notes: widget.set.notes,
+                ));
               },
             )
           else if (widget.set.completed)
-            const Icon(Icons.check_circle, color: AppColors.success, size: 24),
+            const Icon(
+              Icons.check_circle,
+              color: AppColors.success,
+              size: 24,
+            ),
 
           // Options menu button
           IconButton(
@@ -238,22 +222,15 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             children: [
               ListTile(
                 leading: const Icon(Icons.note_add, color: AppColors.primary),
-                title: Text(
-                  widget.isEditable ? 'Add Set Notes' : 'See Set Notes',
-                ),
+                title: Text(widget.isEditable ? AppLocalizations.of(context)!.addSetNotes : AppLocalizations.of(context)!.seeSetNotes),
                 onTap: () {
                   Navigator.pop(context);
                   _showSetNotesDialog(context);
                 },
               ),
               ListTile(
-                leading: const Icon(
-                  Icons.fitness_center,
-                  color: AppColors.primary,
-                ),
-                title: Text(
-                  widget.isEditable ? 'Add Effort Level' : 'See Effort Level',
-                ),
+                leading: const Icon(Icons.fitness_center, color: AppColors.primary),
+                title: Text(widget.isEditable ? AppLocalizations.of(context)!.addEffortLevel : AppLocalizations.of(context)!.seeEffortLevel),
                 onTap: () {
                   Navigator.pop(context);
                   if (widget.isEditable) {
@@ -266,7 +243,7 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               if (widget.isEditable && widget.onUpdateDefaultWeight != null)
                 ListTile(
                   leading: const Icon(Icons.update, color: AppColors.primary),
-                  title: const Text('Update Exercise Default Weight'),
+                  title: Text(AppLocalizations.of(context)!.updateExerciseDefaultWeight),
                   onTap: () {
                     Navigator.pop(context);
                     _showUpdateDefaultWeightDialog(context);
@@ -280,15 +257,14 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
   }
 
   void _showSetNotesDialog(BuildContext context) {
-    if (!widget.isEditable &&
-        (widget.set.notes == null || widget.set.notes!.isEmpty)) {
+    if (!widget.isEditable && (widget.set.notes == null || widget.set.notes!.isEmpty)) {
       // Viewing past session with no notes
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Set Notes'),
-            content: const Text('No notes for this set.'),
+            title: Text(AppLocalizations.of(context)!.setNotes),
+            content: Text(AppLocalizations.of(context)!.noNotesForThisSet),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -337,8 +313,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
           content: TextField(
             controller: notesController,
             maxLines: 3,
-            decoration: const InputDecoration(
-              hintText: 'Add notes about this set...',
+ decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.addNotesAboutSet,
               border: OutlineInputBorder(),
             ),
           ),
@@ -349,24 +325,22 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             ),
             TextButton(
               onPressed: () {
-                widget.onSetUpdated(
-                  WorkoutSet(
-                    id: widget.set.id,
-                    workoutExerciseId: widget.set.workoutExerciseId,
-                    setNumber: widget.set.setNumber,
-                    reps: widget.set.reps,
-                    weight: widget.set.weight,
-                    effortLevel: widget.set.effortLevel,
-                    effortLevelSpecifier: widget.set.effortLevelSpecifier,
-                    completed: widget.set.completed,
-                    completedAt: widget.set.completedAt,
-                    notes: notesController.text,
-                  ),
-                );
+                widget.onSetUpdated(WorkoutSet(
+                  id: widget.set.id,
+                  workoutExerciseId: widget.set.workoutExerciseId,
+                  setNumber: widget.set.setNumber,
+                  reps: widget.set.reps,
+                  weight: widget.set.weight,
+                  effortLevel: widget.set.effortLevel,
+                  effortLevelSpecifier: widget.set.effortLevelSpecifier,
+                  completed: widget.set.completed,
+                  completedAt: widget.set.completedAt,
+                  notes: notesController.text,
+                ));
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Set notes saved!'),
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context)!.setNotesSaved),
                     backgroundColor: AppColors.success,
                   ),
                 );
@@ -390,13 +364,13 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Add Effort Level'),
+              title: Text(AppLocalizations.of(context)!.addEffortLevel),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Effort Unit:',
+                  Text(
+                    AppLocalizations.of(context)!.effortUnit,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 8),
@@ -433,8 +407,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Effort Value:',
+                  Text(
+                    AppLocalizations.of(context)!.effortValue,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 8),
@@ -468,8 +442,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Closeness Specifier (optional):',
+                  Text(
+                    AppLocalizations.of(context)!.closenessSpecifier,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 8),
@@ -519,35 +493,31 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
                 TextButton(
                   onPressed: () {
-                    widget.onSetUpdated(
-                      WorkoutSet(
-                        id: widget.set.id,
-                        workoutExerciseId: widget.set.workoutExerciseId,
-                        setNumber: widget.set.setNumber,
-                        reps: widget.set.reps,
-                        weight: widget.set.weight,
-                        effortLevel: effortValue,
-                        effortLevelSpecifier: effortSpecifier.isEmpty
-                            ? effortUnit
-                            : '$effortSpecifier$effortUnit',
-                        completed: widget.set.completed,
-                        completedAt: widget.set.completedAt,
-                        notes: widget.set.notes,
-                      ),
-                    );
+                    widget.onSetUpdated(WorkoutSet(
+                      id: widget.set.id,
+                      workoutExerciseId: widget.set.workoutExerciseId,
+                      setNumber: widget.set.setNumber,
+                      reps: widget.set.reps,
+                      weight: widget.set.weight,
+                      effortLevel: effortValue,
+                      effortLevelSpecifier: effortSpecifier.isEmpty ? effortUnit : '$effortSpecifier$effortUnit',
+                      completed: widget.set.completed,
+                      completedAt: widget.set.completedAt,
+                      notes: widget.set.notes,
+                    ));
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Effort level saved!'),
+                      SnackBar(
+                    content: Text(AppLocalizations.of(context)!.effortLevelSaved),
                         backgroundColor: AppColors.success,
                       ),
                     );
                   },
-                  child: const Text('Save'),
+                  child: Text(AppLocalizations.of(context)!.save),
                 ),
               ],
             );
@@ -563,8 +533,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Effort Level'),
-            content: const Text('No effort level recorded for this set.'),
+            title: Text(AppLocalizations.of(context)!.effortLevel),
+            content: Text(AppLocalizations.of(context)!.noEffortLevelRecorded),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -579,22 +549,15 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
 
     // Parse the effort level specifier
     String displayText = '';
-    if (widget.set.effortLevelSpecifier != null &&
-        widget.set.effortLevelSpecifier!.isNotEmpty) {
+    if (widget.set.effortLevelSpecifier != null && widget.set.effortLevelSpecifier!.isNotEmpty) {
       displayText = widget.set.effortLevelSpecifier!;
       // Check if it already includes the number
       if (!displayText.contains(widget.set.effortLevel.toString())) {
         // Insert the number before the unit (RPE/RIR)
         if (displayText.contains('RPE')) {
-          displayText = displayText.replaceAll(
-            'RPE',
-            '${widget.set.effortLevel} RPE',
-          );
+          displayText = displayText.replaceAll('RPE', '${widget.set.effortLevel} RPE');
         } else if (displayText.contains('RIR')) {
-          displayText = displayText.replaceAll(
-            'RIR',
-            '${widget.set.effortLevel} RIR',
-          );
+          displayText = displayText.replaceAll('RIR', '${widget.set.effortLevel} RIR');
         } else {
           displayText = '${widget.set.effortLevel} $displayText';
         }
@@ -656,8 +619,8 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Mark this set\'s weight to update the exercise default weight when the workout is completed.',
+              Text(
+                AppLocalizations.of(context)!.markSetWeightMessage,
                 style: TextStyle(fontSize: 14),
               ),
               const SizedBox(height: 16),
@@ -670,12 +633,9 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Current Weight:',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
+                    Text(
+                      AppLocalizations.of(context)!.currentWeight,
+                      style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -699,22 +659,17 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
             TextButton(
               onPressed: () {
                 if (widget.onUpdateDefaultWeight != null) {
-                  widget.onUpdateDefaultWeight!(
-                    widget.set.workoutExerciseId,
-                    widget.set.id!,
-                  );
+                  widget.onUpdateDefaultWeight!(widget.set.workoutExerciseId, widget.set.id!);
                 }
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Will update default weight on workout completion!',
-                    ),
+                  SnackBar(
+                    content: Text(AppLocalizations.of(context)!.willUpdateDefaultWeight),
                     backgroundColor: AppColors.success,
                   ),
                 );
               },
-              child: const Text('Mark for Update'),
+              child: Text(AppLocalizations.of(context)!.markForUpdate),
             ),
           ],
         );
@@ -722,3 +677,4 @@ class _ExerciseSetItemState extends State<ExerciseSetItem> {
     );
   }
 }
+

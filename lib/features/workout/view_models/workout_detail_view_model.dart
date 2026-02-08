@@ -27,21 +27,17 @@ class ExerciseWithSets {
 }
 
 class WorkoutDetailViewModel extends ChangeNotifier {
-  final WorkoutSessionRepository _sessionRepository =
-      WorkoutSessionRepository();
-  final WorkoutExerciseRepository _exerciseRepository =
-      WorkoutExerciseRepository();
+  final WorkoutSessionRepository _sessionRepository = WorkoutSessionRepository();
+  final WorkoutExerciseRepository _exerciseRepository = WorkoutExerciseRepository();
   final WorkoutSetRepository _setRepository = WorkoutSetRepository();
   final ExerciseRepository _exerciseCatalogRepository = ExerciseRepository();
   final MuscleGroupRepository _muscleGroupRepository = MuscleGroupRepository();
-  final EquipmentTypeRepository _equipmentTypeRepository =
-      EquipmentTypeRepository();
+  final EquipmentTypeRepository _equipmentTypeRepository = EquipmentTypeRepository();
 
   WorkoutSession? _session;
   List<ExerciseWithSets> _exercises = [];
   List<Exercise> _availableExercises = [];
-  Map<int, int> _exercisesMarkedForWeightUpdate =
-      {}; // Track exercises to update default weight - maps exerciseId to setId
+  Map<int, int> _exercisesMarkedForWeightUpdate = {}; // Track exercises to update default weight - maps exerciseId to setId
   bool _isLoading = false;
   bool _isEditable = false;
   String? _error;
@@ -53,10 +49,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
   bool get isEditable => _isEditable;
   String? get error => _error;
 
-  Future<void> loadWorkoutDetails(
-    int sessionId, {
-    bool editable = false,
-  }) async {
+  Future<void> loadWorkoutDetails(int sessionId, {bool editable = false}) async {
     _isLoading = true;
     _isEditable = editable;
     _error = null;
@@ -75,9 +68,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       _session = session;
 
       // Load exercises for this session
-      final workoutExercises = await _exerciseRepository.getBySession(
-        sessionId,
-      );
+      final workoutExercises = await _exerciseRepository.getBySession(sessionId);
 
       // Load sets for each exercise
       _exercises = [];
@@ -91,21 +82,15 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
         if (exercise.exerciseId != null) {
           // Fetch the exercise details from catalog
-          final exerciseDetails = await _exerciseCatalogRepository.getById(
-            exercise.exerciseId!,
-          );
+          final exerciseDetails = await _exerciseCatalogRepository.getById(exercise.exerciseId!);
 
           if (exerciseDetails != null) {
             // Fetch muscle group name
-            final muscleGroup = await _muscleGroupRepository.getById(
-              exerciseDetails.muscleGroupId,
-            );
+            final muscleGroup = await _muscleGroupRepository.getById(exerciseDetails.muscleGroupId);
             muscleGroupName = muscleGroup?.name;
 
             // Fetch equipment type name
-            final equipmentType = await _equipmentTypeRepository.getById(
-              exerciseDetails.equipmentTypeId,
-            );
+            final equipmentType = await _equipmentTypeRepository.getById(exerciseDetails.equipmentTypeId);
             equipmentName = equipmentType?.name;
 
             // Get unit preference
@@ -113,15 +98,13 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           }
         }
 
-        _exercises.add(
-          ExerciseWithSets(
-            exercise: exercise,
-            sets: sets,
-            equipmentName: equipmentName ?? 'Unknown',
-            muscleGroupName: muscleGroupName ?? 'Unknown',
-            isUsingMetric: isUsingMetric,
-          ),
-        );
+        _exercises.add(ExerciseWithSets(
+          exercise: exercise,
+          sets: sets,
+          equipmentName: equipmentName ?? 'Unknown',
+          muscleGroupName: muscleGroupName ?? 'Unknown',
+          isUsingMetric: isUsingMetric,
+        ));
       }
 
       _isLoading = false;
@@ -135,9 +118,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
   Future<void> addSet(int exerciseId) async {
     try {
-      final exerciseIndex = _exercises.indexWhere(
-        (e) => e.exercise.id == exerciseId,
-      );
+      final exerciseIndex = _exercises.indexWhere((e) => e.exercise.id == exerciseId);
       if (exerciseIndex == -1) return;
 
       final exercise = _exercises[exerciseIndex];
@@ -164,15 +145,13 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error adding set: $e');
+      // Error adding set
     }
   }
 
   Future<void> deleteLastSet(int exerciseId) async {
     try {
-      final exerciseIndex = _exercises.indexWhere(
-        (e) => e.exercise.id == exerciseId,
-      );
+      final exerciseIndex = _exercises.indexWhere((e) => e.exercise.id == exerciseId);
       if (exerciseIndex == -1) return;
 
       final exercise = _exercises[exerciseIndex];
@@ -192,7 +171,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error deleting set: $e');
+      // Error deleting set
     }
   }
 
@@ -202,9 +181,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       // Find and update the set in memory
       for (var i = 0; i < _exercises.length; i++) {
-        final setIndex = _exercises[i].sets.indexWhere(
-          (s) => s.id == updatedSet.id,
-        );
+        final setIndex = _exercises[i].sets.indexWhere((s) => s.id == updatedSet.id);
         if (setIndex != -1) {
           final updatedSets = List<WorkoutSet>.from(_exercises[i].sets);
           updatedSets[setIndex] = updatedSet;
@@ -220,7 +197,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error updating set: $e');
+      // Error updating set
     }
   }
 
@@ -234,6 +211,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         title: _session!.title,
         startTime: _session!.startTime,
         mesocycleId: _session!.mesocycleId,
+        weekNumber: _session!.weekNumber,
+        sessionOrder: _session!.sessionOrder,
         endTime: _session!.endTime,
         notes: notes,
         createdAt: _session!.createdAt,
@@ -242,9 +221,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       await _sessionRepository.update(updatedSession);
       _session = updatedSession;
       notifyListeners();
-      print('WorkoutDetailViewModel: Updated workout notes');
     } catch (e) {
-      print('Error updating notes: $e');
+      // Error updating notes
     }
   }
 
@@ -256,8 +234,10 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         id: _session!.id,
         templateId: _session!.templateId,
         title: _session!.title,
-        startTime: DateTime.now(), // Mark start time to NOW
+        startTime: _session!.startTime ?? DateTime.now(), // Only set if not already set
         mesocycleId: _session!.mesocycleId,
+        weekNumber: _session!.weekNumber,
+        sessionOrder: _session!.sessionOrder,
         endTime: _session!.endTime,
         notes: _session!.notes,
         createdAt: _session!.createdAt,
@@ -266,9 +246,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
       await _sessionRepository.update(updatedSession);
       _session = updatedSession;
       notifyListeners();
-      print('WorkoutDetailViewModel: Marked start time to now');
     } catch (e) {
-      print('Error marking start time: $e');
+      // Error marking start time
     }
   }
 
@@ -300,12 +279,11 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           );
 
           notifyListeners();
-          print('WorkoutDetailViewModel: Updated exercise notes');
           break;
         }
       }
     } catch (e) {
-      print('Error updating exercise notes: $e');
+      // Error updating exercise notes
     }
   }
 
@@ -313,49 +291,34 @@ class WorkoutDetailViewModel extends ChangeNotifier {
     try {
       _availableExercises = await _exerciseCatalogRepository.getAll();
       notifyListeners();
-      print(
-        'WorkoutDetailViewModel: Loaded ${_availableExercises.length} available exercises',
-      );
     } catch (e) {
-      print('Error loading available exercises: $e');
+      // Error loading available exercises
     }
   }
 
-  Future<void> swapExercise(
-    int workoutExerciseId,
-    int newCatalogExerciseId,
-  ) async {
+  Future<void> swapExercise(int workoutExerciseId, int newCatalogExerciseId) async {
     try {
       // Find the workout exercise to swap
       for (var i = 0; i < _exercises.length; i++) {
         if (_exercises[i].exercise.id == workoutExerciseId) {
           // Get the new exercise details from catalog
-          final newExercise = await _exerciseCatalogRepository.getById(
-            newCatalogExerciseId,
-          );
+          final newExercise = await _exerciseCatalogRepository.getById(newCatalogExerciseId);
           if (newExercise == null) {
-            print('Error: New exercise not found in catalog');
             return;
           }
 
           // Get muscle group and equipment for the new exercise
-          final muscleGroup = await _muscleGroupRepository.getById(
-            newExercise.muscleGroupId,
-          );
-          final equipment = await _equipmentTypeRepository.getById(
-            newExercise.equipmentTypeId,
-          );
+          final muscleGroup = await _muscleGroupRepository.getById(newExercise.muscleGroupId);
+          final equipment = await _equipmentTypeRepository.getById(newExercise.equipmentTypeId);
 
           // Store the original template_exercise_id if not already stored
-          final originalTemplateExerciseId =
-              _exercises[i].exercise.templateExerciseId;
+          final originalTemplateExerciseId = _exercises[i].exercise.templateExerciseId;
 
           // Update the workout exercise with new exercise details
           final updatedWorkoutExercise = WorkoutExercise(
             id: _exercises[i].exercise.id,
             sessionId: _exercises[i].exercise.sessionId,
-            templateExerciseId:
-                originalTemplateExerciseId, // Keep original for tracking
+            templateExerciseId: originalTemplateExerciseId, // Keep original for tracking
             exerciseId: newCatalogExerciseId, // Update to new exercise
             exerciseName: newExercise.name,
             exerciseDescription: newExercise.name,
@@ -375,8 +338,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
               id: set.id,
               workoutExerciseId: set.workoutExerciseId,
               setNumber: set.setNumber,
-              weight:
-                  newDefaultWeight, // Update to new exercise's default weight
+              weight: newDefaultWeight, // Update to new exercise's default weight
               reps: set.reps,
               completed: set.completed,
               completedAt: set.completedAt,
@@ -398,14 +360,11 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           );
 
           notifyListeners();
-          print(
-            'WorkoutDetailViewModel: Swapped exercise to ${newExercise.name} and updated ${updatedSets.length} sets with default weight $newDefaultWeight',
-          );
           break;
         }
       }
     } catch (e) {
-      print('Error swapping exercise: $e');
+      // Error swapping exercise
     }
   }
 
@@ -427,6 +386,8 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         title: _session!.title,
         startTime: _session!.startTime,
         mesocycleId: _session!.mesocycleId,
+        weekNumber: _session!.weekNumber,
+        sessionOrder: _session!.sessionOrder,
         endTime: DateTime.now(),
         notes: _session!.notes,
         createdAt: _session!.createdAt,
@@ -477,9 +438,7 @@ class WorkoutDetailViewModel extends ChangeNotifier {
         final newDefaultWeight = markedSet.weight ?? 0.0;
 
         // Update the catalog exercise
-        final catalogExercise = await _exerciseCatalogRepository.getById(
-          catalogExerciseId,
-        );
+        final catalogExercise = await _exerciseCatalogRepository.getById(catalogExerciseId);
         if (catalogExercise != null) {
           final updatedExercise = Exercise(
             id: catalogExercise.id,
@@ -493,13 +452,9 @@ class WorkoutDetailViewModel extends ChangeNotifier {
           await _exerciseCatalogRepository.update(updatedExercise);
 
           // Also update all future uncompleted sessions with the same exercise
-          await _updateFutureSessionWeights(
-            exerciseData.exercise.exerciseName,
-            newDefaultWeight,
-          );
+          await _updateFutureSessionWeights(exerciseData.exercise.exerciseName, newDefaultWeight);
         }
       } catch (e) {
-        print('Error updating exercise weight: $e');
         // Silent fail - don't block workout completion
       }
     }
@@ -508,37 +463,26 @@ class WorkoutDetailViewModel extends ChangeNotifier {
     _exercisesMarkedForWeightUpdate.clear();
   }
 
-  Future<void> _updateFutureSessionWeights(
-    String exerciseName,
-    double newWeight,
-  ) async {
+  Future<void> _updateFutureSessionWeights(String exerciseName, double newWeight) async {
     try {
       // Get all uncompleted sessions from the same mesocycle
       if (_session?.mesocycleId == null) return;
 
       // Get all sessions in this mesocycle
-      final allSessions = await _sessionRepository.getSessionsByMesocycle(
-        _session!.mesocycleId!,
-      );
+      final allSessions = await _sessionRepository.getSessionsByMesocycle(_session!.mesocycleId!);
 
       // Filter to only future/uncompleted sessions
-      final futureSessions = allSessions
-          .where((s) => s.endTime == null && s.id != _session!.id)
-          .toList();
+      final futureSessions = allSessions.where((s) => s.endTime == null && s.id != _session!.id).toList();
 
       for (var session in futureSessions) {
         // Get exercises for this session
-        final sessionExercises = await _exerciseRepository.getBySession(
-          session.id!,
-        );
+        final sessionExercises = await _exerciseRepository.getBySession(session.id!);
 
         // Find exercises matching the name
         for (var exercise in sessionExercises) {
           if (exercise.exerciseName == exerciseName) {
             // Get all sets for this exercise
-            final sets = await _setRepository.getByWorkoutExercise(
-              exercise.id!,
-            );
+            final sets = await _setRepository.getByWorkoutExercise(exercise.id!);
 
             // Update each set's weight
             for (var set in sets) {
@@ -564,3 +508,4 @@ class WorkoutDetailViewModel extends ChangeNotifier {
     }
   }
 }
+

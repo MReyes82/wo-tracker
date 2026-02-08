@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wo_tracker/generated/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import '../../../core/themes/app_colors.dart';
 import '../models/workout_template.dart';
@@ -14,25 +15,22 @@ import '../../exercise/repositories/equipment_type_repository.dart';
 class WorkoutTemplateDetailScreen extends StatefulWidget {
   final int templateId;
 
-  const WorkoutTemplateDetailScreen({Key? key, required this.templateId})
-    : super(key: key);
+  const WorkoutTemplateDetailScreen({
+    Key? key,
+    required this.templateId,
+  }) : super(key: key);
 
   @override
-  State<WorkoutTemplateDetailScreen> createState() =>
-      _WorkoutTemplateDetailScreenState();
+  State<WorkoutTemplateDetailScreen> createState() => _WorkoutTemplateDetailScreenState();
 }
 
-class _WorkoutTemplateDetailScreenState
-    extends State<WorkoutTemplateDetailScreen> {
-  final WorkoutTemplateRepository _templateRepository =
-      WorkoutTemplateRepository();
-  final TemplateExerciseRepository _templateExerciseRepository =
-      TemplateExerciseRepository();
+class _WorkoutTemplateDetailScreenState extends State<WorkoutTemplateDetailScreen> {
+  final WorkoutTemplateRepository _templateRepository = WorkoutTemplateRepository();
+  final TemplateExerciseRepository _templateExerciseRepository = TemplateExerciseRepository();
   final WorkoutTypeRepository _workoutTypeRepository = WorkoutTypeRepository();
   final ExerciseRepository _exerciseRepository = ExerciseRepository();
   final MuscleGroupRepository _muscleGroupRepository = MuscleGroupRepository();
-  final EquipmentTypeRepository _equipmentTypeRepository =
-      EquipmentTypeRepository();
+  final EquipmentTypeRepository _equipmentTypeRepository = EquipmentTypeRepository();
 
   WorkoutTemplate? _template;
   String? _workoutType;
@@ -50,33 +48,22 @@ class _WorkoutTemplateDetailScreenState
       final template = await _templateRepository.getById(widget.templateId);
 
       if (template != null) {
-        final workoutType = await _workoutTypeRepository.getById(
-          template.typeId,
-        );
-        final templateExercises = await _templateExerciseRepository
-            .getByTemplate(template.id!);
+        final workoutType = await _workoutTypeRepository.getById(template.typeId);
+        final templateExercises = await _templateExerciseRepository.getByTemplate(template.id!);
 
         List<_ExerciseDetail> exerciseDetails = [];
         for (var templateExercise in templateExercises) {
-          final exercise = await _exerciseRepository.getById(
-            templateExercise.exerciseId,
-          );
+          final exercise = await _exerciseRepository.getById(templateExercise.exerciseId);
           if (exercise != null) {
-            final muscleGroup = await _muscleGroupRepository.getById(
-              exercise.muscleGroupId,
-            );
-            final equipment = await _equipmentTypeRepository.getById(
-              exercise.equipmentTypeId,
-            );
+            final muscleGroup = await _muscleGroupRepository.getById(exercise.muscleGroupId);
+            final equipment = await _equipmentTypeRepository.getById(exercise.equipmentTypeId);
 
-            exerciseDetails.add(
-              _ExerciseDetail(
-                exercise: exercise,
-                templateExercise: templateExercise,
-                muscleGroupName: muscleGroup?.name ?? 'Unknown',
-                equipmentName: equipment?.name ?? 'Unknown',
-              ),
-            );
+            exerciseDetails.add(_ExerciseDetail(
+              exercise: exercise,
+              templateExercise: templateExercise,
+              muscleGroupName: muscleGroup?.name ?? 'Unknown',
+              equipmentName: equipment?.name ?? 'Unknown',
+            ));
           }
         }
 
@@ -92,7 +79,6 @@ class _WorkoutTemplateDetailScreenState
         });
       }
     } catch (e) {
-      print('Error loading workout template details: $e');
       setState(() {
         _isLoading = false;
       });
@@ -107,7 +93,7 @@ class _WorkoutTemplateDetailScreenState
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          _template?.name ?? 'Workout Details',
+          _template?.name ?? AppLocalizations.of(context)!.workoutDetails,
           style: const TextStyle(
             color: AppColors.textPrimary,
             fontSize: 20,
@@ -120,132 +106,125 @@ class _WorkoutTemplateDetailScreenState
         ),
       ),
       body: _isLoading
-          ? const Center(
-              child: CircularProgressIndicator(color: AppColors.primary),
-            )
+          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
           : _template == null
-          ? const Center(child: Text('Workout template not found'))
-          : SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header card
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
+              ? const Center(child: Text('Workout template not found'))
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Header card
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.view_list,
-                          size: 64,
-                          color: AppColors.primary,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.view_list,
+                              size: 64,
+                              color: AppColors.primary,
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              _template!.name,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimary,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              _workoutType ?? 'Unknown Type',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
+                            if (_template!.createdAt != null) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                '${AppLocalizations.of(context)!.created} ${DateFormat('MMM d, y').format(_template!.createdAt!)}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ],
                         ),
-                        const SizedBox(height: 16),
-                        Text(
-                          _template!.name,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          _workoutType ?? 'Unknown Type',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: AppColors.textSecondary,
-                          ),
-                        ),
-                        if (_template!.createdAt != null) ...[
-                          const SizedBox(height: 4),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // Exercises section
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
                           Text(
-                            'Created ${DateFormat('MMM d, y').format(_template!.createdAt!)}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
+                            AppLocalizations.of(context)!.exercises,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '${_exercises.length} ${AppLocalizations.of(context)!.exercises}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ),
                         ],
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Exercises section
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Exercises',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                        ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          '${_exercises.length} exercises',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primary,
+                      const SizedBox(height: 12),
+
+                      if (_exercises.isEmpty)
+                        Container(
+                          padding: const EdgeInsets.all(32),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-
-                  if (_exercises.isEmpty)
-                    Container(
-                      padding: const EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'No exercises in this workout',
-                          style: TextStyle(
-                            color: AppColors.textSecondary.withValues(
-                              alpha: 0.7,
+                          child: Center(
+                            child: Text(
+                              'No exercises in this workout',
+                              style: TextStyle(
+                                color: AppColors.textSecondary.withValues(alpha: 0.7),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    )
-                  else
-                    ...List.generate(_exercises.length, (index) {
-                      return _buildExerciseCard(_exercises[index], index + 1);
-                    }),
-                ],
-              ),
-            ),
+                        )
+                      else
+                        ...List.generate(_exercises.length, (index) {
+                          return _buildExerciseCard(_exercises[index], index + 1);
+                        }),
+                    ],
+                  ),
+                ),
     );
   }
 
@@ -303,28 +282,18 @@ class _WorkoutTemplateDetailScreenState
           const SizedBox(height: 12),
           Row(
             children: [
-              Icon(
-                Icons.fitness_center,
-                size: 16,
-                color: AppColors.textSecondary,
-              ),
+              Icon(Icons.fitness_center, size: 16, color: AppColors.textSecondary),
               const SizedBox(width: 4),
               Text(
                 detail.muscleGroupName,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textSecondary,
-                ),
+                style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
               ),
               const SizedBox(width: 16),
               Icon(Icons.build, size: 16, color: AppColors.textSecondary),
               const SizedBox(width: 4),
               Text(
                 detail.equipmentName,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textSecondary,
-                ),
+                style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
               ),
             ],
           ),
@@ -341,7 +310,7 @@ class _WorkoutTemplateDetailScreenState
                 const Icon(Icons.repeat, size: 16, color: AppColors.primary),
                 const SizedBox(width: 8),
                 Text(
-                  '${detail.templateExercise.plannedSets} sets',
+                  '${detail.templateExercise.plannedSets} ${AppLocalizations.of(context)!.sets}',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -350,15 +319,14 @@ class _WorkoutTemplateDetailScreenState
                 ),
                 if (detail.templateExercise.useDefaultWeight) ...[
                   const SizedBox(width: 16),
-                  const Icon(
-                    Icons.check_circle,
-                    size: 16,
-                    color: AppColors.success,
-                  ),
+                  const Icon(Icons.check_circle, size: 16, color: AppColors.success),
                   const SizedBox(width: 4),
-                  const Text(
-                    'Using default weight',
-                    style: TextStyle(fontSize: 12, color: AppColors.success),
+                  Text(
+                    AppLocalizations.of(context)!.usingDefaultWeight,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.success,
+                    ),
                   ),
                 ],
               ],
@@ -383,3 +351,4 @@ class _ExerciseDetail {
     required this.equipmentName,
   });
 }
+
