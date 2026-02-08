@@ -10,9 +10,11 @@ import '../../workout/repositories/workout_session_repository.dart';
 
 class RecordsViewModel extends ChangeNotifier {
   final ExerciseRepository _exerciseRepository = ExerciseRepository();
-  final WorkoutTemplateRepository _workoutRepository = WorkoutTemplateRepository();
+  final WorkoutTemplateRepository _workoutRepository =
+      WorkoutTemplateRepository();
   final MesocycleRepository _mesocycleRepository = MesocycleRepository();
-  final WorkoutSessionRepository _sessionRepository = WorkoutSessionRepository();
+  final WorkoutSessionRepository _sessionRepository =
+      WorkoutSessionRepository();
 
   List<Exercise> _exercises = [];
   List<WorkoutTemplate> _workouts = [];
@@ -85,7 +87,9 @@ class RecordsViewModel extends ChangeNotifier {
     try {
       final allSessions = await _sessionRepository.getAll();
       // Filter to only show completed sessions
-      _sessions = allSessions.where((session) => session.endTime != null).toList();
+      _sessions = allSessions
+          .where((session) => session.endTime != null)
+          .toList();
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -97,22 +101,29 @@ class RecordsViewModel extends ChangeNotifier {
 
   List<Exercise> filterExercises(String query) {
     if (query.isEmpty) return _exercises;
-    return _exercises.where((e) => e.name.toLowerCase().contains(query)).toList();
+    return _exercises
+        .where((e) => e.name.toLowerCase().contains(query))
+        .toList();
   }
 
   List<WorkoutTemplate> filterWorkouts(String query) {
     if (query.isEmpty) return _workouts;
-    return _workouts.where((w) => w.name.toLowerCase().contains(query)).toList();
+    return _workouts
+        .where((w) => w.name.toLowerCase().contains(query))
+        .toList();
   }
 
   List<Mesocycle> filterMesocycles(String query) {
     if (query.isEmpty) return _mesocycles;
-    return _mesocycles.where((m) => m.name.toLowerCase().contains(query)).toList();
+    return _mesocycles
+        .where((m) => m.name.toLowerCase().contains(query))
+        .toList();
   }
 
   List<WorkoutSession> filterSessions(String query) {
     if (query.isEmpty) return _sessions;
-    return _sessions.where((s) => (s.title?.toLowerCase() ?? '').contains(query)).toList();
+    return _sessions
+        .where((s) => (s.title?.toLowerCase() ?? '').contains(query))
+        .toList();
   }
 }
-

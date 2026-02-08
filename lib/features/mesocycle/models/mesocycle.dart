@@ -52,7 +52,7 @@ class Mesocycle {
   @override
   String toString() {
     return 'Mesocycle{id: $id, name: $name, startDate: $startDate, endDate: $endDate, '
-           'weeksQuantity: $weeksQuantity, sessionsPerWeek: $sessionsPerWeek}';
+        'weeksQuantity: $weeksQuantity, sessionsPerWeek: $sessionsPerWeek}';
   }
 
   Mesocycle copyWith({
@@ -77,4 +77,3 @@ class Mesocycle {
     );
   }
 }
-

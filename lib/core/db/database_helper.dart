@@ -278,4 +278,3 @@ class DatabaseHelper {
     await _onCreate(await database, 1);
   }
 }
-

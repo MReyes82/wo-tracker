@@ -32,7 +32,6 @@ class MesocycleWorkout {
   @override
   String toString() {
     return 'MesocycleWorkout{id: $id, mesocycleId: $mesocycleId, '
-           'workoutTemplateId: $workoutTemplateId, dayOfWeek: $dayOfWeek}';
+        'workoutTemplateId: $workoutTemplateId, dayOfWeek: $dayOfWeek}';
   }
 }
-

@@ -161,9 +161,7 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
       ),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primary,
-              ),
+              child: CircularProgressIndicator(color: AppColors.primary),
             )
           : SingleChildScrollView(
               child: Padding(
@@ -186,15 +184,22 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.borderColor),
+                            borderSide: const BorderSide(
+                              color: AppColors.borderColor,
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.borderColor),
+                            borderSide: const BorderSide(
+                              color: AppColors.borderColor,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                            borderSide: const BorderSide(
+                              color: AppColors.primary,
+                              width: 2,
+                            ),
                           ),
                         ),
                         validator: (value) {
@@ -206,7 +211,9 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                         },
                         onChanged: (value) {
                           setState(() {
-                            _exerciseName = value.trim().isNotEmpty ? value.trim() : null;
+                            _exerciseName = value.trim().isNotEmpty
+                                ? value.trim()
+                                : null;
                           });
                         },
                       ),
@@ -222,15 +229,22 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                              borderSide: const BorderSide(
+                                color: AppColors.primary,
+                                width: 2,
+                              ),
                             ),
                           ),
                           hint: Text(AppLocalizations.of(context)!.selectExerciseType),
@@ -266,15 +280,22 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                              borderSide: const BorderSide(
+                                color: AppColors.primary,
+                                width: 2,
+                              ),
                             ),
                           ),
                           hint: Text(AppLocalizations.of(context)!.selectEquipmentType),
@@ -310,15 +331,22 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                              borderSide: const BorderSide(
+                                color: AppColors.primary,
+                                width: 2,
+                              ),
                             ),
                           ),
                           hint: Text(AppLocalizations.of(context)!.selectMuscleGroup),
@@ -346,9 +374,14 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                             Expanded(
                               child: TextFormField(
                                 controller: _defaultWeightController,
-                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                keyboardType:
+                                    const TextInputType.numberWithOptions(
+                                      decimal: true,
+                                    ),
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                                  FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*\.?\d*'),
+                                  ),
                                 ],
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context)!.enterWeight,
@@ -356,15 +389,22 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
                                   fillColor: Colors.white,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(color: AppColors.borderColor),
+                                    borderSide: const BorderSide(
+                                      color: AppColors.borderColor,
+                                    ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(color: AppColors.borderColor),
+                                    borderSide: const BorderSide(
+                                      color: AppColors.borderColor,
+                                    ),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
-                                    borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                                    borderSide: const BorderSide(
+                                      color: AppColors.primary,
+                                      width: 2,
+                                    ),
                                   ),
                                 ),
                                 onChanged: (value) {
@@ -464,4 +504,3 @@ class _NewExerciseScreenState extends State<NewExerciseScreen> {
     );
   }
 }
-

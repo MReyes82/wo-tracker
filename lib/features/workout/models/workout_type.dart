@@ -2,23 +2,14 @@ class WorkoutType {
   final int? id;
   final String name;
 
-  WorkoutType({
-    this.id,
-    required this.name,
-  });
+  WorkoutType({this.id, required this.name});
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-    };
+    return {'id': id, 'name': name};
   }
 
   factory WorkoutType.fromMap(Map<String, dynamic> map) {
-    return WorkoutType(
-      id: map['id'] as int?,
-      name: map['name'] as String,
-    );
+    return WorkoutType(id: map['id'] as int?, name: map['name'] as String);
   }
 
   @override
@@ -26,4 +17,3 @@ class WorkoutType {
     return 'WorkoutType{id: $id, name: $name}';
   }
 }
-

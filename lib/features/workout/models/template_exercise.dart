@@ -40,7 +40,6 @@ class TemplateExercise {
   @override
   String toString() {
     return 'TemplateExercise{id: $id, templateId: $templateId, exerciseId: $exerciseId, '
-           'position: $position, plannedSets: $plannedSets, useDefaultWeight: $useDefaultWeight}';
+        'position: $position, plannedSets: $plannedSets, useDefaultWeight: $useDefaultWeight}';
   }
 }
-

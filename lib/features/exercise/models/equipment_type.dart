@@ -2,23 +2,14 @@ class EquipmentType {
   final int? id;
   final String name;
 
-  EquipmentType({
-    this.id,
-    required this.name,
-  });
+  EquipmentType({this.id, required this.name});
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'name': name,
-    };
+    return {'id': id, 'name': name};
   }
 
   factory EquipmentType.fromMap(Map<String, dynamic> map) {
-    return EquipmentType(
-      id: map['id'] as int?,
-      name: map['name'] as String,
-    );
+    return EquipmentType(id: map['id'] as int?, name: map['name'] as String);
   }
 
   @override
@@ -26,4 +17,3 @@ class EquipmentType {
     return 'EquipmentType{id: $id, name: $name}';
   }
 }
-

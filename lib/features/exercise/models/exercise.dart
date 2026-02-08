@@ -44,11 +44,11 @@ class Exercise {
       muscleGroupId: map['muscle_group_id'] as int,
       defaultWorkingWeight: map['default_working_weight'] as double?,
       isUsingMetric: (map['is_using_metric'] as int) == 1,
-      createdAt: map['created_at'] != null 
-          ? DateTime.parse(map['created_at'] as String) 
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'] as String)
           : null,
-      updatedAt: map['updated_at'] != null 
-          ? DateTime.parse(map['updated_at'] as String) 
+      updatedAt: map['updated_at'] != null
+          ? DateTime.parse(map['updated_at'] as String)
           : null,
     );
   }
@@ -56,8 +56,7 @@ class Exercise {
   @override
   String toString() {
     return 'Exercise{id: $id, name: $name, exerciseTypeId: $exerciseTypeId, '
-           'equipmentTypeId: $equipmentTypeId, muscleGroupId: $muscleGroupId, '
-           'defaultWorkingWeight: $defaultWorkingWeight, isUsingMetric: $isUsingMetric}';
+        'equipmentTypeId: $equipmentTypeId, muscleGroupId: $muscleGroupId, '
+        'defaultWorkingWeight: $defaultWorkingWeight, isUsingMetric: $isUsingMetric}';
   }
 }
-

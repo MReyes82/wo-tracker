@@ -11,11 +11,7 @@ class MesocycleRepository {
 
   Future<Mesocycle?> getById(int id) async {
     final db = await _dbHelper.database;
-    final maps = await db.query(
-      'mesocycle',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    final maps = await db.query('mesocycle', where: 'id = ?', whereArgs: [id]);
 
     if (maps.isEmpty) return null;
     return Mesocycle.fromMap(maps.first);
@@ -39,11 +35,7 @@ class MesocycleRepository {
 
   Future<int> delete(int id) async {
     final db = await _dbHelper.database;
-    return await db.delete(
-      'mesocycle',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    return await db.delete('mesocycle', where: 'id = ?', whereArgs: [id]);
   }
 
   /// Get active mesocycles (those that haven't ended yet)
@@ -75,4 +67,3 @@ class MesocycleRepository {
     return Mesocycle.fromMap(maps.first);
   }
 }
-
